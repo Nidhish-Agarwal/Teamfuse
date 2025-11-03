@@ -128,3 +128,15 @@ This keeps all commits linted, formatted, and error-free.
 
 Strict typing + linting + auto-formatting =
 clean, consistent, and bug-free code for the whole team.
+
+### Logs
+
+```bash
+$ git commit -m "Checking EsLint Setup"
+✔ Backed up original state in git stash (e8361c5)
+✔ Running tasks for staged files...
+✔ Applying modifications from tasks...
+✔ Cleaning up temporary files...
+[EsLint 502bd23] Checking EsLint Setup
+ 1 file changed, 1 insertion(+)
+```
