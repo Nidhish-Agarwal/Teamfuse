@@ -99,6 +99,7 @@ Before submitting your Pull Request (PR), make sure you’ve verified the follow
 - [ ] Screenshots added (if UI feature)  
 - [ ] Reflections or notes included for team discussion  
 
+
 This checklist ensures that all contributions maintain consistency, readability, and quality across the TeamFuse project.
 
 
@@ -109,10 +110,15 @@ Each branch name clearly indicates its purpose, making collaboration and reviews
 
 ### 🔹 Branch Naming Format
 
-feature/<feature-name> → For new features
-fix/<bug-name> → For bug fixes
-chore/<task-name> → For maintenance tasks
-docs/<update-name> → For documentation updates
+- feature/admin-ruleset-management, feature/user-dashboard, feature/login-auth → For developing new modules or adding new functionalities to the Cognifuse project.
+
+- fix/ruleset-display-error, fix/api-authentication-failure → For resolving bugs, UI issues, or fixing existing code errors.
+
+- chore/env-setup, chore/dependency-update, chore/build-optimization → For configuration updates, refactoring, or maintenance-related improvements.
+
+
+- docs/pr-guidelines, docs/readme-update, docs/setup-instructions → For updating documentation, guides, or workflow-related information.
+
 
 ###  PR Template
 Stored in `.github/pull_request_template.md`
@@ -132,6 +138,8 @@ Following this structure ensures consistency, traceability, and cleaner collabor
 ### Screenshots
 
 - Screenshot of branch protection
+![alt text](image-2.png)
 
 
 - Screenshot of a PR showing checks/review approval
+![alt text](image-3.png)
