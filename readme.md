@@ -102,7 +102,6 @@ Before submitting your Pull Request (PR), make sure you’ve verified the follow
 This checklist ensures that all contributions maintain consistency, readability, and quality across the TeamFuse project.
 
 
-
 ## Branching Strategy & Naming Conventions
 
 To maintain a clean and professional Git workflow, TeamFuse follows a consistent branching strategy.  
