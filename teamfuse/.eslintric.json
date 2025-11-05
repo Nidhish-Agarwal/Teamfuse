@@ -6,6 +6,7 @@
     "quotes": ["error", "double"]
   },
   "ignorePatterns": [
-    "teamfuse/prisma/src/generated/**/*"
-  ]
+  "src/generated/",
+  "src/generated/**"
+]
 }
