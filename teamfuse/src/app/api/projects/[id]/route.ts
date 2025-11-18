@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { withAuth } from "@/lib/withAuth";
 import { AppError } from "@/lib/errors/AppError";
 import { handleRouteError } from "@/lib/errors/handleRouteError";
+import { sendSuccess } from "@/lib/responseHandler";
 
 export const GET = withAuth(async (req, user) => {
   try {
@@ -97,9 +97,8 @@ export const GET = withAuth(async (req, user) => {
 
     const latestInsight = project.insights[0] ?? null;
 
-    return NextResponse.json({
-      success: true,
-      data: {
+    return sendSuccess(
+      {
         project: {
           id: project.id,
           name: project.name,
@@ -127,7 +126,8 @@ export const GET = withAuth(async (req, user) => {
 
         latestInsight,
       },
-    });
+      "Successfully fetched project dashboard data"
+    );
   } catch (err) {
     return handleRouteError(err);
   }
