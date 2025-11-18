@@ -40,7 +40,12 @@ export async function middleware(req: NextRequest) {
     if (refreshRes.ok) {
       console.log("✅ Refresh succeeded. Forwarding new cookies.");
 
-      const res = NextResponse.next();
+      let res;
+      if (req.method == "GET" || req.method == "HEAD") {
+        res = NextResponse.redirect(req.url);
+      } else {
+        res = NextResponse.next();
+      }
 
       refreshRes.headers.forEach((value, key) => {
         if (key.toLowerCase() === "set-cookie") {
