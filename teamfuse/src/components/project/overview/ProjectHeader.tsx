@@ -1,4 +1,4 @@
-// src/components/project/overview/ProjectHeader.tsx
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Github } from "lucide-react";
 
 export default function ProjectHeader({ overview }: { overview: any }) {
@@ -7,8 +7,12 @@ export default function ProjectHeader({ overview }: { overview: any }) {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-white">{overview.name}</h1>
-          <p className="text-gray-400">{overview.description}</p>
-          <p className="text-sm text-gray-500 mt-1">
+
+          {overview.description && (
+            <p className="text-gray-400 mt-1">{overview.description}</p>
+          )}
+
+          <p className="text-sm text-gray-500 mt-2">
             Last updated{" "}
             {new Date(overview.updatedAt).toLocaleString("en-IN", {
               hour: "2-digit",

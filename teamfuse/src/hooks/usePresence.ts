@@ -1,57 +1,128 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
+
+import { useEffect, useRef, useState } from "react";
+import { io, Socket } from "socket.io-client";
 
 interface PresenceMap {
-  [userId: string]: "ONLINE" | "IDLE" | "OFFLINE";
+  [userId: string]: "ONLINE" | "IDLE" | "OFFLINE" | "FOCUSED";
 }
 
 export function usePresence(projectId: string, currentUserId: string) {
   const [presence, setPresence] = useState<PresenceMap>({});
+  const socketRef = useRef<Socket | null>(null);
+  const idleRef = useRef<NodeJS.Timeout | null>(null);
+
+  const currentProjectRef = useRef(projectId);
+  const currentUserRef = useRef(currentUserId);
+
+  useEffect(() => {
+    currentProjectRef.current = projectId;
+    currentUserRef.current = currentUserId;
+  }, [projectId, currentUserId]);
 
   useEffect(() => {
     if (!projectId || !currentUserId) return;
 
-    // connect to Socket.io via Next.js API route
-    const socket = io("/", {
-      path: "/api/socket/io",
-      transports: ["websocket"],
-    });
+    // Create socket if it doesn't exist
+    if (!socketRef.current) {
+      socketRef.current = io("/", {
+        path: "/api/socket/io",
+        transports: ["websocket"],
+      });
 
-    socket.on("connect", () => {
-      socket.emit("join_project", { projectId, userId: currentUserId });
-    });
+      const socket = socketRef.current;
 
-    socket.on("presence_update", (data) => {
-      setPresence((prev) => ({
-        ...prev,
-        [data.userId]: data.status,
-      }));
-    });
+      socket.on("connect", () => {
+        console.log("Socket connected to project:", projectId);
 
-    // Idle logic (optional)
-    const handleIdle = () =>
-      socket.emit("status_update", { projectId, userId: currentUserId, status: "IDLE" });
-    const handleActive = () =>
-      socket.emit("status_update", { projectId, userId: currentUserId, status: "ONLINE" });
+        socket.emit("join_project", {
+          projectId: currentProjectRef.current,
+          userId: currentUserRef.current,
+        });
+      });
 
-    let idleTimer: any;
-    const resetIdle = () => {
-      clearTimeout(idleTimer);
-      handleActive();
-      idleTimer = setTimeout(handleIdle, 60_000);
+      socket.on("disconnect", () => {
+        console.log("Socket disconnected");
+      });
+
+      socket.on("presence_update", (data: any) => {
+        // Handle both userId (database ID) and originalUserId (session ID)
+        const userIdToUse = data.userId || data.originalUserId;
+        if (userIdToUse) {
+          setPresence((prev) => ({
+            ...prev,
+            [userIdToUse]: data.status,
+          }));
+        }
+      });
+
+      // Idle tracking
+      const resetIdle = () => {
+        if (idleRef.current) {
+          clearTimeout(idleRef.current);
+        }
+
+        if (socket.connected) {
+          socket.emit("status_update", {
+            projectId: currentProjectRef.current,
+            userId: currentUserRef.current,
+            status: "ONLINE",
+          });
+
+          idleRef.current = setTimeout(() => {
+            if (socket.connected) {
+              socket.emit("status_update", {
+                projectId: currentProjectRef.current,
+                userId: currentUserRef.current,
+                status: "IDLE",
+              });
+            }
+          }, 120000); // 2 minutes
+        }
+      };
+
+      const events = ["mousemove", "keydown", "click", "scroll", "touchstart"];
+      events.forEach((event) => {
+        window.addEventListener(event, resetIdle, { passive: true });
+      });
+
+      resetIdle();
+
+      return () => {
+        events.forEach((event) => {
+          window.removeEventListener(event, resetIdle);
+        });
+
+        if (idleRef.current) {
+          clearTimeout(idleRef.current);
+        }
+      };
+    }
+    // Re-join if already connected
+    else if (socketRef.current.connected) {
+      socketRef.current.emit("join_project", {
+        projectId: currentProjectRef.current,
+        userId: currentUserRef.current,
+      });
+    }
+  }, [projectId, currentUserId]);
+
+  // Cleanup on app close
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (socketRef.current) {
+        socketRef.current.emit("leave_project");
+        socketRef.current.disconnect();
+      }
     };
 
-    window.addEventListener("mousemove", resetIdle);
-    window.addEventListener("keydown", resetIdle);
-    resetIdle();
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
-      socket.disconnect();
-      window.removeEventListener("mousemove", resetIdle);
-      window.removeEventListener("keydown", resetIdle);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [projectId, currentUserId]);
+  }, []);
 
   return presence;
 }

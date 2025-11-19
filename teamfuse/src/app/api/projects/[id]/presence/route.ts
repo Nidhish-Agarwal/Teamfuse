@@ -1,31 +1,39 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { NextRequest } from "next/server";
+import { withAuth } from "@/lib/withAuth";
 import { prisma } from "@/lib/prisma";
 import { sendSuccess, sendError } from "@/lib/responseHandler";
+import { getPresenceSnapshot } from "@/lib/presence/getPresence";
 
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+export const GET = withAuth(async (req: NextRequest, user) => {
   try {
-    const projectId = params.id;
+    // ✅ Better URL parsing
+    const url = new URL(req.url);
+    const pathSegments = url.pathname.split("/");
+    const projectId = pathSegments[3]; // /api/projects/[id]/presence
 
-    const sessions = await prisma.presenceSession.findMany({
-      where: { projectId },
-      include: {
-        user: { select: { id: true, name: true, avatarUrl: true } },
+    if (!projectId) {
+      return sendError("Missing project ID", "BAD_REQUEST", 400);
+    }
+
+    // Check access level
+    const member = await prisma.projectMember.findFirst({
+      where: {
+        userId: user.id,
+        projectId,
+        status: "ACCEPTED",
       },
-      orderBy: { lastActive: "desc" },
     });
 
-    const formatted = sessions.map((s) => ({
-      userId: s.userId,
-      name: s.user.name,
-      avatarUrl: s.user.avatarUrl,
-      status: s.status,
-      totalActiveMinutes: s.totalActiveMinutes || 0,
-      lastActive: s.lastActive,
-    }));
+    if (!member) {
+      return sendError("Not authorized for this project", "FORBIDDEN", 403);
+    }
 
-    return sendSuccess(formatted, "Presence data fetched successfully");
-  } catch (error: any) {
-    console.error("Error fetching presence data:", error);
-    return sendError(error.message, "FETCH_PRESENCE_ERROR", 500, error);
+    // Build presence snapshot
+    const presence = await getPresenceSnapshot(projectId);
+
+    return sendSuccess(presence, "Presence loaded");
+  } catch (err) {
+    console.error("Presence fetch error:", err);
+    return sendError("Presence fetch failed", "FETCH_ERROR", 500, err);
   }
-}
+});

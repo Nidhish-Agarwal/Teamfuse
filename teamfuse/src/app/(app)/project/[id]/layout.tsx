@@ -1,15 +1,39 @@
+import Sidebar from "@/components/project/Sidebar";
 import PresenceWidget from "@/components/project/PresenceWidget";
-import ProjectSidebar from "@/components/project/ProjectSidebar";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
+import { redirect } from "next/navigation";
 
-export default function ProjectLayout({ children }: { children: React.ReactNode }) {
+interface LayoutProps {
+  children: React.ReactNode;
+  params: Promise<{ id: string }>;
+}
+
+export default async function ProjectLayout({ children, params }: LayoutProps) {
+  // ✅ Properly await the params Promise
+  const { id: projectId } = await params;
+
+  const session = await getServerSession(authOptions);
+
+  // Redirect if no session
+  if (!session?.user) {
+    redirect("/auth/signin");
+  }
+
   return (
     <div className="flex h-screen bg-gray-950 text-white">
-      <ProjectSidebar />
-      <div className="flex-1 overflow-y-auto p-6">{children}</div>
+      {/* LEFT SIDEBAR */}
+      <Sidebar projectId={projectId} />
 
-      {/* Presence Widget in right sidebar */}
-      <aside className="hidden lg:block w-72 border-l border-gray-800 p-6">
-        <PresenceWidget projectId={"replace-with-dynamic-id"} />
+      {/* MAIN CONTENT */}
+      <main className="flex-1 overflow-auto">{children}</main>
+
+      {/* RIGHT PRESENCE SIDEBAR */}
+      <aside className="hidden xl:block w-80 border-l border-gray-800 p-4 overflow-y-auto">
+        <PresenceWidget
+          projectId={projectId}
+          currentUserId={session.user.id ?? null}
+        />
       </aside>
     </div>
   );

@@ -1,70 +1,115 @@
-// src/lib/socketServer.ts
-import { Server } from "socket.io";
-import { prisma } from "./prisma";
+import { Server, Socket } from "socket.io";
+import {
+  logStartSession,
+  logEndSession,
+  updateStatus,
+} from "./presence/logPresence";
+import { prisma } from "@/lib/prisma";
 
-let io: Server | null = null;
+interface JoinPayload {
+  projectId: string;
+  userId: string;
+}
 
-export function initSocket(server: any) {
-  if (io) return io; // already initialized
+export function socketServer(io: Server) {
+  io.on("connection", (socket: Socket) => {
+    let currentProjectId: string | null = null;
+    let currentUserId: string | null = null; // Session ID (GitHub OAuth ID)
+    let currentDbUserId: string | null = null; // Database UUID
 
-  io = new Server(server, {
-    cors: {
-      origin: "*",
-    },
-  });
+    let lastDbWrite = 0;
+    const INTERVAL = 30_000;
 
-  const activeUsers: Record<string, Set<string>> = {}; // projectId => Set<userId>
+    async function throttledWrite(status: string) {
+      if (status === "IDLE" || status === "FOCUSED") return;
 
-  io.on("connection", (socket) => {
-    socket.on("join_project", async ({ projectId, userId }) => {
+      const now = Date.now();
+      if (now - lastDbWrite < INTERVAL) return;
+
+      lastDbWrite = now;
+
+      if (currentDbUserId && currentProjectId) {
+        await updateStatus(currentDbUserId, currentProjectId, status);
+      }
+    }
+
+    async function endSession() {
+      if (!currentDbUserId || !currentProjectId) return;
+
+      await updateStatus(currentDbUserId, currentProjectId, "OFFLINE");
+      await logEndSession(currentDbUserId, currentProjectId);
+
+      // Emit to both user IDs for compatibility
+      io.to(currentProjectId).emit("presence_update", {
+        userId: currentDbUserId, // Database ID
+        originalUserId: currentUserId, // Session ID
+        projectId: currentProjectId,
+        status: "OFFLINE",
+      });
+    }
+
+    socket.on("join_project", async ({ projectId, userId }: JoinPayload) => {
+      currentProjectId = projectId;
+      currentUserId = userId;
+
       socket.join(projectId);
 
-      // Add user to active map
-      if (!activeUsers[projectId]) activeUsers[projectId] = new Set();
-      activeUsers[projectId].add(userId);
+      try {
+        // Find the actual database user using GitHub OAuth ID
+        const dbUser = await prisma.user.findFirst({
+          where: {
+            oauthId: userId, // Look for GitHub OAuth ID
+          },
+        });
 
-      await prisma.presenceSession.upsert({
-        where: {
-          userId_projectId: {
-            userId,
+        if (!dbUser) {
+          console.log(`User with oauthId ${userId} not found in database`);
+          // Still allow realtime presence but don't save to database
+          io.to(projectId).emit("presence_update", {
+            userId: userId, // Use session ID for realtime
             projectId,
-          } as any,
-        },
-        update: { status: "ONLINE", lastActive: new Date() },
-        create: { userId, projectId, status: "ONLINE" },
-      });
+            status: "ONLINE",
+          });
+          return;
+        }
 
-      io.to(projectId).emit("presence_update", {
-        projectId,
-        userId,
-        status: "ONLINE",
-        activeCount: activeUsers[projectId].size,
-      });
+        // Store the actual database user ID
+        currentDbUserId = dbUser.id;
+
+        await logStartSession(currentDbUserId, projectId);
+        await updateStatus(currentDbUserId, projectId, "ONLINE");
+
+        // Emit with both IDs for compatibility
+        io.to(projectId).emit("presence_update", {
+          userId: currentDbUserId, // Database ID for API consistency
+          originalUserId: userId, // Session ID for realtime matching
+          projectId,
+          status: "ONLINE",
+        });
+      } catch (error) {
+        console.error("Error joining project:", error);
+        // Fallback: use session ID for realtime presence
+        io.to(projectId).emit("presence_update", {
+          userId,
+          projectId,
+          status: "ONLINE",
+        });
+      }
     });
 
     socket.on("status_update", async ({ projectId, userId, status }) => {
-      await prisma.presenceSession.updateMany({
-        where: { userId, projectId, endedAt: null },
-        data: { status, lastActive: new Date() },
-      });
-      io.to(projectId).emit("presence_update", { userId, status });
-    });
-
-    socket.on("leave_project", async ({ projectId, userId }) => {
-      if (activeUsers[projectId]) activeUsers[projectId].delete(userId);
-
-      await prisma.presenceSession.updateMany({
-        where: { userId, projectId, endedAt: null },
-        data: { status: "OFFLINE", endedAt: new Date() },
-      });
-
+      // Emit to both possible user IDs for compatibility
       io.to(projectId).emit("presence_update", {
         userId,
-        status: "OFFLINE",
-        activeCount: activeUsers[projectId]?.size || 0,
+        originalUserId: userId,
+        projectId,
+        status,
       });
-    });
-  });
 
-  return io;
+      throttledWrite(status);
+    });
+
+    socket.on("leave_project", endSession);
+    socket.on("disconnect", endSession);
+  });
 }

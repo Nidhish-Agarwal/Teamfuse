@@ -8,6 +8,7 @@ import { sendSuccess, sendError } from "@/lib/responseHandler";
 import { withAuth } from "@/lib/withAuth";
 import { getGitHubToken } from "@/lib/github/getGitHubToken";
 import { handleRouteError } from "@/lib/errors/handleRouteError";
+import { prisma } from "@/lib/prisma";
 
 export const POST = withAuth(async (req, user) => {
   try {
@@ -35,7 +36,11 @@ export const POST = withAuth(async (req, user) => {
     // 4. Prevent duplicate use
     const exists = await isRepoLinked(githubRepo);
     if (exists) {
-      return sendError("This repository is already linked to another project.");
+      return sendError(
+        "This repository is already linked to another project.",
+        "DUPLICATE_REPO",
+        409
+      );
     }
 
     // 5. Create project
@@ -48,6 +53,41 @@ export const POST = withAuth(async (req, user) => {
 
     return sendSuccess(project, "Project created successfully", 201);
   } catch (err) {
+    console.log("Error in POST /api/projects:", err);
+    return handleRouteError(err);
+  }
+});
+
+export const GET = withAuth(async (req, user) => {
+  try {
+    // Fetch all projects where user is a member
+    const accepted = await prisma.project.findMany({
+      where: {
+        members: {
+          some: { userId: user.id, status: "ACCEPTED" },
+        },
+      },
+    });
+    const pending = await prisma.project.findMany({
+      where: {
+        members: {
+          some: { userId: user.id, status: "PENDING" },
+        },
+      },
+      include: {
+        createdBy: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            avatarUrl: true,
+          },
+        },
+      },
+    });
+    return sendSuccess({ accepted, pending }, "Projects fetched successfully");
+  } catch (err) {
+    console.log("Error in GET /api/projects:", err);
     return handleRouteError(err);
   }
 });
