@@ -298,7 +298,7 @@ const config = {
     },
     output: {
       value:
-        "D:\\Kalvium project\\S62-1125-Cognifuse-Full-Stack-With-NextjsAnd-AWS-Azure-TeamFuse\\teamfuse\\src\\generated\\prisma",
+        "C:\\Users\\adrin_lvogr7j\\Downloads\\S62_Teamfuse\\S62-1125-Cognifuse-Full-Stack-With-NextjsAnd-AWS-Azure-TeamFuse\\teamfuse\\src\\generated\\prisma",
       fromEnvVar: null,
     },
     config: {
@@ -317,18 +317,18 @@ const config = {
     ],
     previewFeatures: [],
     sourceFilePath:
-      "D:\\Kalvium project\\S62-1125-Cognifuse-Full-Stack-With-NextjsAnd-AWS-Azure-TeamFuse\\teamfuse\\prisma\\schema.prisma",
+      "C:\\Users\\adrin_lvogr7j\\Downloads\\S62_Teamfuse\\S62-1125-Cognifuse-Full-Stack-With-NextjsAnd-AWS-Azure-TeamFuse\\teamfuse\\prisma\\schema.prisma",
     isCustomOutput: true,
   },
   relativeEnvPaths: {
     rootEnvPath: null,
-    schemaEnvPath: "../../../prisma/.env",
   },
   relativePath: "../../../prisma",
   clientVersion: "6.18.0",
   engineVersion: "34b5a692b7bd79939a9a2c3ef97d816e749cda2f",
   datasourceNames: ["db"],
   activeProvider: "postgresql",
+  postinstall: false,
   inlineDatasources: {
     db: {
       url: {
