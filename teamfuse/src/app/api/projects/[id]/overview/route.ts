@@ -1,71 +1,109 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { withAuth } from "@/lib/withAuth";
 import { sendSuccess, sendError } from "@/lib/responseHandler";
 
-export async function GET(_: Request, context: { params: Promise<{ id: string }> }) {
-  const { id } = await context.params;
-
+export const GET = withAuth(async (req: NextRequest, user) => {
   try {
+    const projectId = req.url.split("/").at(-2);
+
+    if (!projectId) {
+      return sendError("Missing project ID", "BAD_REQUEST", 400);
+    }
+
+    const membership = await prisma.projectMember.findFirst({
+      where: {
+        userId: user.id,
+        projectId,
+        status: "ACCEPTED",
+      },
+    });
+
+    if (!membership) {
+      return sendError("Not authorized for this project", "FORBIDDEN", 403);
+    }
+
     const project = await prisma.project.findUnique({
-      where: { id },
+      where: { id: projectId },
       include: {
-        createdBy: { select: { id: true, name: true, email: true } },
         members: {
           include: {
             user: {
               select: {
                 id: true,
                 name: true,
-                role: true,
+                email: true,
                 avatarUrl: true,
-                githubProfile: { select: { commits: true } },
-                googleProfile: { select: { editsCount: true } },
-                messages: { where: { projectId: id }, select: { id: true } },
-                tasksAssigned: { select: { id: true, status: true } },
               },
             },
           },
         },
         tasks: true,
-        messages: true,
+        chatMessages: true,
+        githubData: { orderBy: { weekStart: "desc" }, take: 1 },
+        insights: { orderBy: { generatedAt: "desc" }, take: 1 },
       },
     });
 
-    if (!project) return sendError("Project not found", "NOT_FOUND", 404);
+    if (!project) {
+      return sendError("Project not found", "NOT_FOUND", 404);
+    }
 
-    const totalCommits = project.members.reduce(
-      (s, m) => s + (m.user.githubProfile?.commits || 0),
-      0
-    );
-    const activeTasks = project.tasks.filter((t) => t.status !== "COMPLETED").length;
-    const totalMessages = project.messages.length;
-
-    const overview = {
-      id: project.id,
-      name: project.name,
-      description: project.description,
-      githubRepo: project.description?.includes("github.com")
-        ? project.description
-        : "https://github.com/org/repo", // placeholder
-      updatedAt: project.messages[0]?.createdAt || project.createdAt,
-      stats: {
-        totalCommits,
-        activeTasks,
-        totalMessages,
-        lastUpdated: project.messages[0]?.createdAt || project.createdAt,
-      },
-      members: project.members.map((m) => ({
-        name: m.user.name,
-        role: m.role,
-        commits: m.user.githubProfile?.commits || 0,
-        tasks: m.user.tasksAssigned.length,
-        messages: m.user.messages.length,
-      })),
+    const taskSummary = {
+      total: project.tasks.length,
+      todo: project.tasks.filter((t) => t.status === "PENDING").length,
+      inProgress: project.tasks.filter((t) => t.status === "IN_PROGRESS")
+        .length,
+      completed: project.tasks.filter((t) => t.status === "COMPLETED").length,
     };
 
-    return sendSuccess(overview, "Overview data fetched");
-  } catch (error: any) {
-    console.error("Overview API error:", error);
-    return sendError(error.message, "FETCH_OVERVIEW_ERROR", 500, error);
+    const githubSummary = project.githubData[0] ?? {
+      commitCount: 0,
+      prCount: 0,
+      linesAdded: 0,
+      linesDeleted: 0,
+    };
+
+    const latestInsight = project.insights[0] ?? null;
+
+    return sendSuccess(
+      {
+        project: {
+          id: project.id,
+          name: project.name,
+          description: project.description,
+          githubRepo: project.githubRepo,
+          updatedAt: project.lastActive ?? project.createdAt,
+          createdById: project.createdById,
+        },
+
+        members: project.members.map((m) => ({
+          memberId: m.id,
+          userId: m.user.id,
+          name: m.user.name,
+          email: m.user.email,
+          avatarUrl: m.user.avatarUrl,
+          role: m.role,
+          status: m.status,
+        })),
+
+        stats: {
+          tasks: taskSummary,
+          github: githubSummary,
+          messages: project.chatMessages.length,
+        },
+
+        latestInsight,
+      },
+      "Overview data loaded"
+    );
+  } catch (err) {
+    console.error("Error fetching overview:", err);
+    return sendError(
+      "Server error fetching overview",
+      "INTERNAL_ERROR",
+      500,
+      err
+    );
   }
-}
+});
