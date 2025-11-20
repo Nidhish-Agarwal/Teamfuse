@@ -123,20 +123,25 @@ export default function TeamFuseDashboard() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* Top Navbar */}
+    <div className="min-h-screen relative bg-gradient-to-b from-[#0f111a] via-[#141620] to-[#1a1c25] text-white overflow-hidden">
+      
+      {/* Background glowing blobs */}
+      <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-purple-600/20 blur-[120px] rounded-full"></div>
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-indigo-600/20 blur-[100px] rounded-full"></div>
+
+      {/* Navigation */}
       <DashboardNavBar />
 
       <div className="flex">
-        {/* Left Sidebar */}
-        <aside className="w-80 bg-white border-r border-slate-200 p-6 min-h-[calc(100vh-73px)]">
+        {/* Sidebar */}
+        <aside className="w-80 bg-white/5 backdrop-blur-xl border-r border-white/10 p-6 min-h-[calc(100vh-73px)]">
           <div className="space-y-6">
             {/* Quick Stats */}
             <DashboardStats mockProjects={mockProjects} />
 
             {/* Recent Activity */}
             <div>
-              <h2 className="text-lg font-semibold text-slate-900 mb-4">
+              <h2 className="text-lg font-semibold text-indigo-300 mb-3">
                 Recent Activity
               </h2>
               <div className="space-y-3">
@@ -148,76 +153,69 @@ export default function TeamFuseDashboard() {
           </div>
         </aside>
 
-        {/* Main Content */}
-        <main className="flex-1 p-8">
-          <div className="max-w-7xl mx-auto">
+        {/* MAIN CONTENT */}
+        <main className="flex-1 p-10">
+          <div className="max-w-7xl mx-auto space-y-10">
+            
             {/* Header */}
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex justify-between items-center">
               <div>
-                <h1 className="text-3xl font-bold text-slate-900">
+                <h1 className="text-4xl font-extrabold bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-300 bg-clip-text text-transparent">
                   My Projects
                 </h1>
-                <p className="text-slate-600 mt-1">
+                <p className="text-gray-400 mt-1">
                   Manage and track all your team projects
                 </p>
               </div>
-              <Dialog
-                open={isCreateModalOpen}
-                onOpenChange={setIsCreateModalOpen}
-              >
+
+              {/* New Project Button */}
+              <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
                 <DialogTrigger asChild>
-                  <Button className="bg-blue-600 hover:bg-blue-700">
+                  <Button className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 shadow-lg shadow-indigo-500/30">
                     <Plus className="h-4 w-4 mr-2" />
                     New Project
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[500px]">
+
+                {/* Modal */}
+                <DialogContent className="sm:max-w-[500px] bg-[#10121c] text-white border border-white/10 backdrop-blur-xl">
                   <DialogHeader>
-                    <DialogTitle>Create New Project</DialogTitle>
-                    <DialogDescription>
+                    <DialogTitle className="text-xl font-bold text-indigo-300">
+                      Create New Project
+                    </DialogTitle>
+                    <DialogDescription className="text-gray-400">
                       Set up a new project and invite your team members
                     </DialogDescription>
                   </DialogHeader>
+
                   <div className="space-y-4 py-4">
-                    <div className="space-y-2">
+                    <div>
                       <Label htmlFor="name">Project Name</Label>
-                      <Input id="name" placeholder="Enter project name" />
+                      <Input id="name" className="bg-white/5 border-white/10 text-white" />
                     </div>
-                    <div className="space-y-2">
+
+                    <div>
                       <Label htmlFor="description">Description</Label>
-                      <Textarea
-                        id="description"
-                        placeholder="Describe your project"
-                      />
+                      <Textarea id="description" className="bg-white/5 border-white/10 text-white" />
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="repo">
-                        GitHub Repository URL (Optional)
-                      </Label>
-                      <Input
-                        id="repo"
-                        placeholder="https://github.com/username/repo"
-                      />
+
+                    <div>
+                      <Label htmlFor="repo">GitHub Repository URL</Label>
+                      <Input id="repo" className="bg-white/5 border-white/10 text-white" />
                     </div>
-                    <div className="space-y-2">
+
+                    <div>
                       <Label htmlFor="members">Invite Team Members</Label>
-                      <Input
-                        id="members"
-                        placeholder="Enter email or GitHub username"
-                      />
+                      <Input id="members" className="bg-white/5 border-white/10 text-white" />
                     </div>
                   </div>
+
+                  {/* Modal Footer */}
                   <div className="flex justify-end gap-3">
-                    <Button
-                      variant="outline"
-                      onClick={() => setIsCreateModalOpen(false)}
-                    >
+                    <Button variant="outline" className="border-white/20 text-white" onClick={() => setIsCreateModalOpen(false)}>
                       Cancel
                     </Button>
-                    <Button
-                      className="bg-blue-600 hover:bg-blue-700"
-                      onClick={() => setIsCreateModalOpen(false)}
-                    >
+                    <Button className="bg-gradient-to-r from-indigo-500 to-purple-600">
                       Create Project
                     </Button>
                   </div>
@@ -225,36 +223,44 @@ export default function TeamFuseDashboard() {
               </Dialog>
             </div>
 
-            {/* Filters and Search */}
-            <div className="flex items-center gap-4 mb-6">
+            {/* Search & Filters */}
+            <div className="flex items-center gap-4">
               <div className="relative flex-1 max-w-md">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
                   placeholder="Search projects..."
-                  className="pl-10"
+                  className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-gray-400"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
-              <div className="flex items-center gap-2">
-                <Filter className="h-4 w-4 text-slate-600" />
+
+              {/* Filters */}
+              <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-xl backdrop-blur-md">
+                <Filter className="h-4 w-4 text-indigo-300" />
+
                 <Button
                   variant={filterStatus === "all" ? "default" : "outline"}
                   size="sm"
+                  className={filterStatus === "all" ? "bg-indigo-500 text-white" : "border-white/10 text-gray-300"}
                   onClick={() => setFilterStatus("all")}
                 >
                   All
                 </Button>
+
                 <Button
                   variant={filterStatus === "active" ? "default" : "outline"}
                   size="sm"
+                  className={filterStatus === "active" ? "bg-indigo-500 text-white" : "border-white/10 text-gray-300"}
                   onClick={() => setFilterStatus("active")}
                 >
                   Active
                 </Button>
+
                 <Button
                   variant={filterStatus === "completed" ? "default" : "outline"}
                   size="sm"
+                  className={filterStatus === "completed" ? "bg-indigo-500 text-white" : "border-white/10 text-gray-300"}
                   onClick={() => setFilterStatus("completed")}
                 >
                   Completed
@@ -263,15 +269,16 @@ export default function TeamFuseDashboard() {
             </div>
 
             {/* Projects Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredProjects.map((project) => (
                 <ProjectCard key={project.id} project={project} />
               ))}
             </div>
 
+            {/* If no results */}
             {filteredProjects.length === 0 && (
-              <div className="text-center py-12">
-                <p className="text-slate-600">
+              <div className="text-center py-20">
+                <p className="text-gray-400 text-lg">
                   No projects found matching your criteria.
                 </p>
               </div>

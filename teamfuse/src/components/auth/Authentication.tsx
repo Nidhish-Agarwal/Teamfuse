@@ -10,73 +10,60 @@ function Authentication() {
   const { data: session } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
-  console.log("Session data:", session);
 
   const handleLogin = () => {
     setIsLoading(true);
-    try {
-      signIn("github", {
-        callbackUrl: searchParams.get("from") || "/dashboard",
-      });
-    } catch (error) {
-      console.error("Error during sign in:", error);
-    }
+    signIn("github", {
+      callbackUrl: searchParams.get("from") || "/dashboard",
+    });
   };
 
   const handleLogout = async () => {
     setIsLoading(true);
-    try {
-      await fetch("/api/auth/logout", { method: "POST" });
-      signOut();
-      router.replace("/");
-    } catch (error) {
-      console.error("Error during sign out:", error);
-    }
+    await fetch("/api/auth/logout", { method: "POST" });
+    signOut();
+    router.replace("/");
   };
 
-  if (session) {
-    return (
-      <Button
-        onClick={handleLogout}
-        disabled={isLoading}
-        className="w-full h-12 text-base bg-slate-900 hover:bg-slate-800 transition-all"
-        size="lg"
-      >
-        {isLoading ? (
-          <div className="flex items-center gap-2">
-            <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-            <span>Signing Out...</span>
-          </div>
-        ) : (
-          <div className="flex items-center gap-3">
-            <Github className="h-5 w-5" />
-            <span>Sign Out</span>
-          </div>
-        )}
-      </Button>
-    );
-  } else {
-    return (
-      <Button
-        onClick={handleLogin}
-        disabled={isLoading}
-        className="w-full h-12 text-base bg-slate-900 hover:bg-slate-800 transition-all"
-        size="lg"
-      >
-        {isLoading ? (
-          <div className="flex items-center gap-2">
-            <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-            <span>Connecting...</span>
-          </div>
-        ) : (
-          <div className="flex items-center gap-3">
-            <Github className="h-5 w-5" />
-            <span>Continue with GitHub</span>
-          </div>
-        )}
-      </Button>
-    );
-  }
+  const LoadingSpinner = (
+    <div className="flex items-center gap-2">
+      <div className="h-4 w-4 border-2 border-white/80 border-t-transparent rounded-full animate-spin" />
+      <span className="text-white/90">Please wait...</span>
+    </div>
+  );
+
+  return (
+    <Button
+      onClick={session ? handleLogout : handleLogin}
+      disabled={isLoading}
+      className="
+        w-full 
+        h-12 
+        text-base 
+        rounded-xl
+        transition-all 
+        flex items-center justify-center gap-3 
+        font-semibold
+        shadow-lg shadow-indigo-500/20
+        bg-gradient-to-r from-indigo-600 to-purple-600
+        hover:from-indigo-500 hover:to-purple-500 
+        hover:shadow-indigo-500/40
+        disabled:opacity-50 disabled:cursor-not-allowed
+      "
+      size="lg"
+    >
+      {isLoading ? (
+        LoadingSpinner
+      ) : (
+        <>
+          <Github className="h-5 w-5 text-white" />
+          <span className="text-white">
+            {session ? "Sign Out" : "Continue with GitHub"}
+          </span>
+        </>
+      )}
+    </Button>
+  );
 }
 
 export default Authentication;

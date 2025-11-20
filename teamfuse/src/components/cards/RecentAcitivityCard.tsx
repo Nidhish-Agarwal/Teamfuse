@@ -3,15 +3,42 @@ import { Activity } from "lucide-react";
 
 function RecentAcitivityCard({ activity }: { activity: RecentActivityType }) {
   return (
-    <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-slate-50">
-      <div className="p-1.5 bg-slate-100 rounded-full mt-0.5">
-        <Activity className="h-3 w-3 text-slate-600" />
+    <div
+      className="
+        flex items-start gap-3 
+        p-3 
+        rounded-xl 
+        backdrop-blur-md 
+        bg-white/5 
+        border border-white/10 
+        hover:bg-white/10 
+        transition 
+        shadow-md shadow-black/10
+      "
+    >
+      {/* Icon Circle */}
+      <div
+        className="
+          p-2 
+          rounded-full 
+          bg-gradient-to-br 
+          from-indigo-500/40 
+          to-purple-600/40 
+          shadow-md 
+          shadow-indigo-500/20
+        "
+      >
+        <Activity className="h-4 w-4 text-indigo-300" />
       </div>
+
+      {/* Text */}
       <div className="flex-1 min-w-0">
-        <p className="text-sm text-slate-900">
-          <span className="font-medium">{activity.user}</span> {activity.action}
+        <p className="text-sm text-gray-200">
+          <span className="font-semibold text-white">{activity.user}</span>{" "}
+          <span className="text-gray-300">{activity.action}</span>
         </p>
-        <p className="text-xs text-slate-500 mt-0.5">{activity.time}</p>
+
+        <p className="text-xs text-gray-500 mt-1">{activity.time}</p>
       </div>
     </div>
   );

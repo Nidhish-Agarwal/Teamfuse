@@ -18,41 +18,82 @@ function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Card
       key={project.id}
-      className="hover:shadow-lg transition-shadow cursor-pointer"
+      className="
+        cursor-pointer 
+        transition-all 
+        backdrop-blur-xl 
+        bg-white/5 
+        border border-white/10 
+        hover:bg-white/10 
+        rounded-2xl 
+        shadow-lg shadow-black/30
+      "
     >
       <CardHeader>
         <div className="flex items-start justify-between">
           <div>
-            <CardTitle className="text-xl">{project.name}</CardTitle>
+            <CardTitle className="text-xl font-bold text-white drop-shadow-sm">
+              {project.name}
+            </CardTitle>
+
             <div className="flex items-center gap-2 mt-2">
               <Badge
-                variant={project.role === "Leader" ? "default" : "secondary"}
+                variant="outline"
+                className="
+                  text-xs 
+                  px-2 
+                  py-1
+                  border-indigo-400/40 
+                  text-indigo-300 
+                  bg-indigo-500/10 
+                "
               >
                 {project.role}
               </Badge>
-              <Badge variant="outline" className="text-xs">
+
+              <Badge
+                variant="outline"
+                className="
+                  text-xs 
+                  px-2 
+                  py-1
+                  border-purple-400/40 
+                  text-purple-300 
+                  bg-purple-500/10
+                "
+              >
                 {project.status}
               </Badge>
             </div>
           </div>
         </div>
-        <CardDescription className="mt-2">
+
+        <CardDescription className="mt-2 text-gray-400 text-sm">
           Last active: {project.lastActive}
         </CardDescription>
       </CardHeader>
+
       <CardContent>
         <div className="space-y-4">
           {/* Progress Bar */}
           <div>
             <div className="flex items-center justify-between text-sm mb-2">
-              <span className="text-slate-600">Tasks Completed</span>
-              <span className="font-semibold text-slate-900">
+              <span className="text-gray-400">Tasks Completed</span>
+              <span className="font-semibold text-indigo-300">
                 {project.tasksCompleted}%
               </span>
             </div>
-            <div className="w-full bg-slate-200 rounded-full h-2">
+
+            <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
               <div
-                className="bg-blue-600 h-2 rounded-full transition-all"
+                className="
+                  h-2 
+                  rounded-full 
+                  bg-gradient-to-r 
+                  from-indigo-400 
+                  via-purple-400 
+                  to-pink-400
+                "
                 style={{ width: `${project.tasksCompleted}%` }}
               />
             </div>
@@ -60,17 +101,30 @@ function ProjectCard({ project }: ProjectCardProps) {
 
           {/* Stats Row */}
           <div className="flex items-center justify-between text-sm">
-            <div className="flex items-center gap-1.5">
-              <GitCommit className="h-4 w-4 text-slate-500" />
-              <span className="text-slate-600">{project.commits} commits</span>
+            <div className="flex items-center gap-1.5 text-gray-400">
+              <GitCommit className="h-4 w-4 text-indigo-300" />
+              <span>{project.commits} commits</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <MessageSquare className="h-4 w-4 text-slate-500" />
-              <span className="text-slate-600">{project.lastMessage}</span>
+
+            <div className="flex items-center gap-1.5 text-gray-400">
+              <MessageSquare className="h-4 w-4 text-purple-300" />
+              <span>{project.lastMessage}</span>
             </div>
           </div>
 
-          <Button className="w-full" variant="outline">
+          <Button
+            className="
+              w-full 
+              bg-gradient-to-r 
+              from-indigo-500 
+              to-purple-600 
+              hover:from-indigo-400 
+              hover:to-purple-500
+              text-white 
+              shadow-md 
+              shadow-indigo-500/20
+            "
+          >
             Open Project
           </Button>
         </div>

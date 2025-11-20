@@ -1,48 +1,44 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 
-import { Code2, ListTodo, MessageCircle } from "lucide-react";
+import { GitCommit, ListChecks, MessageSquare } from "lucide-react";
 
-export default function QuickStats({ stats }: { stats: any }) {
-  if (!stats) return null;
-
-  const { tasks, github, messages } = stats;
+export default function QuickStats({ stats }: any) {
+  const items = [
+    {
+      icon: GitCommit,
+      label: "Total Commits",
+      value: stats.totalCommits,
+      color: "text-indigo-400",
+    },
+    {
+      icon: ListChecks,
+      label: "Active Tasks",
+      value: stats.activeTasks,
+      color: "text-purple-400",
+    },
+    {
+      icon: MessageSquare,
+      label: "Messages Sent",
+      value: stats.messages,
+      color: "text-pink-400",
+    },
+  ];
 
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {/* === Tasks === */}
-      <div className="p-5 bg-gray-900 rounded-xl border border-gray-800 flex items-center gap-4">
-        <div className="p-3 bg-blue-600/20 rounded-lg">
-          <ListTodo className="w-6 h-6 text-blue-400" />
-        </div>
-        <div>
-          <p className="text-gray-400 text-sm">Active Tasks</p>
-          <h2 className="text-2xl font-bold text-white">{tasks?.total ?? 0}</h2>
-        </div>
-      </div>
-
-      {/* === Commits === */}
-      <div className="p-5 bg-gray-900 rounded-xl border border-gray-800 flex items-center gap-4">
-        <div className="p-3 bg-green-600/20 rounded-lg">
-          <Code2 className="w-6 h-6 text-green-400" />
-        </div>
-        <div>
-          <p className="text-gray-400 text-sm">Commits</p>
-          <h2 className="text-2xl font-bold text-white">
-            {github?.commitCount ?? 0}
-          </h2>
-        </div>
-      </div>
-
-      {/* === Messages === */}
-      <div className="p-5 bg-gray-900 rounded-xl border border-gray-800 flex items-center gap-4">
-        <div className="p-3 bg-purple-600/20 rounded-lg">
-          <MessageCircle className="w-6 h-6 text-purple-400" />
-        </div>
-        <div>
-          <p className="text-gray-400 text-sm">Messages Sent</p>
-          <h2 className="text-2xl font-bold text-white">{messages ?? 0}</h2>
-        </div>
-      </div>
-    </section>
+    <div className="grid md:grid-cols-3 gap-6">
+      {items.map((i, index) => {
+        const Icon = i.icon;
+        return (
+          <div
+            key={index}
+            className="p-6 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-xl shadow shadow-indigo-500/10 flex flex-col gap-2"
+          >
+            <Icon className={`h-6 w-6 ${i.color}`} />
+            <p className="text-sm text-gray-400">{i.label}</p>
+            <p className="text-3xl font-bold text-white">{i.value}</p>
+          </div>
+        );
+      })}
+    </div>
   );
 }
