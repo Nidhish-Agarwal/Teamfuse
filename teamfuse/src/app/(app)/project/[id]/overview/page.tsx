@@ -2,71 +2,46 @@ import ProjectHeader from "@/components/project/overview/ProjectHeader";
 import TeamMembers from "@/components/project/overview/TeamMembers";
 import QuickStats from "@/components/project/overview/QuickStats";
 import AISummary from "@/components/project/overview/AISummary";
-import { prisma } from "@/lib/prisma";
+import { getProjectById } from "@/lib/services/projectServices";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
-import { cookies } from "next/headers";
-import { verifyAccess } from "@/lib/auth-tokens";
 
-interface OverviewProps {
+export default async function OverviewTab({
+  params,
+}: {
   params: Promise<{ id: string }>;
-}
+}) {
+  const session = await getServerSession(authOptions);
+  const { id } = await params;
 
-export default async function OverviewTab({ params }: OverviewProps) {
-  const { id } = await params; // <-- FIXED
+  const currentUserId = session?.user?.id;
 
-  // Session will be null for a split second before refresh resolves
-  // const session = await getServerSession(authOptions);
-  const cookieStore = await cookies();
-  const accesstoken = cookieStore.get("access_token")?.value;
-  const { payload } = await verifyAccess(accesstoken);
+  console.log("Current User ID:", currentUserId);
 
-  const currentUserId = payload.sub;
-
-  // Do NOT throw — allow refresh token to complete
+  // 2. No session or missing user ID
   if (!currentUserId) {
-    return <div className="text-white p-6">Loading...</div>;
+    return <div className="text-white p-6">Unauthorized</div>;
   }
 
-  const project = await prisma.project.findUnique({
-    where: { id },
-    include: {
-      members: {
-        include: {
-          user: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-              avatarUrl: true,
-            },
-          },
-        },
-      },
-      tasks: true,
-      chatMessages: true,
-      githubData: { orderBy: { weekStart: "desc" }, take: 1 },
-      insights: { orderBy: { generatedAt: "desc" }, take: 1 },
-    },
-  });
+  let project, taskSummary, githubSummary, latestInsight;
+  try {
+    ({ project, taskSummary, githubSummary, latestInsight } =
+      await getProjectById(id, currentUserId));
+  } catch {
+    return (
+      <div className="text-white p-6">
+        Project not found or you do not have access.
+      </div>
+    );
+  }
 
-  if (!project) throw new Error("Project not found");
-
-  const taskSummary = {
-    total: project.tasks.length,
-    todo: project.tasks.filter((t) => t.status === "PENDING").length,
-    inProgress: project.tasks.filter((t) => t.status === "IN_PROGRESS").length,
-    completed: project.tasks.filter((t) => t.status === "COMPLETED").length,
-  };
-
-  const githubSummary = project.githubData[0] ?? {
-    commitCount: 0,
-    prCount: 0,
-    linesAdded: 0,
-    linesDeleted: 0,
-  };
-
-  const latestInsight = project.insights[0] ?? null;
+  if (!project) {
+    return (
+      <div className="text-white p-6">
+        Project not found or you do not have access.
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -91,15 +66,15 @@ export default async function OverviewTab({ params }: OverviewProps) {
           role: m.role,
           status: m.status,
         }))}
-        projectId={id}
-        currentUserId={project.createdById}
+        projectId={id as string}
+        currentUserId={currentUserId}
       />
 
       <QuickStats
         stats={{
           tasks: taskSummary,
           github: githubSummary,
-          messages: project.chatMessages.length,
+          messages: project?.chatMessages?.length,
         }}
       />
 

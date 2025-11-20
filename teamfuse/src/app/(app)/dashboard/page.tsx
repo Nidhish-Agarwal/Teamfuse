@@ -20,6 +20,7 @@ import DashboardNavBar from "@/components/navigation/DashboardNavBar";
 import DashboardStats from "@/components/DashboardStats";
 import RecentAcitivityCard from "@/components/cards/RecentAcitivityCard";
 import RecentActivityType from "@/lib/interfaces/RecentActivityType";
+import { useSession } from "next-auth/react";
 
 // Mock Data
 const mockProjects: ProjectCardType[] = [
@@ -109,6 +110,8 @@ const recentActivity: RecentActivityType[] = [
 ];
 
 export default function TeamFuseDashboard() {
+  const session = useSession();
+  console.log("Dashboard session:", session?.data?.user);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [filterStatus, setFilterStatus] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");

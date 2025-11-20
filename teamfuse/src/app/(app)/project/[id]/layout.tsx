@@ -3,6 +3,9 @@ import PresenceWidget from "@/components/project/PresenceWidget";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { verifyAccess } from "@/lib/auth-tokens";
+import { useSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -11,22 +14,9 @@ interface LayoutProps {
 
 export default async function ProjectLayout({ children, params }: LayoutProps) {
   // ✅ Properly await the params Promise
-  const { id: projectId } = params;
-  const cookieStore = await cookies();
-
-  // const session = await getServerSession(authOptions);
-  const accessToken = cookieStore.get("access_token")?.value;
-  if (!accessToken) {
-    console.log("No access token found, redirecting to auth");
-    redirect("/auth");
-  }
-  const { payload } = await verifyAccess(accessToken);
-
-  // Redirect if no session
-  // if (!session?.user) {
-  //   console.log("No session found, redirecting to auth");
-  //   redirect("/auth");
-  // }
+  const { id: projectId } = await params;
+  const session = await getServerSession(authOptions);
+  const currentUserId = session?.user?.id;
 
   return (
     <div className="flex h-screen bg-gray-950 text-white">
@@ -38,7 +28,7 @@ export default async function ProjectLayout({ children, params }: LayoutProps) {
 
       {/* RIGHT PRESENCE SIDEBAR */}
       <aside className="hidden xl:block w-80 border-l border-gray-800 p-4 overflow-y-auto">
-        <PresenceWidget projectId={projectId} currentUserId={payload.sub!} />
+        <PresenceWidget projectId={projectId} currentUserId={currentUserId} />
       </aside>
     </div>
   );
