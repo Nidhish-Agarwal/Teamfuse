@@ -75,11 +75,7 @@ export default function LandingPage() {
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4">
             {[
-              {
-                value: "10k+",
-                label: "Active Teams",
-                color: "text-indigo-400",
-              },
+              { value: "10k+", label: "Active Teams", color: "text-indigo-400" },
               { value: "50k+", label: "Projects", color: "text-purple-400" },
               { value: "99%", label: "Uptime", color: "text-pink-400" },
             ].map((item, index) => (
@@ -87,7 +83,9 @@ export default function LandingPage() {
                 key={index}
                 className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-xl p-4 shadow-md hover:shadow-indigo-500/20 transition"
               >
-                <div className={`text-3xl font-bold ${item.color}`}>
+                <div
+                  className={`text-3xl font-bold ${item.color}`}
+                >
                   {item.value}
                 </div>
                 <div className="text-sm text-gray-400 mt-1">{item.label}</div>
