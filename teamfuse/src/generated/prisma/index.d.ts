@@ -165,7 +165,6 @@ export class PrismaClient<
     : never,
   ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
 > {
-  [x: string]: any;
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>["other"] };
 
   /**

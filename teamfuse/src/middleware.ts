@@ -70,5 +70,6 @@ export const config = {
     "/api/auth/sessions/:path*",
     "/dashboard/:path*",
     "/api/projects/:path*",
+    "/projects/:path*",
   ],
 };

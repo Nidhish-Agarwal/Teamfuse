@@ -3,6 +3,7 @@ import { withAuth } from "@/lib/withAuth";
 import { prisma } from "@/lib/prisma";
 import { sendSuccess, sendError } from "@/lib/responseHandler";
 import { getPresenceSnapshot } from "@/lib/presence/getPresence";
+import { handleRouteError } from "@/lib/errors/handleRouteError";
 
 export const GET = withAuth(async (req: NextRequest, user) => {
   try {
@@ -34,6 +35,7 @@ export const GET = withAuth(async (req: NextRequest, user) => {
     return sendSuccess(presence, "Presence loaded");
   } catch (err) {
     console.error("Presence fetch error:", err);
-    return sendError("Presence fetch failed", "FETCH_ERROR", 500, err);
+    return handleRouteError(err);
+    // return sendError("Presence fetch failed", "FETCH_ERROR", 500, err);
   }
 });
