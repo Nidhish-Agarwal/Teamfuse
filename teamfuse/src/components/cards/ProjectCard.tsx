@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import Button from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MessageSquare, GitCommit } from "lucide-react";
 import ProjectCardType from "@/lib/interfaces/ProjectCardType";
@@ -14,6 +14,7 @@ interface ProjectCardProps {
   project: ProjectCardType;
 }
 
+// this is a change
 function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Card
