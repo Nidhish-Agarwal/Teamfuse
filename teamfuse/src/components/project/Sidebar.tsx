@@ -3,37 +3,36 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export default function Sidebar({ projectId }: { projectId: string }) {
+const LINKS = [
+  { label: "Overview", path: "overview" },
+  { label: "Chat Space", path: "chat" },
+  { label: "Task Space", path: "tasks" },
+  { label: "GitHub Insights", path: "github" },
+  { label: "Team Performance", path: "team-performance" },
+  { label: "Peer Feedback", path: "feedback" },
+];
+
+export default function ProjectSidebar() {
   const pathname = usePathname();
 
-  const links = [
-    { label: "Overview", href: `/project/${projectId}/overview` },
-    { label: "Tasks", href: `/project/${projectId}/tasks` },
-    { label: "GitHub", href: `/project/${projectId}/github` },
-    { label: "Chat", href: `/project/${projectId}/chat` },
-    {
-      label: "Team Performance",
-      href: `/project/${projectId}/team-performance`,
-    },
-  ];
-
   return (
-    <aside className="w-64 border-r border-gray-800 p-6 hidden md:block">
-      <nav className="space-y-3">
-        {links.map(({ label, href }) => (
+    <aside className="w-64 h-full bg-white/5 border-r border-white/10 backdrop-blur-xl p-6 hidden lg:flex flex-col gap-1">
+      {LINKS.map((link) => {
+        const active = pathname.includes(link.path);
+        return (
           <Link
-            key={href}
-            href={href}
-            className={`block px-3 py-2 rounded transition-colors ${
-              pathname === href
-                ? "bg-gray-800 text-blue-400"
-                : "hover:bg-gray-800 hover:text-blue-400"
+            key={link.path}
+            href={pathname.replace(/(overview|chat|tasks|github|team-performance|feedback)/, link.path)}
+            className={`px-4 py-2 rounded-lg text-sm transition ${
+              active
+                ? "bg-indigo-600/30 text-white border border-indigo-500/50"
+                : "text-gray-300 hover:bg-white/10"
             }`}
           >
-            {label}
+            {link.label}
           </Link>
-        ))}
-      </nav>
+        );
+      })}
     </aside>
   );
 }
