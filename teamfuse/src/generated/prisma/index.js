@@ -300,7 +300,7 @@ const config = {
     },
     output: {
       value:
-        "C:\\Users\\adrin_lvogr7j\\Downloads\\S62_Teamfuse\\S62-1125-Cognifuse-Full-Stack-With-NextjsAnd-AWS-Azure-TeamFuse\\teamfuse\\src\\generated\\prisma",
+        "D:\\Kalvium project\\S62-1125-Cognifuse-Full-Stack-With-NextjsAnd-AWS-Azure-TeamFuse\\teamfuse\\src\\generated\\prisma",
       fromEnvVar: null,
     },
     config: {
@@ -319,11 +319,12 @@ const config = {
     ],
     previewFeatures: [],
     sourceFilePath:
-      "C:\\Users\\adrin_lvogr7j\\Downloads\\S62_Teamfuse\\S62-1125-Cognifuse-Full-Stack-With-NextjsAnd-AWS-Azure-TeamFuse\\teamfuse\\prisma\\schema.prisma",
+      "D:\\Kalvium project\\S62-1125-Cognifuse-Full-Stack-With-NextjsAnd-AWS-Azure-TeamFuse\\teamfuse\\prisma\\schema.prisma",
     isCustomOutput: true,
   },
   relativeEnvPaths: {
     rootEnvPath: null,
+    schemaEnvPath: "../../../prisma/.env",
   },
   relativePath: "../../../prisma",
   clientVersion: "6.18.0",

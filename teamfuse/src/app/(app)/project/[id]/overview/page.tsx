@@ -5,6 +5,8 @@ import AISummary from "@/components/project/overview/AISummary";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
+import { cookies } from "next/headers";
+import { verifyAccess } from "@/lib/auth-tokens";
 
 interface OverviewProps {
   params: Promise<{ id: string }>;
@@ -14,12 +16,12 @@ export default async function OverviewTab({ params }: OverviewProps) {
   const { id } = await params; // <-- FIXED
 
   // Session will be null for a split second before refresh resolves
-  const session = await getServerSession(authOptions);
+  // const session = await getServerSession(authOptions);
+  const cookieStore = await cookies();
+  const accesstoken = cookieStore.get("access_token")?.value;
+  const { payload } = await verifyAccess(accesstoken);
 
-  const currentUserId =
-    session && session.user && "id" in session.user
-      ? (session.user.id as string)
-      : null;
+  const currentUserId = payload.sub;
 
   // Do NOT throw — allow refresh token to complete
   if (!currentUserId) {
