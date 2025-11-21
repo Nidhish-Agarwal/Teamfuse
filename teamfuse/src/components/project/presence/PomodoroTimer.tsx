@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
+import { Timer, Play, Pause, RotateCcw } from "lucide-react";
 
 interface PomodoroProps {
   projectId: string;
@@ -28,11 +29,9 @@ export default function PomodoroTimer({ projectId, userId }: PomodoroProps) {
     socket.disconnect();
   }
 
-  // --- Controls ---
   const start = () => {
     if (running) return;
     setRunning(true);
-
     send(isBreak ? "IDLE" : "FOCUSED");
 
     ref.current = setInterval(() => {
@@ -52,14 +51,12 @@ export default function PomodoroTimer({ projectId, userId }: PomodoroProps) {
     setSeconds(FOCUS);
   };
 
-  // --- SAFE EFFECT FIX ---
   useEffect(() => {
     if (!running) return;
     if (seconds > 0) return;
 
     if (ref.current) clearInterval(ref.current);
 
-    // ❗ Wrap state updates inside a microtask to avoid ESLint error
     Promise.resolve().then(() => {
       setRunning(false);
 
@@ -83,45 +80,81 @@ export default function PomodoroTimer({ projectId, userId }: PomodoroProps) {
       "0"
     )}`;
 
+  const progress = isBreak
+    ? ((BREAK - seconds) / BREAK) * 100
+    : ((FOCUS - seconds) / FOCUS) * 100;
+
   return (
-    <div className="bg-gray-900 border border-gray-800 p-4 rounded-xl mt-4">
-      <h3 className="text-white text-sm font-semibold mb-2">Pomodoro Timer</h3>
-
-      <div className="text-center text-3xl text-white font-bold">
-        {fmt(seconds)}
+    <div className="p-5 rounded-2xl bg-gradient-to-br from-blue-900/20 via-gray-900/50 to-purple-900/20 border border-blue-500/20 backdrop-blur-sm">
+      <div className="flex items-center gap-2 mb-4">
+        <div className="p-1.5 bg-blue-500/20 rounded-lg border border-blue-500/30">
+          <Timer className="w-4 h-4 text-blue-400" />
+        </div>
+        <h3 className="text-white text-sm font-semibold">Pomodoro Timer</h3>
       </div>
-      <p className="text-xs text-gray-400 text-center mb-2">
-        {isBreak ? "Break" : "Focus"}
-      </p>
 
-      <div className="flex justify-center gap-2">
+      {/* Circular Progress */}
+      <div className="relative w-32 h-32 mx-auto mb-4">
+        <svg className="transform -rotate-90 w-32 h-32">
+          <circle
+            cx="64"
+            cy="64"
+            r="56"
+            stroke="currentColor"
+            strokeWidth="8"
+            fill="none"
+            className="text-gray-700"
+          />
+          <circle
+            cx="64"
+            cy="64"
+            r="56"
+            stroke="currentColor"
+            strokeWidth="8"
+            fill="none"
+            strokeDasharray={`${2 * Math.PI * 56}`}
+            strokeDashoffset={`${2 * Math.PI * 56 * (1 - progress / 100)}`}
+            className={isBreak ? "text-yellow-400" : "text-blue-400"}
+            strokeLinecap="round"
+          />
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <div className="text-3xl text-white font-bold">{fmt(seconds)}</div>
+          <p className="text-xs text-gray-400 mt-1">
+            {isBreak ? "Break Time" : "Focus Time"}
+          </p>
+        </div>
+      </div>
+
+      <div className="flex justify-center gap-2 mb-4">
         {!running ? (
           <button
             onClick={start}
-            className="bg-green-600 px-3 py-1 rounded text-white"
+            className="flex items-center gap-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 px-4 py-2 rounded-xl text-white font-medium transition-all shadow-lg shadow-green-500/25"
           >
-            Start
+            <Play className="w-4 h-4" /> Start
           </button>
         ) : (
           <button
             onClick={pause}
-            className="bg-yellow-600 px-3 py-1 rounded text-white"
+            className="flex items-center gap-2 bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-500 hover:to-orange-500 px-4 py-2 rounded-xl text-white font-medium transition-all shadow-lg shadow-yellow-500/25"
           >
-            Pause
+            <Pause className="w-4 h-4" /> Pause
           </button>
         )}
 
         <button
           onClick={reset}
-          className="bg-gray-700 px-3 py-1 rounded text-white"
+          className="flex items-center gap-2 bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-xl text-white font-medium transition-all border border-gray-600"
         >
-          Reset
+          <RotateCcw className="w-4 h-4" />
         </button>
       </div>
 
-      <p className="text-center text-xs text-gray-400 mt-2">
-        Pomodoros Today: <span className="text-white">{count}</span>
-      </p>
+      <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
+        <p className="text-xs text-gray-400">Pomodoros Today</p>
+        <p className="text-2xl font-bold text-white">{count}</p>
+      </div>
     </div>
   );
 }
