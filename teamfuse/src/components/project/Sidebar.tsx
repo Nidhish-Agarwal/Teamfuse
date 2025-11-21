@@ -2,37 +2,74 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import {
+  LayoutDashboard,
+  ListTodo,
+  Github,
+  MessageCircle,
+  Users,
+} from "lucide-react";
 
-const LINKS = [
-  { label: "Overview", path: "overview" },
-  { label: "Chat Space", path: "chat" },
-  { label: "Task Space", path: "tasks" },
-  { label: "GitHub Insights", path: "github" },
-  { label: "Team Performance", path: "team-performance" },
-  { label: "Peer Feedback", path: "feedback" },
-];
-
-export default function ProjectSidebar() {
+export default function Sidebar({ projectId }: { projectId: string }) {
   const pathname = usePathname();
 
+  const links = [
+    {
+      label: "Overview",
+      href: `/project/${projectId}/overview`,
+      icon: LayoutDashboard,
+    },
+    {
+      label: "Tasks",
+      href: `/project/${projectId}/tasks`,
+      icon: ListTodo,
+    },
+    {
+      label: "GitHub",
+      href: `/project/${projectId}/github`,
+      icon: Github,
+    },
+    {
+      label: "Chat",
+      href: `/project/${projectId}/chat`,
+      icon: MessageCircle,
+    },
+    {
+      label: "Team Performance",
+      href: `/project/${projectId}/team-performance`,
+      icon: Users,
+    },
+  ];
+
   return (
-    <aside className="w-64 h-full bg-white/5 border-r border-white/10 backdrop-blur-xl p-6 hidden lg:flex flex-col gap-1">
-      {LINKS.map((link) => {
-        const active = pathname.includes(link.path);
-        return (
-          <Link
-            key={link.path}
-            href={pathname.replace(/(overview|chat|tasks|github|team-performance|feedback)/, link.path)}
-            className={`px-4 py-2 rounded-lg text-sm transition ${
-              active
-                ? "bg-indigo-600/30 text-white border border-indigo-500/50"
-                : "text-gray-300 hover:bg-white/10"
-            }`}
-          >
-            {link.label}
-          </Link>
-        );
-      })}
+    <aside className="w-64 border-r border-gray-800/50 p-6 hidden md:block bg-gradient-to-b from-gray-900/50 to-gray-950/50 backdrop-blur-xl">
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+          Dashboard
+        </h2>
+      </div>
+
+      <nav className="space-y-2">
+        {links.map(({ label, href, icon: Icon }) => {
+          const isActive = pathname === href;
+          return (
+            <Link
+              key={href}
+              href={href}
+              className={`group flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                isActive
+                  ? "bg-gradient-to-r from-purple-600/20 to-blue-600/20 text-purple-300 border border-purple-500/30 shadow-lg shadow-purple-500/10"
+                  : "hover:bg-gray-800/50 text-gray-400 hover:text-white border border-transparent"
+              }`}
+            >
+              <Icon
+                className={`w-5 h-5 ${isActive ? "text-purple-400" : "group-hover:text-purple-400"} transition-colors`}
+              />
+              <span className="font-medium">{label}</span>
+            </Link>
+          );
+        })}
+      </nav>
     </aside>
   );
 }
