@@ -99,3 +99,63 @@ export async function getProjectById(projectId: string, userId: string) {
     throw error;
   }
 }
+
+export async function getAllProjectsForUser(userId: string) {
+  try {
+    const acceptedRaw = await prisma.project.findMany({
+      where: {
+        members: {
+          some: { userId, status: "ACCEPTED" },
+        },
+      },
+      include: {
+        members: {
+          where: { userId },
+          select: {
+            role: true,
+            status: true,
+          },
+        },
+      },
+    });
+
+    const pendingRaw = await prisma.project.findMany({
+      where: {
+        members: {
+          some: { userId, status: "PENDING" },
+        },
+      },
+      include: {
+        createdBy: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            avatarUrl: true,
+          },
+        },
+        members: {
+          where: { userId },
+          select: {
+            role: true,
+            status: true,
+          },
+        },
+      },
+    });
+
+    const accepted = acceptedRaw.map((p) => ({
+      ...p,
+      role: p.members[0]?.role ?? null,
+    }));
+
+    const pending = pendingRaw.map((p) => ({
+      ...p,
+      role: p.members[0]?.role ?? null,
+    }));
+
+    return { accepted, pending };
+  } catch (error) {
+    throw error;
+  }
+}

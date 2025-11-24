@@ -1,10 +1,19 @@
 export default interface ProjectCardType {
-  id: number;
+  id: string;
   name: string;
-  role: "Leader" | "Member" | "Viewer";
-  status: "active" | "completed" | "On Hold";
-  lastActive: string; // e.g., "2 days ago"
-  tasksCompleted: number; // percentage
-  commits: number;
-  lastMessage: string; // e.g., "Fixed bug in authentication"
+  description?: string | null;
+  githubRepo: string;
+  role: "LEADER" | "MEMBER";
+  status: "ACTIVE" | "COMPLETED" | "ARCHIVED";
+  lastActive: Date | null;
+  createdAt: Date;
+  commits?: number;
+  lastMessage?: string;
+  tasksCompleted?: number;
+  createdBy?: {
+    id: string;
+    name: string;
+    email: string;
+    avatarUrl: string;
+  };
 }

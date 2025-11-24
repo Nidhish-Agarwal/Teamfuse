@@ -120,6 +120,15 @@ export namespace $Enums {
   };
 
   export type MemberStatus = (typeof MemberStatus)[keyof typeof MemberStatus];
+
+  export const ProjectStatus: {
+    ACTIVE: "ACTIVE";
+    ARCHIVED: "ARCHIVED";
+    COMPLETED: "COMPLETED";
+  };
+
+  export type ProjectStatus =
+    (typeof ProjectStatus)[keyof typeof ProjectStatus];
 }
 
 export type PresenceStatus = $Enums.PresenceStatus;
@@ -141,6 +150,10 @@ export const TaskPriority: typeof $Enums.TaskPriority;
 export type MemberStatus = $Enums.MemberStatus;
 
 export const MemberStatus: typeof $Enums.MemberStatus;
+
+export type ProjectStatus = $Enums.ProjectStatus;
+
+export const ProjectStatus: typeof $Enums.ProjectStatus;
 
 /**
  * ##  Prisma Client ʲˢ
@@ -6810,6 +6823,7 @@ export namespace Prisma {
   export type ProjectMinAggregateOutputType = {
     id: string | null;
     name: string | null;
+    status: $Enums.ProjectStatus | null;
     description: string | null;
     githubRepo: string | null;
     createdById: string | null;
@@ -6820,6 +6834,7 @@ export namespace Prisma {
   export type ProjectMaxAggregateOutputType = {
     id: string | null;
     name: string | null;
+    status: $Enums.ProjectStatus | null;
     description: string | null;
     githubRepo: string | null;
     createdById: string | null;
@@ -6830,6 +6845,7 @@ export namespace Prisma {
   export type ProjectCountAggregateOutputType = {
     id: number;
     name: number;
+    status: number;
     description: number;
     githubRepo: number;
     createdById: number;
@@ -6841,6 +6857,7 @@ export namespace Prisma {
   export type ProjectMinAggregateInputType = {
     id?: true;
     name?: true;
+    status?: true;
     description?: true;
     githubRepo?: true;
     createdById?: true;
@@ -6851,6 +6868,7 @@ export namespace Prisma {
   export type ProjectMaxAggregateInputType = {
     id?: true;
     name?: true;
+    status?: true;
     description?: true;
     githubRepo?: true;
     createdById?: true;
@@ -6861,6 +6879,7 @@ export namespace Prisma {
   export type ProjectCountAggregateInputType = {
     id?: true;
     name?: true;
+    status?: true;
     description?: true;
     githubRepo?: true;
     createdById?: true;
@@ -6949,6 +6968,7 @@ export namespace Prisma {
   export type ProjectGroupByOutputType = {
     id: string;
     name: string;
+    status: $Enums.ProjectStatus;
     description: string | null;
     githubRepo: string;
     createdById: string;
@@ -6978,6 +6998,7 @@ export namespace Prisma {
     {
       id?: boolean;
       name?: boolean;
+      status?: boolean;
       description?: boolean;
       githubRepo?: boolean;
       createdById?: boolean;
@@ -7002,6 +7023,7 @@ export namespace Prisma {
     {
       id?: boolean;
       name?: boolean;
+      status?: boolean;
       description?: boolean;
       githubRepo?: boolean;
       createdById?: boolean;
@@ -7018,6 +7040,7 @@ export namespace Prisma {
     {
       id?: boolean;
       name?: boolean;
+      status?: boolean;
       description?: boolean;
       githubRepo?: boolean;
       createdById?: boolean;
@@ -7031,6 +7054,7 @@ export namespace Prisma {
   export type ProjectSelectScalar = {
     id?: boolean;
     name?: boolean;
+    status?: boolean;
     description?: boolean;
     githubRepo?: boolean;
     createdById?: boolean;
@@ -7043,6 +7067,7 @@ export namespace Prisma {
   > = $Extensions.GetOmit<
     | "id"
     | "name"
+    | "status"
     | "description"
     | "githubRepo"
     | "createdById"
@@ -7092,6 +7117,7 @@ export namespace Prisma {
       {
         id: string;
         name: string;
+        status: $Enums.ProjectStatus;
         description: string | null;
         githubRepo: string;
         createdById: string;
@@ -7776,6 +7802,7 @@ export namespace Prisma {
   interface ProjectFieldRefs {
     readonly id: FieldRef<"Project", "String">;
     readonly name: FieldRef<"Project", "String">;
+    readonly status: FieldRef<"Project", "ProjectStatus">;
     readonly description: FieldRef<"Project", "String">;
     readonly githubRepo: FieldRef<"Project", "String">;
     readonly createdById: FieldRef<"Project", "String">;
@@ -19597,6 +19624,7 @@ export namespace Prisma {
   export const ProjectScalarFieldEnum: {
     id: "id";
     name: "name";
+    status: "status";
     description: "description";
     githubRepo: "githubRepo";
     createdById: "createdById";
@@ -19788,6 +19816,20 @@ export namespace Prisma {
     $PrismaModel,
     "DateTime[]"
   >;
+
+  /**
+   * Reference to a field of type 'ProjectStatus'
+   */
+  export type EnumProjectStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
+    $PrismaModel,
+    "ProjectStatus"
+  >;
+
+  /**
+   * Reference to a field of type 'ProjectStatus[]'
+   */
+  export type ListEnumProjectStatusFieldRefInput<$PrismaModel> =
+    FieldRefInputType<$PrismaModel, "ProjectStatus[]">;
 
   /**
    * Reference to a field of type 'ProjectRole'
@@ -20234,6 +20276,7 @@ export namespace Prisma {
     NOT?: ProjectWhereInput | ProjectWhereInput[];
     id?: StringFilter<"Project"> | string;
     name?: StringFilter<"Project"> | string;
+    status?: EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus;
     description?: StringNullableFilter<"Project"> | string | null;
     githubRepo?: StringFilter<"Project"> | string;
     createdById?: StringFilter<"Project"> | string;
@@ -20252,6 +20295,7 @@ export namespace Prisma {
   export type ProjectOrderByWithRelationInput = {
     id?: SortOrder;
     name?: SortOrder;
+    status?: SortOrder;
     description?: SortOrderInput | SortOrder;
     githubRepo?: SortOrder;
     createdById?: SortOrder;
@@ -20274,6 +20318,7 @@ export namespace Prisma {
       OR?: ProjectWhereInput[];
       NOT?: ProjectWhereInput | ProjectWhereInput[];
       name?: StringFilter<"Project"> | string;
+      status?: EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus;
       description?: StringNullableFilter<"Project"> | string | null;
       githubRepo?: StringFilter<"Project"> | string;
       createdById?: StringFilter<"Project"> | string;
@@ -20294,6 +20339,7 @@ export namespace Prisma {
   export type ProjectOrderByWithAggregationInput = {
     id?: SortOrder;
     name?: SortOrder;
+    status?: SortOrder;
     description?: SortOrderInput | SortOrder;
     githubRepo?: SortOrder;
     createdById?: SortOrder;
@@ -20314,6 +20360,9 @@ export namespace Prisma {
       | ProjectScalarWhereWithAggregatesInput[];
     id?: StringWithAggregatesFilter<"Project"> | string;
     name?: StringWithAggregatesFilter<"Project"> | string;
+    status?:
+      | EnumProjectStatusWithAggregatesFilter<"Project">
+      | $Enums.ProjectStatus;
     description?: StringNullableWithAggregatesFilter<"Project"> | string | null;
     githubRepo?: StringWithAggregatesFilter<"Project"> | string;
     createdById?: StringWithAggregatesFilter<"Project"> | string;
@@ -21325,6 +21374,7 @@ export namespace Prisma {
   export type ProjectCreateInput = {
     id?: string;
     name: string;
+    status?: $Enums.ProjectStatus;
     description?: string | null;
     githubRepo: string;
     createdAt?: Date | string;
@@ -21342,6 +21392,7 @@ export namespace Prisma {
   export type ProjectUncheckedCreateInput = {
     id?: string;
     name: string;
+    status?: $Enums.ProjectStatus;
     description?: string | null;
     githubRepo: string;
     createdById: string;
@@ -21359,6 +21410,7 @@ export namespace Prisma {
   export type ProjectUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -21380,6 +21432,7 @@ export namespace Prisma {
   export type ProjectUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdById?: StringFieldUpdateOperationsInput | string;
@@ -21401,6 +21454,7 @@ export namespace Prisma {
   export type ProjectCreateManyInput = {
     id?: string;
     name: string;
+    status?: $Enums.ProjectStatus;
     description?: string | null;
     githubRepo: string;
     createdById: string;
@@ -21411,6 +21465,7 @@ export namespace Prisma {
   export type ProjectUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -21424,6 +21479,7 @@ export namespace Prisma {
   export type ProjectUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdById?: StringFieldUpdateOperationsInput | string;
@@ -22424,6 +22480,19 @@ export namespace Prisma {
     deviceName?: SortOrder;
   };
 
+  export type EnumProjectStatusFilter<$PrismaModel = never> = {
+    equals?:
+      | $Enums.ProjectStatus
+      | EnumProjectStatusFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.ProjectStatus[]
+      | ListEnumProjectStatusFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.ProjectStatus[]
+      | ListEnumProjectStatusFieldRefInput<$PrismaModel>;
+    not?: NestedEnumProjectStatusFilter<$PrismaModel> | $Enums.ProjectStatus;
+  };
+
   export type InsightListRelationFilter = {
     every?: InsightWhereInput;
     some?: InsightWhereInput;
@@ -22437,6 +22506,7 @@ export namespace Prisma {
   export type ProjectCountOrderByAggregateInput = {
     id?: SortOrder;
     name?: SortOrder;
+    status?: SortOrder;
     description?: SortOrder;
     githubRepo?: SortOrder;
     createdById?: SortOrder;
@@ -22447,6 +22517,7 @@ export namespace Prisma {
   export type ProjectMaxOrderByAggregateInput = {
     id?: SortOrder;
     name?: SortOrder;
+    status?: SortOrder;
     description?: SortOrder;
     githubRepo?: SortOrder;
     createdById?: SortOrder;
@@ -22457,11 +22528,30 @@ export namespace Prisma {
   export type ProjectMinOrderByAggregateInput = {
     id?: SortOrder;
     name?: SortOrder;
+    status?: SortOrder;
     description?: SortOrder;
     githubRepo?: SortOrder;
     createdById?: SortOrder;
     createdAt?: SortOrder;
     lastActive?: SortOrder;
+  };
+
+  export type EnumProjectStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?:
+      | $Enums.ProjectStatus
+      | EnumProjectStatusFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.ProjectStatus[]
+      | ListEnumProjectStatusFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.ProjectStatus[]
+      | ListEnumProjectStatusFieldRefInput<$PrismaModel>;
+    not?:
+      | NestedEnumProjectStatusWithAggregatesFilter<$PrismaModel>
+      | $Enums.ProjectStatus;
+    _count?: NestedIntFilter<$PrismaModel>;
+    _min?: NestedEnumProjectStatusFilter<$PrismaModel>;
+    _max?: NestedEnumProjectStatusFilter<$PrismaModel>;
   };
 
   export type EnumProjectRoleFilter<$PrismaModel = never> = {
@@ -24316,6 +24406,10 @@ export namespace Prisma {
     connect?: PresenceLogWhereUniqueInput | PresenceLogWhereUniqueInput[];
   };
 
+  export type EnumProjectStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ProjectStatus;
+  };
+
   export type ProjectMemberUpdateManyWithoutProjectNestedInput = {
     create?:
       | XOR<
@@ -25331,6 +25425,39 @@ export namespace Prisma {
       _max?: NestedDateTimeNullableFilter<$PrismaModel>;
     };
 
+  export type NestedEnumProjectStatusFilter<$PrismaModel = never> = {
+    equals?:
+      | $Enums.ProjectStatus
+      | EnumProjectStatusFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.ProjectStatus[]
+      | ListEnumProjectStatusFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.ProjectStatus[]
+      | ListEnumProjectStatusFieldRefInput<$PrismaModel>;
+    not?: NestedEnumProjectStatusFilter<$PrismaModel> | $Enums.ProjectStatus;
+  };
+
+  export type NestedEnumProjectStatusWithAggregatesFilter<
+    $PrismaModel = never,
+  > = {
+    equals?:
+      | $Enums.ProjectStatus
+      | EnumProjectStatusFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.ProjectStatus[]
+      | ListEnumProjectStatusFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.ProjectStatus[]
+      | ListEnumProjectStatusFieldRefInput<$PrismaModel>;
+    not?:
+      | NestedEnumProjectStatusWithAggregatesFilter<$PrismaModel>
+      | $Enums.ProjectStatus;
+    _count?: NestedIntFilter<$PrismaModel>;
+    _min?: NestedEnumProjectStatusFilter<$PrismaModel>;
+    _max?: NestedEnumProjectStatusFilter<$PrismaModel>;
+  };
+
   export type NestedEnumProjectRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.ProjectRole | EnumProjectRoleFieldRefInput<$PrismaModel>;
     in?: $Enums.ProjectRole[] | ListEnumProjectRoleFieldRefInput<$PrismaModel>;
@@ -25630,6 +25757,7 @@ export namespace Prisma {
   export type ProjectCreateWithoutCreatedByInput = {
     id?: string;
     name: string;
+    status?: $Enums.ProjectStatus;
     description?: string | null;
     githubRepo: string;
     createdAt?: Date | string;
@@ -25646,6 +25774,7 @@ export namespace Prisma {
   export type ProjectUncheckedCreateWithoutCreatedByInput = {
     id?: string;
     name: string;
+    status?: $Enums.ProjectStatus;
     description?: string | null;
     githubRepo: string;
     createdAt?: Date | string;
@@ -26051,6 +26180,7 @@ export namespace Prisma {
     NOT?: ProjectScalarWhereInput | ProjectScalarWhereInput[];
     id?: StringFilter<"Project"> | string;
     name?: StringFilter<"Project"> | string;
+    status?: EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus;
     description?: StringNullableFilter<"Project"> | string | null;
     githubRepo?: StringFilter<"Project"> | string;
     createdById?: StringFilter<"Project"> | string;
@@ -27248,6 +27378,7 @@ export namespace Prisma {
   export type ProjectCreateWithoutMembersInput = {
     id?: string;
     name: string;
+    status?: $Enums.ProjectStatus;
     description?: string | null;
     githubRepo: string;
     createdAt?: Date | string;
@@ -27264,6 +27395,7 @@ export namespace Prisma {
   export type ProjectUncheckedCreateWithoutMembersInput = {
     id?: string;
     name: string;
+    status?: $Enums.ProjectStatus;
     description?: string | null;
     githubRepo: string;
     createdById: string;
@@ -27368,6 +27500,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutMembersInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -27388,6 +27521,7 @@ export namespace Prisma {
   export type ProjectUncheckedUpdateWithoutMembersInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdById?: StringFieldUpdateOperationsInput | string;
@@ -27408,6 +27542,7 @@ export namespace Prisma {
   export type ProjectCreateWithoutTasksInput = {
     id?: string;
     name: string;
+    status?: $Enums.ProjectStatus;
     description?: string | null;
     githubRepo: string;
     createdAt?: Date | string;
@@ -27424,6 +27559,7 @@ export namespace Prisma {
   export type ProjectUncheckedCreateWithoutTasksInput = {
     id?: string;
     name: string;
+    status?: $Enums.ProjectStatus;
     description?: string | null;
     githubRepo: string;
     createdById: string;
@@ -27516,6 +27652,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutTasksInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -27536,6 +27673,7 @@ export namespace Prisma {
   export type ProjectUncheckedUpdateWithoutTasksInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdById?: StringFieldUpdateOperationsInput | string;
@@ -27616,6 +27754,7 @@ export namespace Prisma {
   export type ProjectCreateWithoutChatMessagesInput = {
     id?: string;
     name: string;
+    status?: $Enums.ProjectStatus;
     description?: string | null;
     githubRepo: string;
     createdAt?: Date | string;
@@ -27632,6 +27771,7 @@ export namespace Prisma {
   export type ProjectUncheckedCreateWithoutChatMessagesInput = {
     id?: string;
     name: string;
+    status?: $Enums.ProjectStatus;
     description?: string | null;
     githubRepo: string;
     createdById: string;
@@ -27724,6 +27864,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutChatMessagesInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -27744,6 +27885,7 @@ export namespace Prisma {
   export type ProjectUncheckedUpdateWithoutChatMessagesInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdById?: StringFieldUpdateOperationsInput | string;
@@ -27824,6 +27966,7 @@ export namespace Prisma {
   export type ProjectCreateWithoutGithubDataInput = {
     id?: string;
     name: string;
+    status?: $Enums.ProjectStatus;
     description?: string | null;
     githubRepo: string;
     createdAt?: Date | string;
@@ -27840,6 +27983,7 @@ export namespace Prisma {
   export type ProjectUncheckedCreateWithoutGithubDataInput = {
     id?: string;
     name: string;
+    status?: $Enums.ProjectStatus;
     description?: string | null;
     githubRepo: string;
     createdById: string;
@@ -27932,6 +28076,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutGithubDataInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -27952,6 +28097,7 @@ export namespace Prisma {
   export type ProjectUncheckedUpdateWithoutGithubDataInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdById?: StringFieldUpdateOperationsInput | string;
@@ -28140,6 +28286,7 @@ export namespace Prisma {
   export type ProjectCreateWithoutInsightsInput = {
     id?: string;
     name: string;
+    status?: $Enums.ProjectStatus;
     description?: string | null;
     githubRepo: string;
     createdAt?: Date | string;
@@ -28156,6 +28303,7 @@ export namespace Prisma {
   export type ProjectUncheckedCreateWithoutInsightsInput = {
     id?: string;
     name: string;
+    status?: $Enums.ProjectStatus;
     description?: string | null;
     githubRepo: string;
     createdById: string;
@@ -28200,6 +28348,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutInsightsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -28220,6 +28369,7 @@ export namespace Prisma {
   export type ProjectUncheckedUpdateWithoutInsightsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdById?: StringFieldUpdateOperationsInput | string;
@@ -28240,6 +28390,7 @@ export namespace Prisma {
   export type ProjectCreateWithoutFeedbacksInput = {
     id?: string;
     name: string;
+    status?: $Enums.ProjectStatus;
     description?: string | null;
     githubRepo: string;
     createdAt?: Date | string;
@@ -28256,6 +28407,7 @@ export namespace Prisma {
   export type ProjectUncheckedCreateWithoutFeedbacksInput = {
     id?: string;
     name: string;
+    status?: $Enums.ProjectStatus;
     description?: string | null;
     githubRepo: string;
     createdById: string;
@@ -28396,6 +28548,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutFeedbacksInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -28416,6 +28569,7 @@ export namespace Prisma {
   export type ProjectUncheckedUpdateWithoutFeedbacksInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdById?: StringFieldUpdateOperationsInput | string;
@@ -28556,6 +28710,7 @@ export namespace Prisma {
   export type ProjectCreateWithoutPresenceLogsInput = {
     id?: string;
     name: string;
+    status?: $Enums.ProjectStatus;
     description?: string | null;
     githubRepo: string;
     createdAt?: Date | string;
@@ -28572,6 +28727,7 @@ export namespace Prisma {
   export type ProjectUncheckedCreateWithoutPresenceLogsInput = {
     id?: string;
     name: string;
+    status?: $Enums.ProjectStatus;
     description?: string | null;
     githubRepo: string;
     createdById: string;
@@ -28664,6 +28820,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutPresenceLogsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -28684,6 +28841,7 @@ export namespace Prisma {
   export type ProjectUncheckedUpdateWithoutPresenceLogsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdById?: StringFieldUpdateOperationsInput | string;
@@ -28775,6 +28933,7 @@ export namespace Prisma {
   export type ProjectCreateManyCreatedByInput = {
     id?: string;
     name: string;
+    status?: $Enums.ProjectStatus;
     description?: string | null;
     githubRepo: string;
     createdAt?: Date | string;
@@ -28917,6 +29076,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutCreatedByInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -28937,6 +29097,7 @@ export namespace Prisma {
   export type ProjectUncheckedUpdateWithoutCreatedByInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -28957,6 +29118,7 @@ export namespace Prisma {
   export type ProjectUncheckedUpdateManyWithoutCreatedByInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
     description?: NullableStringFieldUpdateOperationsInput | string | null;
     githubRepo?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
