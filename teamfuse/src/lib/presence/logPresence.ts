@@ -1,24 +1,49 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from "@/lib/prisma";
+
+const FRESH_SESSION_MS = 2 * 60 * 1000; // 2 minutes
+const SESSION_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
 
 export async function logStartSession(userId: string, projectId: string) {
   try {
-    const exists = await prisma.presenceLog.findFirst({
+    const openSessions = await prisma.presenceLog.findMany({
       where: { userId, projectId, sessionEnd: null },
     });
 
-    if (exists) return exists;
+    const now = new Date();
 
+    // Handle existing sessions
+    for (const session of openSessions) {
+      const sessionAge = now.getTime() - session.sessionStart.getTime();
+
+      if (sessionAge > SESSION_TIMEOUT_MS) {
+        // Close timed-out sessions
+        const minutes = Math.max(1, Math.floor(sessionAge / 60000));
+
+        await prisma.presenceLog.update({
+          where: { id: session.id },
+          data: {
+            sessionEnd: now,
+            duration: minutes,
+            status: "OFFLINE",
+          },
+        });
+      } else {
+        // Reuse recent session
+        return session;
+      }
+    }
+
+    // No active session → create new one
     return await prisma.presenceLog.create({
       data: {
         userId,
         projectId,
         status: "ONLINE",
-        sessionStart: new Date(),
+        sessionStart: now,
       },
     });
   } catch (error) {
-    console.error("Error creating presence log:", error);
+    console.error("logStartSession error:", error);
     return null;
   }
 }
@@ -31,36 +56,36 @@ export async function updateStatus(
   try {
     return await prisma.presenceLog.updateMany({
       where: { userId, projectId, sessionEnd: null },
-      data: { status: status as any },
+      data: { status },
     });
-  } catch (error) {
-    console.error("Error updating status:", error);
+  } catch (err) {
+    console.error("updateStatus error:", err);
   }
 }
 
 export async function logEndSession(userId: string, projectId: string) {
   try {
-    const active = await prisma.presenceLog.findFirst({
+    const open = await prisma.presenceLog.findMany({
       where: { userId, projectId, sessionEnd: null },
     });
 
-    if (!active) return;
+    for (const session of open) {
+      const now = new Date();
+      const minutes = Math.max(
+        1,
+        Math.floor((now.getTime() - session.sessionStart.getTime()) / 60000)
+      );
 
-    const now = new Date();
-    const minutes = Math.max(
-      1,
-      Math.floor((now.getTime() - active.sessionStart.getTime()) / 60000)
-    );
-
-    return await prisma.presenceLog.update({
-      where: { id: active.id },
-      data: {
-        sessionEnd: now,
-        duration: minutes,
-        status: "OFFLINE",
-      },
-    });
-  } catch (error) {
-    console.error("Error ending session:", error);
+      await prisma.presenceLog.update({
+        where: { id: session.id },
+        data: {
+          sessionEnd: now,
+          duration: minutes,
+          status: "OFFLINE",
+        },
+      });
+    }
+  } catch (err) {
+    console.error("logEndSession error:", err);
   }
 }
