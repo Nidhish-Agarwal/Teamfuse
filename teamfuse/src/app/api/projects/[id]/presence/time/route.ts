@@ -5,32 +5,52 @@ import { sendSuccess, sendError } from "@/lib/responseHandler";
 
 export const GET = withAuth(async (req: NextRequest, user) => {
   try {
-    // ✅ Better URL parsing
     const url = new URL(req.url);
-    const pathSegments = url.pathname.split("/");
-    const projectId = pathSegments[3]; // /api/projects/[id]/presence/time
+    const projectId = url.pathname.split("/")[3];
 
-    if (!projectId) {
-      return sendError("Missing project ID", "BAD_REQUEST", 400);
-    }
-
+    // Get ALL sessions (both completed and active)
     const logs = await prisma.presenceLog.findMany({
-      where: { userId: user.id, projectId },
+      where: {
+        userId: user.id,
+        projectId,
+        OR: [{ status: "ONLINE" }, { status: "FOCUSED" }],
+      },
+      orderBy: { sessionStart: "desc" },
     });
+
+    const now = new Date();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
     let totalAll = 0;
     let totalToday = 0;
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
     for (const log of logs) {
-      const mins = log.duration || 0;
-      totalAll += mins;
+      let minutes = 0;
 
-      if (new Date(log.sessionStart) >= today) {
-        totalToday += mins;
+      if (log.duration) {
+        // Completed session with stored duration
+        minutes = log.duration;
+      } else if (log.sessionEnd) {
+        // Completed session without duration - calculate it
+        const ms = log.sessionEnd.getTime() - log.sessionStart.getTime();
+        minutes = Math.floor(ms / 60000);
+      } else {
+        // ACTIVE SESSION - calculate current duration up to now
+        const ms = now.getTime() - log.sessionStart.getTime();
+        minutes = Math.floor(ms / 60000);
       }
+
+      if (minutes <= 0) minutes = 1;
+
+      const sessionDay = new Date(log.sessionStart);
+      sessionDay.setHours(0, 0, 0, 0);
+
+      if (sessionDay.getTime() === today.getTime()) {
+        totalToday += minutes;
+      }
+
+      totalAll += minutes;
     }
 
     return sendSuccess(
@@ -39,11 +59,12 @@ export const GET = withAuth(async (req: NextRequest, user) => {
         todayHours: Number((totalToday / 60).toFixed(2)),
         totalMinutes: totalAll,
         totalHours: Number((totalAll / 60).toFixed(2)),
+        sessionCount: logs.length,
       },
-      "Work summary loaded"
+      "Summary loaded"
     );
   } catch (err) {
-    console.error("Error fetching work summary:", err);
-    return sendError("Failed to load work summary", "INTERNAL_ERROR", 500, err);
+    console.error("Time summary error:", err);
+    return sendError("Failed to load summary", "INTERNAL_ERROR", 500, err);
   }
 });

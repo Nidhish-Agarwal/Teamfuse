@@ -4,8 +4,40 @@ import { useEffect, useState } from "react";
 import { Clock } from "lucide-react";
 
 interface WorkSummaryData {
+  todayMinutes: number; // Use minutes directly
+  totalMinutes: number; // Use minutes directly
   todayHours: number;
   totalHours: number;
+}
+
+// Utility to convert minutes → h/m format
+function formatToday(todayMinutes: number) {
+  // Accept minutes directly
+  if (todayMinutes < 60) return `${todayMinutes}m`;
+
+  const hrs = Math.floor(todayMinutes / 60);
+  const mins = todayMinutes % 60;
+
+  return mins === 0 ? `${hrs}h` : `${hrs}h ${mins}m`;
+}
+
+// Utility to convert minutes → d/h/m format
+function formatTotal(totalMinutes: number) {
+  // Accept minutes directly
+  const days = Math.floor(totalMinutes / (60 * 24));
+  const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
+  const minutes = totalMinutes % 60;
+
+  if (days > 0) {
+    if (hours === 0 && minutes === 0) return `${days}d`;
+    if (minutes === 0) return `${days}d ${hours}h`;
+    return `${days}d ${hours}h ${minutes}m`;
+  }
+
+  if (hours === 0) return `${minutes}m`;
+  if (minutes === 0) return `${hours}h`;
+
+  return `${hours}h ${minutes}m`;
 }
 
 export default function WorkSummary({ projectId }: { projectId: string }) {
@@ -20,8 +52,11 @@ export default function WorkSummary({ projectId }: { projectId: string }) {
       try {
         const res = await fetch(`/api/projects/${projectId}/presence/time`);
         const json = await res.json();
+        console.log("Work summary API response:", json);
+
         if (mounted && json.success) {
           setData(json.data as WorkSummaryData);
+          console.log("Work summary data set:", json.data);
         }
       } catch (error) {
         console.error("Failed to load work summary:", error);
@@ -59,17 +94,19 @@ export default function WorkSummary({ projectId }: { projectId: string }) {
       </div>
 
       <div className="space-y-3">
+        {/* Today */}
         <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/10">
           <span className="text-gray-300 text-sm">Today</span>
           <span className="text-white font-semibold">
-            {data.todayHours.toFixed(1)} hrs
+            {formatToday(data.todayMinutes)} {/* Use todayMinutes directly */}
           </span>
         </div>
 
+        {/* Total */}
         <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/10">
           <span className="text-gray-300 text-sm">Total</span>
           <span className="text-white font-semibold">
-            {data.totalHours.toFixed(1)} hrs
+            {formatTotal(data.totalMinutes)} {/* Use totalMinutes directly */}
           </span>
         </div>
       </div>

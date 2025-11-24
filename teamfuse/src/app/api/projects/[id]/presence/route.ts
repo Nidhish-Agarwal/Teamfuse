@@ -1,41 +1,93 @@
 import { NextRequest } from "next/server";
-import { withAuth } from "@/lib/withAuth";
 import { prisma } from "@/lib/prisma";
+import { withAuth } from "@/lib/withAuth";
 import { sendSuccess, sendError } from "@/lib/responseHandler";
-import { getPresenceSnapshot } from "@/lib/presence/getPresence";
-import { handleRouteError } from "@/lib/errors/handleRouteError";
 
 export const GET = withAuth(async (req: NextRequest, user) => {
   try {
-    // ✅ Better URL parsing
     const url = new URL(req.url);
-    const pathSegments = url.pathname.split("/");
-    const projectId = pathSegments[3]; // /api/projects/[id]/presence
+    const projectId = url.pathname.split("/")[3];
 
     if (!projectId) {
       return sendError("Missing project ID", "BAD_REQUEST", 400);
     }
 
-    // Check access level
-    const member = await prisma.projectMember.findFirst({
-      where: {
-        userId: user.id,
-        projectId,
-        status: "ACCEPTED",
+    const members = await prisma.projectMember.findMany({
+      where: { projectId, status: "ACCEPTED" },
+      include: {
+        user: {
+          select: { id: true, name: true, avatarUrl: true },
+        },
       },
     });
 
-    if (!member) {
-      return sendError("Not authorized for this project", "FORBIDDEN", 403);
-    }
+    const userIds = members.map((m) => m.userId);
 
-    // Build presence snapshot
-    const presence = await getPresenceSnapshot(projectId);
+    const logs = await prisma.presenceLog.findMany({
+      where: {
+        projectId,
+        userId: { in: userIds },
+      },
+      orderBy: { sessionStart: "desc" },
+    });
 
-    return sendSuccess(presence, "Presence loaded");
+    const now = new Date();
+
+    const result = userIds.map((userId) => {
+      const userLogs = logs.filter((l) => l.userId === userId);
+
+      if (userLogs.length === 0) {
+        const member = members.find((m) => m.userId === userId)!;
+        return {
+          userId,
+          name: member.user.name,
+          avatarUrl: member.user.avatarUrl,
+          status: "OFFLINE",
+          totalActiveMinutes: 0,
+          lastActive: "Never",
+        };
+      }
+
+      const latest = userLogs[0];
+      const lastActive = (
+        latest.sessionEnd || latest.sessionStart
+      ).toISOString();
+
+      let totalMinutes = 0;
+      for (const log of userLogs) {
+        let minutes = 0;
+
+        if (log.duration) {
+          minutes = log.duration;
+        } else if (log.sessionEnd) {
+          const ms = log.sessionEnd.getTime() - log.sessionStart.getTime();
+          minutes = Math.max(1, Math.floor(ms / 60000));
+        } else {
+          // ACTIVE SESSION - count up to current time
+          const ms = now.getTime() - log.sessionStart.getTime();
+          minutes = Math.max(1, Math.floor(ms / 60000));
+        }
+
+        if (log.status === "ONLINE" || log.status === "FOCUSED") {
+          totalMinutes += minutes;
+        }
+      }
+
+      const member = members.find((m) => m.userId === userId)!;
+
+      return {
+        userId,
+        name: member.user.name,
+        avatarUrl: member.user.avatarUrl,
+        status: latest.status,
+        totalActiveMinutes: totalMinutes,
+        lastActive,
+      };
+    });
+
+    return sendSuccess(result, "Presence loaded");
   } catch (err) {
-    console.error("Presence fetch error:", err);
-    return handleRouteError(err);
-    // return sendError("Presence fetch failed", "FETCH_ERROR", 500, err);
+    console.error("Presence API error:", err);
+    return sendError("Failed to load presence", "INTERNAL_ERROR", 500, err);
   }
 });
