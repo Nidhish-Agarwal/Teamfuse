@@ -1,3 +1,5 @@
+import { AppError } from "../errors/AppError";
+
 export function checkScopes(scope: string | null) {
   if (!scope) {
     throw new Error(
@@ -11,8 +13,10 @@ export function checkScopes(scope: string | null) {
   const missing = needed.filter((s) => !scopes.includes(s));
 
   if (missing.length > 0) {
-    throw new Error(
-      `Missing required GitHub permissions: ${missing.join(", ")}. Please log in again.`
+    throw new AppError(
+      `Missing required GitHub permissions: ${missing.join(", ")}. Please log in again.`,
+      "GITHUB_ERROR",
+      403
     );
   }
 }

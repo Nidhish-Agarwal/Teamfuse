@@ -72,12 +72,13 @@ model RefreshToken {
 }
 
 model Project {
-  id          String    @id @default(uuid())
+  id          String        @id @default(uuid())
   name        String
+  status      ProjectStatus @default(ACTIVE) // 'active' | 'archived'
   description String?
   githubRepo  String
   createdById String
-  createdAt   DateTime  @default(now())
+  createdAt   DateTime      @default(now())
   lastActive  DateTime?
 
   members      ProjectMember[]
@@ -231,4 +232,10 @@ enum MemberStatus {
   PENDING
   ACCEPTED
   DECLINED
+}
+
+enum ProjectStatus {
+  ACTIVE
+  ARCHIVED
+  COMPLETED
 }

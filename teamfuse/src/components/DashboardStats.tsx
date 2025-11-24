@@ -4,23 +4,19 @@ import { GitCommit, Clock, Brain, Activity } from "lucide-react";
 import ProjectCardType from "@/lib/interfaces/ProjectCardType";
 
 export default function DashboardStats({
-  mockProjects,
+  projects,
 }: {
-  mockProjects: ProjectCardType[];
+  projects: ProjectCardType[];
 }) {
-  const activeProjects = mockProjects.filter((p) => p.status === "active")
-    .length;
-  const totalCommits = mockProjects.reduce((acc, p) => acc + p.commits, 0);
+  const activeProjects = projects.filter((p) => p.status === "ACTIVE").length;
+  const totalCommits = projects.reduce((acc, p) => acc + (p.commits || 0), 0);
   const weeklyCommits = [12, 18, 15, 22, 19, 25, 20];
 
   return (
     <div>
-      <h2 className="text-lg font-semibold text-white mb-4">
-        Quick Stats
-      </h2>
+      <h2 className="text-lg font-semibold text-white mb-4">Quick Stats</h2>
 
       <div className="space-y-4">
-
         {/* Active Projects */}
         <Card className="bg-white/5 border-white/10 backdrop-blur-xl shadow-lg shadow-indigo-500/10">
           <CardContent className="pt-6">
@@ -30,7 +26,9 @@ export default function DashboardStats({
               </div>
               <div>
                 <p className="text-sm text-gray-300">Active Projects</p>
-                <p className="text-2xl font-bold text-white">{activeProjects}</p>
+                <p className="text-2xl font-bold text-white">
+                  {activeProjects}
+                </p>
               </div>
             </div>
           </CardContent>
@@ -45,9 +43,7 @@ export default function DashboardStats({
               </div>
               <div>
                 <p className="text-sm text-gray-300">Commits (7 days)</p>
-                <p className="text-2xl font-bold text-white">
-                  {totalCommits}
-                </p>
+                <p className="text-2xl font-bold text-white">{totalCommits}</p>
               </div>
             </div>
 
@@ -96,7 +92,6 @@ export default function DashboardStats({
             </div>
           </CardContent>
         </Card>
-
       </div>
     </div>
   );

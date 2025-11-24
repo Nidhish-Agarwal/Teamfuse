@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MessageSquare, GitCommit } from "lucide-react";
 import ProjectCardType from "@/lib/interfaces/ProjectCardType";
+import Link from "next/link";
 
 interface ProjectCardProps {
   project: ProjectCardType;
@@ -36,6 +37,11 @@ function ProjectCard({ project }: ProjectCardProps) {
             <CardTitle className="text-xl font-bold text-white drop-shadow-sm">
               {project.name}
             </CardTitle>
+            {project.description && (
+              <CardDescription className="text-gray-400 mt-1">
+                {project.description}
+              </CardDescription>
+            )}
 
             <div className="flex items-center gap-2 mt-2">
               <Badge
@@ -66,18 +72,24 @@ function ProjectCard({ project }: ProjectCardProps) {
                 {project.status}
               </Badge>
             </div>
+            {project.createdAt && (
+              <CardDescription className="mt-1 text-gray-400 text-sm">
+                Created on: {new Date(project.createdAt).toLocaleDateString()}
+              </CardDescription>
+            )}
           </div>
         </div>
 
         <CardDescription className="mt-2 text-gray-400 text-sm">
-          Last active: {project.lastActive}
+          Last active:{" "}
+          {project.lastActive ? project.lastActive.toLocaleString() : "N/A"}
         </CardDescription>
       </CardHeader>
 
       <CardContent>
         <div className="space-y-4">
           {/* Progress Bar */}
-          <div>
+          {/* <div>
             <div className="flex items-center justify-between text-sm mb-2">
               <span className="text-gray-400">Tasks Completed</span>
               <span className="font-semibold text-indigo-300">
@@ -98,25 +110,26 @@ function ProjectCard({ project }: ProjectCardProps) {
                 style={{ width: `${project.tasksCompleted}%` }}
               />
             </div>
-          </div>
+          </div> */}
 
           {/* Stats Row */}
           <div className="flex items-center justify-between text-sm">
             <div className="flex items-center gap-1.5 text-gray-400">
               <GitCommit className="h-4 w-4 text-indigo-300" />
-              <span>{project.commits} commits</span>
+              <span>{project.commits || 0} commits</span>
             </div>
 
             <div className="flex items-center gap-1.5 text-gray-400">
               <MessageSquare className="h-4 w-4 text-purple-300" />
-              <span>{project.lastMessage}</span>
+              <span>{project.lastMessage || "N/A"}</span>
             </div>
           </div>
 
-          <Button
-            className="
+          <Link href={`/project/${project.id}`}>
+            <Button
+              className="
               w-full 
-              bg-gradient-to-r 
+              bg-linear-to-r 
               from-indigo-500 
               to-purple-600 
               hover:from-indigo-400 
@@ -125,9 +138,10 @@ function ProjectCard({ project }: ProjectCardProps) {
               shadow-md 
               shadow-indigo-500/20
             "
-          >
-            Open Project
-          </Button>
+            >
+              Open Project
+            </Button>
+          </Link>
         </div>
       </CardContent>
     </Card>

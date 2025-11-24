@@ -156,6 +156,7 @@ exports.Prisma.RefreshTokenScalarFieldEnum = {
 exports.Prisma.ProjectScalarFieldEnum = {
   id: "id",
   name: "name",
+  status: "status",
   description: "description",
   githubRepo: "githubRepo",
   createdById: "createdById",
@@ -272,6 +273,12 @@ exports.Prisma.JsonNullValueFilter = {
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull,
 };
+exports.ProjectStatus = exports.$Enums.ProjectStatus = {
+  ACTIVE: "ACTIVE",
+  ARCHIVED: "ARCHIVED",
+  COMPLETED: "COMPLETED",
+};
+
 exports.ProjectRole = exports.$Enums.ProjectRole = {
   LEADER: "LEADER",
   MEMBER: "MEMBER",
