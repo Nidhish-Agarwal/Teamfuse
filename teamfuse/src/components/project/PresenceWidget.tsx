@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable react-hooks/purity */
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef, useMemo } from "react";
 import { Activity } from "lucide-react";
 import { usePresence } from "@/hooks/usePresence";
 import WorkSummary from "./presence/WorkSummary";
@@ -15,21 +15,12 @@ interface PresenceMember {
   status: "ONLINE" | "IDLE" | "OFFLINE" | "FOCUSED";
   lastActive: string;
   totalActiveMinutes: number;
-  todayMinutes?: number;
+  todayMinutes: number;
 }
 
 interface PresenceWidgetProps {
   projectId: string;
   currentUserId: string;
-}
-
-// ✅ Move impure function outside the component
-function ago(t: string) {
-  const diff = Math.floor((Date.now() - new Date(t).getTime()) / 60000);
-  if (diff < 1) return "just now";
-  if (diff < 60) return `${diff}m ago`;
-  if (diff < 1440) return `${Math.floor(diff / 60)}h ago`;
-  return `${Math.floor(diff / 1440)}d ago`;
 }
 
 export default function PresenceWidget({
@@ -38,27 +29,53 @@ export default function PresenceWidget({
 }: PresenceWidgetProps) {
   const [members, setMembers] = useState<PresenceMember[]>([]);
   const realtime = usePresence(projectId, currentUserId);
+  const initializedRef = useRef(false);
 
   const loadPresence = useCallback(async () => {
     try {
       const res = await fetch(`/api/projects/${projectId}/presence`);
       const data = await res.json();
-      if (data.success) setMembers(data.data);
+      if (!data.success) return;
+
+      const baseMembers: PresenceMember[] = data.data;
+
+      const tRes = await fetch(`/api/projects/${projectId}/presence/time`);
+      const tJson = await tRes.json();
+
+      if (tJson.success) {
+        const { todayMinutes, totalMinutes } = tJson.data;
+
+        baseMembers.forEach((m) => {
+          if (m.userId === currentUserId) {
+            m.todayMinutes = todayMinutes;
+            m.totalActiveMinutes = totalMinutes;
+          }
+        });
+      }
+
+      setMembers(baseMembers);
     } catch (e) {
       console.error("Presence load failed:", e);
     }
-  }, [projectId]);
+  }, [projectId, currentUserId]);
 
   useEffect(() => {
+    if (initializedRef.current) return;
+    initializedRef.current = true;
+
     loadPresence();
     const interval = setInterval(loadPresence, 60_000);
-    return () => clearInterval(interval);
-  }, [loadPresence]);
 
-  const merged = members.map((m) => ({
-    ...m,
-    status: realtime[m.userId] ?? m.status,
-  }));
+    return () => clearInterval(interval);
+  }, [loadPresence, projectId, currentUserId]);
+
+  // ✅ FIX: Real-time status updates instantly (same speed as TeamMembers)
+  const merged = useMemo(() => {
+    return members.map((m) => ({
+      ...m,
+      status: realtime[m.userId] ?? m.status,
+    }));
+  }, [members, realtime]);
 
   const getColor = (status: string) =>
     status === "ONLINE"
@@ -71,6 +88,14 @@ export default function PresenceWidget({
 
   const fmt = (min: number) =>
     min < 60 ? `${min}m` : `${Math.floor(min / 60)}h`;
+
+  const ago = (t: string) => {
+    const diff = Math.floor((Date.now() - new Date(t).getTime()) / 60000);
+    if (diff < 1) return "just now";
+    if (diff < 60) return `${diff}m ago`;
+    if (diff < 1440) return `${Math.floor(diff / 60)}h ago`;
+    return `${Math.floor(diff / 1440)}d ago`;
+  };
 
   return (
     <div className="space-y-4">

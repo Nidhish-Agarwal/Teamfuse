@@ -18190,6 +18190,7 @@ export namespace Prisma {
     sessionStart: Date | null;
     sessionEnd: Date | null;
     duration: number | null;
+    isActive: boolean | null;
   };
 
   export type PresenceLogMaxAggregateOutputType = {
@@ -18200,6 +18201,7 @@ export namespace Prisma {
     sessionStart: Date | null;
     sessionEnd: Date | null;
     duration: number | null;
+    isActive: boolean | null;
   };
 
   export type PresenceLogCountAggregateOutputType = {
@@ -18210,6 +18212,7 @@ export namespace Prisma {
     sessionStart: number;
     sessionEnd: number;
     duration: number;
+    isActive: number;
     _all: number;
   };
 
@@ -18229,6 +18232,7 @@ export namespace Prisma {
     sessionStart?: true;
     sessionEnd?: true;
     duration?: true;
+    isActive?: true;
   };
 
   export type PresenceLogMaxAggregateInputType = {
@@ -18239,6 +18243,7 @@ export namespace Prisma {
     sessionStart?: true;
     sessionEnd?: true;
     duration?: true;
+    isActive?: true;
   };
 
   export type PresenceLogCountAggregateInputType = {
@@ -18249,6 +18254,7 @@ export namespace Prisma {
     sessionStart?: true;
     sessionEnd?: true;
     duration?: true;
+    isActive?: true;
     _all?: true;
   };
 
@@ -18352,6 +18358,7 @@ export namespace Prisma {
     sessionStart: Date;
     sessionEnd: Date | null;
     duration: number | null;
+    isActive: boolean;
     _count: PresenceLogCountAggregateOutputType | null;
     _avg: PresenceLogAvgAggregateOutputType | null;
     _sum: PresenceLogSumAggregateOutputType | null;
@@ -18384,6 +18391,7 @@ export namespace Prisma {
       sessionStart?: boolean;
       sessionEnd?: boolean;
       duration?: boolean;
+      isActive?: boolean;
       project?: boolean | ProjectDefaultArgs<ExtArgs>;
       user?: boolean | UserDefaultArgs<ExtArgs>;
     },
@@ -18401,6 +18409,7 @@ export namespace Prisma {
       sessionStart?: boolean;
       sessionEnd?: boolean;
       duration?: boolean;
+      isActive?: boolean;
       project?: boolean | ProjectDefaultArgs<ExtArgs>;
       user?: boolean | UserDefaultArgs<ExtArgs>;
     },
@@ -18418,6 +18427,7 @@ export namespace Prisma {
       sessionStart?: boolean;
       sessionEnd?: boolean;
       duration?: boolean;
+      isActive?: boolean;
       project?: boolean | ProjectDefaultArgs<ExtArgs>;
       user?: boolean | UserDefaultArgs<ExtArgs>;
     },
@@ -18432,6 +18442,7 @@ export namespace Prisma {
     sessionStart?: boolean;
     sessionEnd?: boolean;
     duration?: boolean;
+    isActive?: boolean;
   };
 
   export type PresenceLogOmit<
@@ -18443,7 +18454,8 @@ export namespace Prisma {
     | "status"
     | "sessionStart"
     | "sessionEnd"
-    | "duration",
+    | "duration"
+    | "isActive",
     ExtArgs["result"]["presenceLog"]
   >;
   export type PresenceLogInclude<
@@ -18482,6 +18494,7 @@ export namespace Prisma {
         sessionStart: Date;
         sessionEnd: Date | null;
         duration: number | null;
+        isActive: boolean;
       },
       ExtArgs["result"]["presenceLog"]
     >;
@@ -19107,6 +19120,7 @@ export namespace Prisma {
     readonly sessionStart: FieldRef<"PresenceLog", "DateTime">;
     readonly sessionEnd: FieldRef<"PresenceLog", "DateTime">;
     readonly duration: FieldRef<"PresenceLog", "Int">;
+    readonly isActive: FieldRef<"PresenceLog", "Boolean">;
   }
 
   // Custom InputTypes
@@ -19738,6 +19752,7 @@ export namespace Prisma {
     sessionStart: "sessionStart";
     sessionEnd: "sessionEnd";
     duration: "duration";
+    isActive: "isActive";
   };
 
   export type PresenceLogScalarFieldEnum =
@@ -19950,6 +19965,14 @@ export namespace Prisma {
    */
   export type ListEnumPresenceStatusFieldRefInput<$PrismaModel> =
     FieldRefInputType<$PrismaModel, "PresenceStatus[]">;
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<
+    $PrismaModel,
+    "Boolean"
+  >;
 
   /**
    * Deep Input Types
@@ -20966,6 +20989,7 @@ export namespace Prisma {
     sessionStart?: DateTimeFilter<"PresenceLog"> | Date | string;
     sessionEnd?: DateTimeNullableFilter<"PresenceLog"> | Date | string | null;
     duration?: IntNullableFilter<"PresenceLog"> | number | null;
+    isActive?: BoolFilter<"PresenceLog"> | boolean;
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>;
     user?: XOR<UserScalarRelationFilter, UserWhereInput>;
   };
@@ -20978,6 +21002,7 @@ export namespace Prisma {
     sessionStart?: SortOrder;
     sessionEnd?: SortOrderInput | SortOrder;
     duration?: SortOrderInput | SortOrder;
+    isActive?: SortOrder;
     project?: ProjectOrderByWithRelationInput;
     user?: UserOrderByWithRelationInput;
   };
@@ -20994,6 +21019,7 @@ export namespace Prisma {
       sessionStart?: DateTimeFilter<"PresenceLog"> | Date | string;
       sessionEnd?: DateTimeNullableFilter<"PresenceLog"> | Date | string | null;
       duration?: IntNullableFilter<"PresenceLog"> | number | null;
+      isActive?: BoolFilter<"PresenceLog"> | boolean;
       project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>;
       user?: XOR<UserScalarRelationFilter, UserWhereInput>;
     },
@@ -21008,6 +21034,7 @@ export namespace Prisma {
     sessionStart?: SortOrder;
     sessionEnd?: SortOrderInput | SortOrder;
     duration?: SortOrderInput | SortOrder;
+    isActive?: SortOrder;
     _count?: PresenceLogCountOrderByAggregateInput;
     _avg?: PresenceLogAvgOrderByAggregateInput;
     _max?: PresenceLogMaxOrderByAggregateInput;
@@ -21036,6 +21063,7 @@ export namespace Prisma {
       | string
       | null;
     duration?: IntNullableWithAggregatesFilter<"PresenceLog"> | number | null;
+    isActive?: BoolWithAggregatesFilter<"PresenceLog"> | boolean;
   };
 
   export type UserCreateInput = {
@@ -22050,6 +22078,7 @@ export namespace Prisma {
     sessionStart: Date | string;
     sessionEnd?: Date | string | null;
     duration?: number | null;
+    isActive?: boolean;
     project: ProjectCreateNestedOneWithoutPresenceLogsInput;
     user: UserCreateNestedOneWithoutPresenceLogsInput;
   };
@@ -22062,6 +22091,7 @@ export namespace Prisma {
     sessionStart: Date | string;
     sessionEnd?: Date | string | null;
     duration?: number | null;
+    isActive?: boolean;
   };
 
   export type PresenceLogUpdateInput = {
@@ -22076,6 +22106,7 @@ export namespace Prisma {
       | string
       | null;
     duration?: NullableIntFieldUpdateOperationsInput | number | null;
+    isActive?: BoolFieldUpdateOperationsInput | boolean;
     project?: ProjectUpdateOneRequiredWithoutPresenceLogsNestedInput;
     user?: UserUpdateOneRequiredWithoutPresenceLogsNestedInput;
   };
@@ -22094,6 +22125,7 @@ export namespace Prisma {
       | string
       | null;
     duration?: NullableIntFieldUpdateOperationsInput | number | null;
+    isActive?: BoolFieldUpdateOperationsInput | boolean;
   };
 
   export type PresenceLogCreateManyInput = {
@@ -22104,6 +22136,7 @@ export namespace Prisma {
     sessionStart: Date | string;
     sessionEnd?: Date | string | null;
     duration?: number | null;
+    isActive?: boolean;
   };
 
   export type PresenceLogUpdateManyMutationInput = {
@@ -22118,6 +22151,7 @@ export namespace Prisma {
       | string
       | null;
     duration?: NullableIntFieldUpdateOperationsInput | number | null;
+    isActive?: BoolFieldUpdateOperationsInput | boolean;
   };
 
   export type PresenceLogUncheckedUpdateManyInput = {
@@ -22134,6 +22168,7 @@ export namespace Prisma {
       | string
       | null;
     duration?: NullableIntFieldUpdateOperationsInput | number | null;
+    isActive?: BoolFieldUpdateOperationsInput | boolean;
   };
 
   export type StringFilter<$PrismaModel = never> = {
@@ -23131,6 +23166,11 @@ export namespace Prisma {
     not?: NestedEnumPresenceStatusFilter<$PrismaModel> | $Enums.PresenceStatus;
   };
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>;
+    not?: NestedBoolFilter<$PrismaModel> | boolean;
+  };
+
   export type PresenceLogCountOrderByAggregateInput = {
     id?: SortOrder;
     projectId?: SortOrder;
@@ -23139,6 +23179,7 @@ export namespace Prisma {
     sessionStart?: SortOrder;
     sessionEnd?: SortOrder;
     duration?: SortOrder;
+    isActive?: SortOrder;
   };
 
   export type PresenceLogAvgOrderByAggregateInput = {
@@ -23153,6 +23194,7 @@ export namespace Prisma {
     sessionStart?: SortOrder;
     sessionEnd?: SortOrder;
     duration?: SortOrder;
+    isActive?: SortOrder;
   };
 
   export type PresenceLogMinOrderByAggregateInput = {
@@ -23163,6 +23205,7 @@ export namespace Prisma {
     sessionStart?: SortOrder;
     sessionEnd?: SortOrder;
     duration?: SortOrder;
+    isActive?: SortOrder;
   };
 
   export type PresenceLogSumOrderByAggregateInput = {
@@ -23185,6 +23228,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>;
     _min?: NestedEnumPresenceStatusFilter<$PrismaModel>;
     _max?: NestedEnumPresenceStatusFilter<$PrismaModel>;
+  };
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>;
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean;
+    _count?: NestedIntFilter<$PrismaModel>;
+    _min?: NestedBoolFilter<$PrismaModel>;
+    _max?: NestedBoolFilter<$PrismaModel>;
   };
 
   export type UserOAuthCreateNestedManyWithoutUserInput = {
@@ -25245,6 +25296,10 @@ export namespace Prisma {
     set?: $Enums.PresenceStatus;
   };
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean;
+  };
+
   export type ProjectUpdateOneRequiredWithoutPresenceLogsNestedInput = {
     create?: XOR<
       ProjectCreateWithoutPresenceLogsInput,
@@ -25699,6 +25754,11 @@ export namespace Prisma {
     not?: NestedEnumPresenceStatusFilter<$PrismaModel> | $Enums.PresenceStatus;
   };
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>;
+    not?: NestedBoolFilter<$PrismaModel> | boolean;
+  };
+
   export type NestedEnumPresenceStatusWithAggregatesFilter<
     $PrismaModel = never,
   > = {
@@ -25717,6 +25777,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>;
     _min?: NestedEnumPresenceStatusFilter<$PrismaModel>;
     _max?: NestedEnumPresenceStatusFilter<$PrismaModel>;
+  };
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>;
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean;
+    _count?: NestedIntFilter<$PrismaModel>;
+    _min?: NestedBoolFilter<$PrismaModel>;
+    _max?: NestedBoolFilter<$PrismaModel>;
   };
 
   export type UserOAuthCreateWithoutUserInput = {
@@ -26037,6 +26105,7 @@ export namespace Prisma {
     sessionStart: Date | string;
     sessionEnd?: Date | string | null;
     duration?: number | null;
+    isActive?: boolean;
     project: ProjectCreateNestedOneWithoutPresenceLogsInput;
   };
 
@@ -26047,6 +26116,7 @@ export namespace Prisma {
     sessionStart: Date | string;
     sessionEnd?: Date | string | null;
     duration?: number | null;
+    isActive?: boolean;
   };
 
   export type PresenceLogCreateOrConnectWithoutUserInput = {
@@ -26508,6 +26578,7 @@ export namespace Prisma {
     sessionStart?: DateTimeFilter<"PresenceLog"> | Date | string;
     sessionEnd?: DateTimeNullableFilter<"PresenceLog"> | Date | string | null;
     duration?: IntNullableFilter<"PresenceLog"> | number | null;
+    isActive?: BoolFilter<"PresenceLog"> | boolean;
   };
 
   export type RefreshTokenUpsertWithWhereUniqueWithoutUserInput = {
@@ -26984,6 +27055,7 @@ export namespace Prisma {
     sessionStart: Date | string;
     sessionEnd?: Date | string | null;
     duration?: number | null;
+    isActive?: boolean;
     user: UserCreateNestedOneWithoutPresenceLogsInput;
   };
 
@@ -26994,6 +27066,7 @@ export namespace Prisma {
     sessionStart: Date | string;
     sessionEnd?: Date | string | null;
     duration?: number | null;
+    isActive?: boolean;
   };
 
   export type PresenceLogCreateOrConnectWithoutProjectInput = {
@@ -29012,6 +29085,7 @@ export namespace Prisma {
     sessionStart: Date | string;
     sessionEnd?: Date | string | null;
     duration?: number | null;
+    isActive?: boolean;
   };
 
   export type RefreshTokenCreateManyUserInput = {
@@ -29360,6 +29434,7 @@ export namespace Prisma {
       | string
       | null;
     duration?: NullableIntFieldUpdateOperationsInput | number | null;
+    isActive?: BoolFieldUpdateOperationsInput | boolean;
     project?: ProjectUpdateOneRequiredWithoutPresenceLogsNestedInput;
   };
 
@@ -29376,6 +29451,7 @@ export namespace Prisma {
       | string
       | null;
     duration?: NullableIntFieldUpdateOperationsInput | number | null;
+    isActive?: BoolFieldUpdateOperationsInput | boolean;
   };
 
   export type PresenceLogUncheckedUpdateManyWithoutUserInput = {
@@ -29391,6 +29467,7 @@ export namespace Prisma {
       | string
       | null;
     duration?: NullableIntFieldUpdateOperationsInput | number | null;
+    isActive?: BoolFieldUpdateOperationsInput | boolean;
   };
 
   export type RefreshTokenUpdateWithoutUserInput = {
@@ -29515,6 +29592,7 @@ export namespace Prisma {
     sessionStart: Date | string;
     sessionEnd?: Date | string | null;
     duration?: number | null;
+    isActive?: boolean;
   };
 
   export type ProjectMemberUpdateWithoutProjectInput = {
@@ -29736,6 +29814,7 @@ export namespace Prisma {
       | string
       | null;
     duration?: NullableIntFieldUpdateOperationsInput | number | null;
+    isActive?: BoolFieldUpdateOperationsInput | boolean;
     user?: UserUpdateOneRequiredWithoutPresenceLogsNestedInput;
   };
 
@@ -29752,6 +29831,7 @@ export namespace Prisma {
       | string
       | null;
     duration?: NullableIntFieldUpdateOperationsInput | number | null;
+    isActive?: BoolFieldUpdateOperationsInput | boolean;
   };
 
   export type PresenceLogUncheckedUpdateManyWithoutProjectInput = {
@@ -29767,6 +29847,7 @@ export namespace Prisma {
       | string
       | null;
     duration?: NullableIntFieldUpdateOperationsInput | number | null;
+    isActive?: BoolFieldUpdateOperationsInput | boolean;
   };
 
   /**

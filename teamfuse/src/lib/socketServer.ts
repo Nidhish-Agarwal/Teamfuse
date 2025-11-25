@@ -1,77 +1,59 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Server, Socket } from "socket.io";
-import { logStartSession, updateStatus } from "./presence/logPresence";
+import { SessionManager } from "./presence/sessionManager";
 
-interface JoinPayload {
-  projectId: string;
-  userId: string;
-}
-
-const activeConnections = new Map<string, string>();
+const userSockets = new Map<string, Set<string>>();
+const socketProjects = new Map<string, string>();
 
 export function socketServer(io: Server) {
   io.on("connection", (socket: Socket) => {
-    let currentUserId: string | null = null;
-    let currentProjectId: string | null = null;
+    socket.on("join_project", async ({ projectId, userId }) => {
+      socketProjects.set(socket.id, projectId);
+      await socket.join(projectId);
 
-    socket.on("join_project", async ({ projectId, userId }: JoinPayload) => {
-      // Save state
-      currentUserId = userId;
-      currentProjectId = projectId;
+      if (!userSockets.has(userId)) userSockets.set(userId, new Set());
+      userSockets.get(userId)!.add(socket.id);
 
-      // Disconnect old socket if duplicated
-      const oldSocketId = activeConnections.get(userId);
-
-      if (oldSocketId && oldSocketId !== socket.id) {
-        const oldSocket = io.sockets.sockets.get(oldSocketId);
-        if (oldSocket) {
-          (oldSocket as any)._skipEnd = true;
-          oldSocket.disconnect(true);
-        }
-      }
-
-      activeConnections.set(userId, socket.id);
-      socket.join(projectId);
-
-      // Log or create session
-      const session = await logStartSession(userId, projectId);
-
-      if (session) {
-        await updateStatus(userId, projectId, "ONLINE");
-
-        io.to(projectId).emit("presence_update", {
-          userId,
-          projectId,
-          status: "ONLINE",
-        });
-      }
-    });
-
-    socket.on("status_update", async ({ userId, projectId, status }) => {
-      // Ignore foreign socket updates
-      if (activeConnections.get(userId) !== socket.id) return;
-
-      await updateStatus(userId, projectId, status);
+      const session = await SessionManager.startSession(userId, projectId);
 
       io.to(projectId).emit("presence_update", {
         userId,
         projectId,
-        status,
+        status: session.status,
       });
     });
 
-    socket.on("disconnect", () => {
-      // Skip disconnects from duplicate replacement
-      if ((socket as any)._skipEnd) return;
+    socket.on("activity", async ({ userId, projectId }) => {
+      await SessionManager.resetIdle(userId, projectId);
 
-      if (currentUserId && currentProjectId) {
-        activeConnections.delete(currentUserId);
+      io.to(projectId).emit("presence_update", {
+        userId,
+        projectId,
+        status: "ONLINE",
+      });
+    });
 
-        io.to(currentProjectId).emit("presence_update", {
-          userId: currentUserId,
-          projectId: currentProjectId,
-          status: "OFFLINE",
-        });
+    socket.on("disconnect", async () => {
+      const projectId = socketProjects.get(socket.id);
+      socketProjects.delete(socket.id);
+
+      if (!projectId) return;
+
+      for (const [userId, sockets] of userSockets.entries()) {
+        if (sockets.has(socket.id)) {
+          sockets.delete(socket.id);
+
+          if (sockets.size === 0) {
+            userSockets.delete(userId);
+            await SessionManager.endSession(userId, projectId);
+
+            io.to(projectId).emit("presence_update", {
+              userId,
+              projectId,
+              status: "OFFLINE",
+            });
+          }
+          break;
+        }
       }
     });
   });

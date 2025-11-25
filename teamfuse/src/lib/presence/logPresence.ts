@@ -51,7 +51,7 @@ export async function logStartSession(userId: string, projectId: string) {
 export async function updateStatus(
   userId: string,
   projectId: string,
-  status: string
+  status: "ONLINE" | "OFFLINE" | "IDLE"
 ) {
   try {
     return await prisma.presenceLog.updateMany({

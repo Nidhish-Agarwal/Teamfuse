@@ -24,7 +24,10 @@ export default async function ProjectLayout({ children, params }: LayoutProps) {
 
       {/* RIGHT PRESENCE SIDEBAR — NO SCROLL */}
       <aside className="hidden xl:block w-80 border-l border-gray-800 p-4 overflow-visible">
-        <PresenceWidget projectId={projectId} currentUserId={currentUserId} />
+        <PresenceWidget
+          projectId={projectId}
+          currentUserId={currentUserId ?? ""}
+        />
       </aside>
     </div>
   );

@@ -1,93 +1,116 @@
 import { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { withAuth } from "@/lib/withAuth";
 import { sendSuccess, sendError } from "@/lib/responseHandler";
+import { withAuth } from "@/lib/withAuth";
 
-export const GET = withAuth(async (req: NextRequest, user) => {
+export const GET = withAuth(async (req: NextRequest) => {
   try {
     const url = new URL(req.url);
-    const projectId = url.pathname.split("/")[3];
+    const pathSegments = url.pathname.split("/");
 
-    if (!projectId) {
-      return sendError("Missing project ID", "BAD_REQUEST", 400);
+    const projectsIndex = pathSegments.findIndex(
+      (segment) => segment === "projects"
+    );
+    const projectId = pathSegments[projectsIndex + 1];
+
+    if (!projectId || projectId === "presence") {
+      return sendError("Missing or invalid project ID", "BAD_REQUEST", 400);
     }
 
     const members = await prisma.projectMember.findMany({
       where: { projectId, status: "ACCEPTED" },
-      include: {
-        user: {
-          select: { id: true, name: true, avatarUrl: true },
-        },
-      },
+      include: { user: true },
     });
 
     const userIds = members.map((m) => m.userId);
 
-    const logs = await prisma.presenceLog.findMany({
+    const activeSessions = await prisma.presenceLog.findMany({
       where: {
-        projectId,
         userId: { in: userIds },
+        projectId,
+        isActive: true,
       },
+    });
+
+    const allLogs = await prisma.presenceLog.findMany({
+      where: { userId: { in: userIds }, projectId },
       orderBy: { sessionStart: "desc" },
     });
 
     const now = new Date();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-    const result = userIds.map((userId) => {
-      const userLogs = logs.filter((l) => l.userId === userId);
+    const out = [];
+
+    for (const member of members) {
+      const userLogs = allLogs.filter((l) => l.userId === member.userId);
+      const userActiveSession = activeSessions.find(
+        (s) => s.userId === member.userId
+      );
 
       if (userLogs.length === 0) {
-        const member = members.find((m) => m.userId === userId)!;
-        return {
-          userId,
+        out.push({
+          userId: member.userId,
           name: member.user.name,
           avatarUrl: member.user.avatarUrl,
           status: "OFFLINE",
           totalActiveMinutes: 0,
+          todayMinutes: 0,
           lastActive: "Never",
-        };
+        });
+        continue;
+      }
+      let total = 0;
+      let todayMins = 0;
+
+      for (const log of userLogs) {
+        const valid =
+          log.status === "ONLINE" ||
+          log.status === "FOCUSED" ||
+          (log.status === "OFFLINE" && log.duration != null);
+
+        if (!valid) continue;
+
+        const sessionEnd = log.sessionEnd || (log.isActive ? now : null);
+        if (!sessionEnd) continue;
+
+        const minutes =
+          log.duration ??
+          Math.floor(
+            (sessionEnd.getTime() - log.sessionStart.getTime()) / 60000
+          );
+
+        total += minutes;
+
+        const sessionDay = new Date(log.sessionStart);
+        sessionDay.setHours(0, 0, 0, 0);
+
+        if (sessionDay.getTime() === today.getTime()) {
+          todayMins += minutes;
+        }
       }
 
       const latest = userLogs[0];
-      const lastActive = (
-        latest.sessionEnd || latest.sessionStart
-      ).toISOString();
 
-      let totalMinutes = 0;
-      for (const log of userLogs) {
-        let minutes = 0;
+      const actualStatus = userActiveSession
+        ? userActiveSession.status
+        : "OFFLINE";
 
-        if (log.duration) {
-          minutes = log.duration;
-        } else if (log.sessionEnd) {
-          const ms = log.sessionEnd.getTime() - log.sessionStart.getTime();
-          minutes = Math.max(1, Math.floor(ms / 60000));
-        } else {
-          // ACTIVE SESSION - count up to current time
-          const ms = now.getTime() - log.sessionStart.getTime();
-          minutes = Math.max(1, Math.floor(ms / 60000));
-        }
-
-        if (log.status === "ONLINE" || log.status === "FOCUSED") {
-          totalMinutes += minutes;
-        }
-      }
-
-      const member = members.find((m) => m.userId === userId)!;
-
-      return {
-        userId,
+      out.push({
+        userId: member.userId,
         name: member.user.name,
         avatarUrl: member.user.avatarUrl,
-        status: latest.status,
-        totalActiveMinutes: totalMinutes,
-        lastActive,
-      };
-    });
+        status: actualStatus,
+        totalActiveMinutes: total,
+        todayMinutes: todayMins,
+        lastActive: (latest.sessionEnd || latest.sessionStart).toISOString(),
+      });
+    }
 
-    return sendSuccess(result, "Presence loaded");
+    return sendSuccess(out, "Presence loaded");
   } catch (err) {
-    console.error("Presence API error:", err);
-    return sendError("Failed to load presence", "INTERNAL_ERROR", 500, err);
+    console.error(err);
+    return sendError("Presence error", "INTERNAL_ERROR", 500);
   }
 });

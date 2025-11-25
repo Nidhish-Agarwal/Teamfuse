@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 
 interface PresenceMap {
@@ -8,9 +8,11 @@ interface PresenceMap {
 }
 
 let socket: Socket | null = null;
+let activityTimeout: NodeJS.Timeout | null = null;
 
 export function usePresence(projectId: string, currentUserId: string) {
   const [presence, setPresence] = useState<PresenceMap>({});
+  const joinedRef = useRef(false);
 
   useEffect(() => {
     if (!projectId || !currentUserId) return;
@@ -18,11 +20,7 @@ export function usePresence(projectId: string, currentUserId: string) {
     if (!socket) {
       socket = io(
         process.env.NODE_ENV === "production" ? "/" : "http://localhost:3000",
-        {
-          path: "/api/socket/io",
-          transports: ["websocket"],
-          reconnection: true,
-        }
+        { path: "/api/socket/io" }
       );
 
       socket.on("presence_update", (data) => {
@@ -33,12 +31,36 @@ export function usePresence(projectId: string, currentUserId: string) {
       });
     }
 
-    socket.emit("join_project", {
-      projectId,
-      userId: currentUserId,
-    });
+    if (!joinedRef.current) {
+      socket.emit("join_project", { projectId, userId: currentUserId });
+      joinedRef.current = true;
+    }
 
-    return () => {};
+    //Emit activity if any keyboard/mouse/touch happens
+    const handleActivity = () => {
+      if (activityTimeout) return;
+      activityTimeout = setTimeout(() => {
+        socket?.emit("activity", { userId: currentUserId, projectId });
+        activityTimeout = null;
+      }, 600);
+    };
+
+    const events = [
+      "mousemove",
+      "mousedown",
+      "keypress",
+      "keydown",
+      "scroll",
+      "wheel",
+      "touchstart",
+    ];
+
+    events.forEach((ev) => document.addEventListener(ev, handleActivity));
+
+    return () => {
+      events.forEach((ev) => document.removeEventListener(ev, handleActivity));
+      if (activityTimeout) clearTimeout(activityTimeout);
+    };
   }, [projectId, currentUserId]);
 
   return presence;
