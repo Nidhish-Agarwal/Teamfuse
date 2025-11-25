@@ -3,12 +3,6 @@ import { AppError } from "../errors/AppError";
 
 export async function getProjectById(projectId: string, userId: string) {
   try {
-    console.log(
-      "Fetching project for userId:",
-      userId,
-      "and projectId:",
-      projectId
-    );
     // Check if user is a member of the project
     const membership = await prisma.projectMember.findFirst({
       where: { projectId, userId: userId, status: "ACCEPTED" },

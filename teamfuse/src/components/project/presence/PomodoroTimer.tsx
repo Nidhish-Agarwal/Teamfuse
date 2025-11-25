@@ -32,7 +32,9 @@ export default function PomodoroTimer({ projectId, userId }: PomodoroProps) {
   const start = () => {
     if (running) return;
     setRunning(true);
-    send(isBreak ? "IDLE" : "FOCUSED");
+
+    // ⭐ Focus → FOCUSED, Break → ONLINE (not IDLE)
+    send(isBreak ? "ONLINE" : "FOCUSED");
 
     ref.current = setInterval(() => {
       setSeconds((prev) => prev - 1);
@@ -42,6 +44,8 @@ export default function PomodoroTimer({ projectId, userId }: PomodoroProps) {
   const pause = () => {
     setRunning(false);
     if (ref.current) clearInterval(ref.current);
+
+    // ⭐ Pause = ONLINE
     send("ONLINE");
   };
 
@@ -61,14 +65,20 @@ export default function PomodoroTimer({ projectId, userId }: PomodoroProps) {
       setRunning(false);
 
       if (!isBreak) {
+        // ⭐ Focus finished → break starts
         setCount((c) => c + 1);
         setIsBreak(true);
         setSeconds(BREAK);
-        send("IDLE");
+
+        // ⭐ Break = ONLINE
+        send("ONLINE");
       } else {
+        // ⭐ Break finished → focus again
         setIsBreak(false);
         setSeconds(FOCUS);
-        send("ONLINE");
+
+        // ⭐ Focus = FOCUSED
+        send("FOCUSED");
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -246,6 +246,7 @@ exports.Prisma.PresenceLogScalarFieldEnum = {
   sessionStart: "sessionStart",
   sessionEnd: "sessionEnd",
   duration: "duration",
+  isActive: "isActive",
 };
 
 exports.Prisma.SortOrder = {

@@ -202,6 +202,10 @@ model PresenceLog {
   sessionStart DateTime
   sessionEnd   DateTime?
   duration     Int? // minutes
+  isActive     Boolean        @default(false)
+
+  @@index([userId, projectId, isActive])
+  @@index([sessionStart])
 }
 
 enum PresenceStatus {
