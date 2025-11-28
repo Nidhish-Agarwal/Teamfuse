@@ -17,7 +17,8 @@ model User {
   oauthProvider    String           @default("github")
   oauthId          String           @unique
   createdAt        DateTime         @default(now())
-  messages         ChatMessage[]
+  messages         ChatMessage[]    @relation("MessageSender")
+  receivedMessages ChatMessage[]    @relation("MessageRecipient")
   feedbackGiven    Feedback[]       @relation("FeedbackGiven")
   feedbackReceived Feedback[]       @relation("FeedbackReceived")
   githubActivities GitHubActivity[]
@@ -119,16 +120,21 @@ model Task {
 }
 
 model ChatMessage {
-  id        String   @id @default(cuid())
-  projectId String
-  senderId  String
-  message   String
-  type      String   @default("text")
-  aiLabel   String?
-  createdAt DateTime @default(now())
-  project   Project  @relation(fields: [projectId], references: [id])
-  sender    User     @relation(fields: [senderId], references: [id])
+  id          String   @id @default(cuid())
+  projectId   String
+  senderId    String
+  recipientId String?
+  message     String
+  type        String   @default("text")
+  aiLabel     String?
+  createdAt   DateTime @default(now())
+  project     Project  @relation(fields: [projectId], references: [id])
+  sender      User    @relation("MessageSender", fields: [senderId], references: [id])
+  recipient   User?   @relation("MessageRecipient", fields: [recipientId], references: [id])
 }
+
+
+
 
 model GitHubActivity {
   id            String   @id @default(cuid())
