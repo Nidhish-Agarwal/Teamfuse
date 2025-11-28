@@ -2041,31 +2041,33 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
-    oauthAccounts: number;
-    projectsCreated: number;
-    memberships: number;
     messages: number;
-    tasks: number;
+    receivedMessages: number;
     feedbackGiven: number;
     feedbackReceived: number;
     githubActivities: number;
     presenceLogs: number;
+    projectsCreated: number;
+    memberships: number;
     refreshTokens: number;
+    tasks: number;
+    oauthAccounts: number;
   };
 
   export type UserCountOutputTypeSelect<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
-    oauthAccounts?: boolean | UserCountOutputTypeCountOauthAccountsArgs;
-    projectsCreated?: boolean | UserCountOutputTypeCountProjectsCreatedArgs;
-    memberships?: boolean | UserCountOutputTypeCountMembershipsArgs;
     messages?: boolean | UserCountOutputTypeCountMessagesArgs;
-    tasks?: boolean | UserCountOutputTypeCountTasksArgs;
+    receivedMessages?: boolean | UserCountOutputTypeCountReceivedMessagesArgs;
     feedbackGiven?: boolean | UserCountOutputTypeCountFeedbackGivenArgs;
     feedbackReceived?: boolean | UserCountOutputTypeCountFeedbackReceivedArgs;
     githubActivities?: boolean | UserCountOutputTypeCountGithubActivitiesArgs;
     presenceLogs?: boolean | UserCountOutputTypeCountPresenceLogsArgs;
+    projectsCreated?: boolean | UserCountOutputTypeCountProjectsCreatedArgs;
+    memberships?: boolean | UserCountOutputTypeCountMembershipsArgs;
     refreshTokens?: boolean | UserCountOutputTypeCountRefreshTokensArgs;
+    tasks?: boolean | UserCountOutputTypeCountTasksArgs;
+    oauthAccounts?: boolean | UserCountOutputTypeCountOauthAccountsArgs;
   };
 
   // Custom InputTypes
@@ -2084,33 +2086,6 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountOauthAccountsArgs<
-    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-  > = {
-    where?: UserOAuthWhereInput;
-  };
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountProjectsCreatedArgs<
-    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-  > = {
-    where?: ProjectWhereInput;
-  };
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountMembershipsArgs<
-    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-  > = {
-    where?: ProjectMemberWhereInput;
-  };
-
-  /**
-   * UserCountOutputType without action
-   */
   export type UserCountOutputTypeCountMessagesArgs<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
@@ -2120,10 +2095,10 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountTasksArgs<
+  export type UserCountOutputTypeCountReceivedMessagesArgs<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
-    where?: TaskWhereInput;
+    where?: ChatMessageWhereInput;
   };
 
   /**
@@ -2165,6 +2140,24 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
+  export type UserCountOutputTypeCountProjectsCreatedArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: ProjectWhereInput;
+  };
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountMembershipsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: ProjectMemberWhereInput;
+  };
+
+  /**
+   * UserCountOutputType without action
+   */
   export type UserCountOutputTypeCountRefreshTokensArgs<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
@@ -2172,29 +2165,47 @@ export namespace Prisma {
   };
 
   /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTasksArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: TaskWhereInput;
+  };
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountOauthAccountsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: UserOAuthWhereInput;
+  };
+
+  /**
    * Count Type ProjectCountOutputType
    */
 
   export type ProjectCountOutputType = {
-    members: number;
-    tasks: number;
     chatMessages: number;
     feedbacks: number;
     githubData: number;
     insights: number;
     presenceLogs: number;
+    members: number;
+    tasks: number;
   };
 
   export type ProjectCountOutputTypeSelect<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
-    members?: boolean | ProjectCountOutputTypeCountMembersArgs;
-    tasks?: boolean | ProjectCountOutputTypeCountTasksArgs;
     chatMessages?: boolean | ProjectCountOutputTypeCountChatMessagesArgs;
     feedbacks?: boolean | ProjectCountOutputTypeCountFeedbacksArgs;
     githubData?: boolean | ProjectCountOutputTypeCountGithubDataArgs;
     insights?: boolean | ProjectCountOutputTypeCountInsightsArgs;
     presenceLogs?: boolean | ProjectCountOutputTypeCountPresenceLogsArgs;
+    members?: boolean | ProjectCountOutputTypeCountMembersArgs;
+    tasks?: boolean | ProjectCountOutputTypeCountTasksArgs;
   };
 
   // Custom InputTypes
@@ -2208,24 +2219,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the ProjectCountOutputType
      */
     select?: ProjectCountOutputTypeSelect<ExtArgs> | null;
-  };
-
-  /**
-   * ProjectCountOutputType without action
-   */
-  export type ProjectCountOutputTypeCountMembersArgs<
-    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-  > = {
-    where?: ProjectMemberWhereInput;
-  };
-
-  /**
-   * ProjectCountOutputType without action
-   */
-  export type ProjectCountOutputTypeCountTasksArgs<
-    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-  > = {
-    where?: TaskWhereInput;
   };
 
   /**
@@ -2271,6 +2264,24 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     where?: PresenceLogWhereInput;
+  };
+
+  /**
+   * ProjectCountOutputType without action
+   */
+  export type ProjectCountOutputTypeCountMembersArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: ProjectMemberWhereInput;
+  };
+
+  /**
+   * ProjectCountOutputType without action
+   */
+  export type ProjectCountOutputTypeCountTasksArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: TaskWhereInput;
   };
 
   /**
@@ -2460,17 +2471,18 @@ export namespace Prisma {
       oauthProvider?: boolean;
       oauthId?: boolean;
       createdAt?: boolean;
-      oauthAccounts?: boolean | User$oauthAccountsArgs<ExtArgs>;
-      projectsCreated?: boolean | User$projectsCreatedArgs<ExtArgs>;
-      googleDocsData?: boolean | User$googleDocsDataArgs<ExtArgs>;
-      memberships?: boolean | User$membershipsArgs<ExtArgs>;
       messages?: boolean | User$messagesArgs<ExtArgs>;
-      tasks?: boolean | User$tasksArgs<ExtArgs>;
+      receivedMessages?: boolean | User$receivedMessagesArgs<ExtArgs>;
       feedbackGiven?: boolean | User$feedbackGivenArgs<ExtArgs>;
       feedbackReceived?: boolean | User$feedbackReceivedArgs<ExtArgs>;
       githubActivities?: boolean | User$githubActivitiesArgs<ExtArgs>;
+      googleDocsData?: boolean | User$googleDocsDataArgs<ExtArgs>;
       presenceLogs?: boolean | User$presenceLogsArgs<ExtArgs>;
+      projectsCreated?: boolean | User$projectsCreatedArgs<ExtArgs>;
+      memberships?: boolean | User$membershipsArgs<ExtArgs>;
       refreshTokens?: boolean | User$refreshTokensArgs<ExtArgs>;
+      tasks?: boolean | User$tasksArgs<ExtArgs>;
+      oauthAccounts?: boolean | User$oauthAccountsArgs<ExtArgs>;
       _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs["result"]["user"]
@@ -2531,17 +2543,18 @@ export namespace Prisma {
   export type UserInclude<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
-    oauthAccounts?: boolean | User$oauthAccountsArgs<ExtArgs>;
-    projectsCreated?: boolean | User$projectsCreatedArgs<ExtArgs>;
-    googleDocsData?: boolean | User$googleDocsDataArgs<ExtArgs>;
-    memberships?: boolean | User$membershipsArgs<ExtArgs>;
     messages?: boolean | User$messagesArgs<ExtArgs>;
-    tasks?: boolean | User$tasksArgs<ExtArgs>;
+    receivedMessages?: boolean | User$receivedMessagesArgs<ExtArgs>;
     feedbackGiven?: boolean | User$feedbackGivenArgs<ExtArgs>;
     feedbackReceived?: boolean | User$feedbackReceivedArgs<ExtArgs>;
     githubActivities?: boolean | User$githubActivitiesArgs<ExtArgs>;
+    googleDocsData?: boolean | User$googleDocsDataArgs<ExtArgs>;
     presenceLogs?: boolean | User$presenceLogsArgs<ExtArgs>;
+    projectsCreated?: boolean | User$projectsCreatedArgs<ExtArgs>;
+    memberships?: boolean | User$membershipsArgs<ExtArgs>;
     refreshTokens?: boolean | User$refreshTokensArgs<ExtArgs>;
+    tasks?: boolean | User$tasksArgs<ExtArgs>;
+    oauthAccounts?: boolean | User$oauthAccountsArgs<ExtArgs>;
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>;
   };
   export type UserIncludeCreateManyAndReturn<
@@ -2556,17 +2569,18 @@ export namespace Prisma {
   > = {
     name: "User";
     objects: {
-      oauthAccounts: Prisma.$UserOAuthPayload<ExtArgs>[];
-      projectsCreated: Prisma.$ProjectPayload<ExtArgs>[];
-      googleDocsData: Prisma.$GoogleDocsDataPayload<ExtArgs> | null;
-      memberships: Prisma.$ProjectMemberPayload<ExtArgs>[];
       messages: Prisma.$ChatMessagePayload<ExtArgs>[];
-      tasks: Prisma.$TaskPayload<ExtArgs>[];
+      receivedMessages: Prisma.$ChatMessagePayload<ExtArgs>[];
       feedbackGiven: Prisma.$FeedbackPayload<ExtArgs>[];
       feedbackReceived: Prisma.$FeedbackPayload<ExtArgs>[];
       githubActivities: Prisma.$GitHubActivityPayload<ExtArgs>[];
+      googleDocsData: Prisma.$GoogleDocsDataPayload<ExtArgs> | null;
       presenceLogs: Prisma.$PresenceLogPayload<ExtArgs>[];
+      projectsCreated: Prisma.$ProjectPayload<ExtArgs>[];
+      memberships: Prisma.$ProjectMemberPayload<ExtArgs>[];
       refreshTokens: Prisma.$RefreshTokenPayload<ExtArgs>[];
+      tasks: Prisma.$TaskPayload<ExtArgs>[];
+      oauthAccounts: Prisma.$UserOAuthPayload<ExtArgs>[];
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -3122,52 +3136,6 @@ export namespace Prisma {
     GlobalOmitOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
-    oauthAccounts<T extends User$oauthAccountsArgs<ExtArgs> = {}>(
-      args?: Subset<T, User$oauthAccountsArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<
-      | $Result.GetResult<
-          Prisma.$UserOAuthPayload<ExtArgs>,
-          T,
-          "findMany",
-          GlobalOmitOptions
-        >
-      | Null
-    >;
-    projectsCreated<T extends User$projectsCreatedArgs<ExtArgs> = {}>(
-      args?: Subset<T, User$projectsCreatedArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<
-      | $Result.GetResult<
-          Prisma.$ProjectPayload<ExtArgs>,
-          T,
-          "findMany",
-          GlobalOmitOptions
-        >
-      | Null
-    >;
-    googleDocsData<T extends User$googleDocsDataArgs<ExtArgs> = {}>(
-      args?: Subset<T, User$googleDocsDataArgs<ExtArgs>>
-    ): Prisma__GoogleDocsDataClient<
-      $Result.GetResult<
-        Prisma.$GoogleDocsDataPayload<ExtArgs>,
-        T,
-        "findUniqueOrThrow",
-        GlobalOmitOptions
-      > | null,
-      null,
-      ExtArgs,
-      GlobalOmitOptions
-    >;
-    memberships<T extends User$membershipsArgs<ExtArgs> = {}>(
-      args?: Subset<T, User$membershipsArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<
-      | $Result.GetResult<
-          Prisma.$ProjectMemberPayload<ExtArgs>,
-          T,
-          "findMany",
-          GlobalOmitOptions
-        >
-      | Null
-    >;
     messages<T extends User$messagesArgs<ExtArgs> = {}>(
       args?: Subset<T, User$messagesArgs<ExtArgs>>
     ): Prisma.PrismaPromise<
@@ -3179,11 +3147,11 @@ export namespace Prisma {
         >
       | Null
     >;
-    tasks<T extends User$tasksArgs<ExtArgs> = {}>(
-      args?: Subset<T, User$tasksArgs<ExtArgs>>
+    receivedMessages<T extends User$receivedMessagesArgs<ExtArgs> = {}>(
+      args?: Subset<T, User$receivedMessagesArgs<ExtArgs>>
     ): Prisma.PrismaPromise<
       | $Result.GetResult<
-          Prisma.$TaskPayload<ExtArgs>,
+          Prisma.$ChatMessagePayload<ExtArgs>,
           T,
           "findMany",
           GlobalOmitOptions
@@ -3223,6 +3191,19 @@ export namespace Prisma {
         >
       | Null
     >;
+    googleDocsData<T extends User$googleDocsDataArgs<ExtArgs> = {}>(
+      args?: Subset<T, User$googleDocsDataArgs<ExtArgs>>
+    ): Prisma__GoogleDocsDataClient<
+      $Result.GetResult<
+        Prisma.$GoogleDocsDataPayload<ExtArgs>,
+        T,
+        "findUniqueOrThrow",
+        GlobalOmitOptions
+      > | null,
+      null,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
     presenceLogs<T extends User$presenceLogsArgs<ExtArgs> = {}>(
       args?: Subset<T, User$presenceLogsArgs<ExtArgs>>
     ): Prisma.PrismaPromise<
@@ -3234,11 +3215,55 @@ export namespace Prisma {
         >
       | Null
     >;
+    projectsCreated<T extends User$projectsCreatedArgs<ExtArgs> = {}>(
+      args?: Subset<T, User$projectsCreatedArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$ProjectPayload<ExtArgs>,
+          T,
+          "findMany",
+          GlobalOmitOptions
+        >
+      | Null
+    >;
+    memberships<T extends User$membershipsArgs<ExtArgs> = {}>(
+      args?: Subset<T, User$membershipsArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$ProjectMemberPayload<ExtArgs>,
+          T,
+          "findMany",
+          GlobalOmitOptions
+        >
+      | Null
+    >;
     refreshTokens<T extends User$refreshTokensArgs<ExtArgs> = {}>(
       args?: Subset<T, User$refreshTokensArgs<ExtArgs>>
     ): Prisma.PrismaPromise<
       | $Result.GetResult<
           Prisma.$RefreshTokenPayload<ExtArgs>,
+          T,
+          "findMany",
+          GlobalOmitOptions
+        >
+      | Null
+    >;
+    tasks<T extends User$tasksArgs<ExtArgs> = {}>(
+      args?: Subset<T, User$tasksArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$TaskPayload<ExtArgs>,
+          T,
+          "findMany",
+          GlobalOmitOptions
+        >
+      | Null
+    >;
+    oauthAccounts<T extends User$oauthAccountsArgs<ExtArgs> = {}>(
+      args?: Subset<T, User$oauthAccountsArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$UserOAuthPayload<ExtArgs>,
           T,
           "findMany",
           GlobalOmitOptions
@@ -3707,111 +3732,6 @@ export namespace Prisma {
   };
 
   /**
-   * User.oauthAccounts
-   */
-  export type User$oauthAccountsArgs<
-    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-  > = {
-    /**
-     * Select specific fields to fetch from the UserOAuth
-     */
-    select?: UserOAuthSelect<ExtArgs> | null;
-    /**
-     * Omit specific fields from the UserOAuth
-     */
-    omit?: UserOAuthOmit<ExtArgs> | null;
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserOAuthInclude<ExtArgs> | null;
-    where?: UserOAuthWhereInput;
-    orderBy?:
-      | UserOAuthOrderByWithRelationInput
-      | UserOAuthOrderByWithRelationInput[];
-    cursor?: UserOAuthWhereUniqueInput;
-    take?: number;
-    skip?: number;
-    distinct?: UserOAuthScalarFieldEnum | UserOAuthScalarFieldEnum[];
-  };
-
-  /**
-   * User.projectsCreated
-   */
-  export type User$projectsCreatedArgs<
-    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-  > = {
-    /**
-     * Select specific fields to fetch from the Project
-     */
-    select?: ProjectSelect<ExtArgs> | null;
-    /**
-     * Omit specific fields from the Project
-     */
-    omit?: ProjectOmit<ExtArgs> | null;
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ProjectInclude<ExtArgs> | null;
-    where?: ProjectWhereInput;
-    orderBy?:
-      | ProjectOrderByWithRelationInput
-      | ProjectOrderByWithRelationInput[];
-    cursor?: ProjectWhereUniqueInput;
-    take?: number;
-    skip?: number;
-    distinct?: ProjectScalarFieldEnum | ProjectScalarFieldEnum[];
-  };
-
-  /**
-   * User.googleDocsData
-   */
-  export type User$googleDocsDataArgs<
-    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-  > = {
-    /**
-     * Select specific fields to fetch from the GoogleDocsData
-     */
-    select?: GoogleDocsDataSelect<ExtArgs> | null;
-    /**
-     * Omit specific fields from the GoogleDocsData
-     */
-    omit?: GoogleDocsDataOmit<ExtArgs> | null;
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: GoogleDocsDataInclude<ExtArgs> | null;
-    where?: GoogleDocsDataWhereInput;
-  };
-
-  /**
-   * User.memberships
-   */
-  export type User$membershipsArgs<
-    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-  > = {
-    /**
-     * Select specific fields to fetch from the ProjectMember
-     */
-    select?: ProjectMemberSelect<ExtArgs> | null;
-    /**
-     * Omit specific fields from the ProjectMember
-     */
-    omit?: ProjectMemberOmit<ExtArgs> | null;
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ProjectMemberInclude<ExtArgs> | null;
-    where?: ProjectMemberWhereInput;
-    orderBy?:
-      | ProjectMemberOrderByWithRelationInput
-      | ProjectMemberOrderByWithRelationInput[];
-    cursor?: ProjectMemberWhereUniqueInput;
-    take?: number;
-    skip?: number;
-    distinct?: ProjectMemberScalarFieldEnum | ProjectMemberScalarFieldEnum[];
-  };
-
-  /**
    * User.messages
    */
   export type User$messagesArgs<
@@ -3840,29 +3760,31 @@ export namespace Prisma {
   };
 
   /**
-   * User.tasks
+   * User.receivedMessages
    */
-  export type User$tasksArgs<
+  export type User$receivedMessagesArgs<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the ChatMessage
      */
-    select?: TaskSelect<ExtArgs> | null;
+    select?: ChatMessageSelect<ExtArgs> | null;
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the ChatMessage
      */
-    omit?: TaskOmit<ExtArgs> | null;
+    omit?: ChatMessageOmit<ExtArgs> | null;
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TaskInclude<ExtArgs> | null;
-    where?: TaskWhereInput;
-    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[];
-    cursor?: TaskWhereUniqueInput;
+    include?: ChatMessageInclude<ExtArgs> | null;
+    where?: ChatMessageWhereInput;
+    orderBy?:
+      | ChatMessageOrderByWithRelationInput
+      | ChatMessageOrderByWithRelationInput[];
+    cursor?: ChatMessageWhereUniqueInput;
     take?: number;
     skip?: number;
-    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[];
+    distinct?: ChatMessageScalarFieldEnum | ChatMessageScalarFieldEnum[];
   };
 
   /**
@@ -3950,6 +3872,27 @@ export namespace Prisma {
   };
 
   /**
+   * User.googleDocsData
+   */
+  export type User$googleDocsDataArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the GoogleDocsData
+     */
+    select?: GoogleDocsDataSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the GoogleDocsData
+     */
+    omit?: GoogleDocsDataOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoogleDocsDataInclude<ExtArgs> | null;
+    where?: GoogleDocsDataWhereInput;
+  };
+
+  /**
    * User.presenceLogs
    */
   export type User$presenceLogsArgs<
@@ -3978,6 +3921,62 @@ export namespace Prisma {
   };
 
   /**
+   * User.projectsCreated
+   */
+  export type User$projectsCreatedArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Project
+     */
+    select?: ProjectSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Project
+     */
+    omit?: ProjectOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectInclude<ExtArgs> | null;
+    where?: ProjectWhereInput;
+    orderBy?:
+      | ProjectOrderByWithRelationInput
+      | ProjectOrderByWithRelationInput[];
+    cursor?: ProjectWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: ProjectScalarFieldEnum | ProjectScalarFieldEnum[];
+  };
+
+  /**
+   * User.memberships
+   */
+  export type User$membershipsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the ProjectMember
+     */
+    select?: ProjectMemberSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProjectMember
+     */
+    omit?: ProjectMemberOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectMemberInclude<ExtArgs> | null;
+    where?: ProjectMemberWhereInput;
+    orderBy?:
+      | ProjectMemberOrderByWithRelationInput
+      | ProjectMemberOrderByWithRelationInput[];
+    cursor?: ProjectMemberWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: ProjectMemberScalarFieldEnum | ProjectMemberScalarFieldEnum[];
+  };
+
+  /**
    * User.refreshTokens
    */
   export type User$refreshTokensArgs<
@@ -4003,6 +4002,60 @@ export namespace Prisma {
     take?: number;
     skip?: number;
     distinct?: RefreshTokenScalarFieldEnum | RefreshTokenScalarFieldEnum[];
+  };
+
+  /**
+   * User.tasks
+   */
+  export type User$tasksArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null;
+    where?: TaskWhereInput;
+    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[];
+    cursor?: TaskWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[];
+  };
+
+  /**
+   * User.oauthAccounts
+   */
+  export type User$oauthAccountsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the UserOAuth
+     */
+    select?: UserOAuthSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the UserOAuth
+     */
+    omit?: UserOAuthOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserOAuthInclude<ExtArgs> | null;
+    where?: UserOAuthWhereInput;
+    orderBy?:
+      | UserOAuthOrderByWithRelationInput
+      | UserOAuthOrderByWithRelationInput[];
+    cursor?: UserOAuthWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: UserOAuthScalarFieldEnum | UserOAuthScalarFieldEnum[];
   };
 
   /**
@@ -7004,14 +7057,14 @@ export namespace Prisma {
       createdById?: boolean;
       createdAt?: boolean;
       lastActive?: boolean;
-      members?: boolean | Project$membersArgs<ExtArgs>;
-      tasks?: boolean | Project$tasksArgs<ExtArgs>;
       chatMessages?: boolean | Project$chatMessagesArgs<ExtArgs>;
       feedbacks?: boolean | Project$feedbacksArgs<ExtArgs>;
       githubData?: boolean | Project$githubDataArgs<ExtArgs>;
       insights?: boolean | Project$insightsArgs<ExtArgs>;
       presenceLogs?: boolean | Project$presenceLogsArgs<ExtArgs>;
       createdBy?: boolean | UserDefaultArgs<ExtArgs>;
+      members?: boolean | Project$membersArgs<ExtArgs>;
+      tasks?: boolean | Project$tasksArgs<ExtArgs>;
       _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs["result"]["project"]
@@ -7078,14 +7131,14 @@ export namespace Prisma {
   export type ProjectInclude<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
-    members?: boolean | Project$membersArgs<ExtArgs>;
-    tasks?: boolean | Project$tasksArgs<ExtArgs>;
     chatMessages?: boolean | Project$chatMessagesArgs<ExtArgs>;
     feedbacks?: boolean | Project$feedbacksArgs<ExtArgs>;
     githubData?: boolean | Project$githubDataArgs<ExtArgs>;
     insights?: boolean | Project$insightsArgs<ExtArgs>;
     presenceLogs?: boolean | Project$presenceLogsArgs<ExtArgs>;
     createdBy?: boolean | UserDefaultArgs<ExtArgs>;
+    members?: boolean | Project$membersArgs<ExtArgs>;
+    tasks?: boolean | Project$tasksArgs<ExtArgs>;
     _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>;
   };
   export type ProjectIncludeCreateManyAndReturn<
@@ -7104,14 +7157,14 @@ export namespace Prisma {
   > = {
     name: "Project";
     objects: {
-      members: Prisma.$ProjectMemberPayload<ExtArgs>[];
-      tasks: Prisma.$TaskPayload<ExtArgs>[];
       chatMessages: Prisma.$ChatMessagePayload<ExtArgs>[];
       feedbacks: Prisma.$FeedbackPayload<ExtArgs>[];
       githubData: Prisma.$GitHubActivityPayload<ExtArgs>[];
       insights: Prisma.$InsightPayload<ExtArgs>[];
       presenceLogs: Prisma.$PresenceLogPayload<ExtArgs>[];
       createdBy: Prisma.$UserPayload<ExtArgs>;
+      members: Prisma.$ProjectMemberPayload<ExtArgs>[];
+      tasks: Prisma.$TaskPayload<ExtArgs>[];
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -7669,28 +7722,6 @@ export namespace Prisma {
     GlobalOmitOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
-    members<T extends Project$membersArgs<ExtArgs> = {}>(
-      args?: Subset<T, Project$membersArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<
-      | $Result.GetResult<
-          Prisma.$ProjectMemberPayload<ExtArgs>,
-          T,
-          "findMany",
-          GlobalOmitOptions
-        >
-      | Null
-    >;
-    tasks<T extends Project$tasksArgs<ExtArgs> = {}>(
-      args?: Subset<T, Project$tasksArgs<ExtArgs>>
-    ): Prisma.PrismaPromise<
-      | $Result.GetResult<
-          Prisma.$TaskPayload<ExtArgs>,
-          T,
-          "findMany",
-          GlobalOmitOptions
-        >
-      | Null
-    >;
     chatMessages<T extends Project$chatMessagesArgs<ExtArgs> = {}>(
       args?: Subset<T, Project$chatMessagesArgs<ExtArgs>>
     ): Prisma.PrismaPromise<
@@ -7759,6 +7790,28 @@ export namespace Prisma {
       Null,
       ExtArgs,
       GlobalOmitOptions
+    >;
+    members<T extends Project$membersArgs<ExtArgs> = {}>(
+      args?: Subset<T, Project$membersArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$ProjectMemberPayload<ExtArgs>,
+          T,
+          "findMany",
+          GlobalOmitOptions
+        >
+      | Null
+    >;
+    tasks<T extends Project$tasksArgs<ExtArgs> = {}>(
+      args?: Subset<T, Project$tasksArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$TaskPayload<ExtArgs>,
+          T,
+          "findMany",
+          GlobalOmitOptions
+        >
+      | Null
     >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -8237,60 +8290,6 @@ export namespace Prisma {
   };
 
   /**
-   * Project.members
-   */
-  export type Project$membersArgs<
-    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-  > = {
-    /**
-     * Select specific fields to fetch from the ProjectMember
-     */
-    select?: ProjectMemberSelect<ExtArgs> | null;
-    /**
-     * Omit specific fields from the ProjectMember
-     */
-    omit?: ProjectMemberOmit<ExtArgs> | null;
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ProjectMemberInclude<ExtArgs> | null;
-    where?: ProjectMemberWhereInput;
-    orderBy?:
-      | ProjectMemberOrderByWithRelationInput
-      | ProjectMemberOrderByWithRelationInput[];
-    cursor?: ProjectMemberWhereUniqueInput;
-    take?: number;
-    skip?: number;
-    distinct?: ProjectMemberScalarFieldEnum | ProjectMemberScalarFieldEnum[];
-  };
-
-  /**
-   * Project.tasks
-   */
-  export type Project$tasksArgs<
-    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-  > = {
-    /**
-     * Select specific fields to fetch from the Task
-     */
-    select?: TaskSelect<ExtArgs> | null;
-    /**
-     * Omit specific fields from the Task
-     */
-    omit?: TaskOmit<ExtArgs> | null;
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TaskInclude<ExtArgs> | null;
-    where?: TaskWhereInput;
-    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[];
-    cursor?: TaskWhereUniqueInput;
-    take?: number;
-    skip?: number;
-    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[];
-  };
-
-  /**
    * Project.chatMessages
    */
   export type Project$chatMessagesArgs<
@@ -8428,6 +8427,60 @@ export namespace Prisma {
     take?: number;
     skip?: number;
     distinct?: PresenceLogScalarFieldEnum | PresenceLogScalarFieldEnum[];
+  };
+
+  /**
+   * Project.members
+   */
+  export type Project$membersArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the ProjectMember
+     */
+    select?: ProjectMemberSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProjectMember
+     */
+    omit?: ProjectMemberOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectMemberInclude<ExtArgs> | null;
+    where?: ProjectMemberWhereInput;
+    orderBy?:
+      | ProjectMemberOrderByWithRelationInput
+      | ProjectMemberOrderByWithRelationInput[];
+    cursor?: ProjectMemberWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: ProjectMemberScalarFieldEnum | ProjectMemberScalarFieldEnum[];
+  };
+
+  /**
+   * Project.tasks
+   */
+  export type Project$tasksArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null;
+    where?: TaskWhereInput;
+    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[];
+    cursor?: TaskWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[];
   };
 
   /**
@@ -8631,8 +8684,8 @@ export namespace Prisma {
       role?: boolean;
       status?: boolean;
       joinedAt?: boolean;
-      user?: boolean | UserDefaultArgs<ExtArgs>;
       project?: boolean | ProjectDefaultArgs<ExtArgs>;
+      user?: boolean | UserDefaultArgs<ExtArgs>;
     },
     ExtArgs["result"]["projectMember"]
   >;
@@ -8647,8 +8700,8 @@ export namespace Prisma {
       role?: boolean;
       status?: boolean;
       joinedAt?: boolean;
-      user?: boolean | UserDefaultArgs<ExtArgs>;
       project?: boolean | ProjectDefaultArgs<ExtArgs>;
+      user?: boolean | UserDefaultArgs<ExtArgs>;
     },
     ExtArgs["result"]["projectMember"]
   >;
@@ -8663,8 +8716,8 @@ export namespace Prisma {
       role?: boolean;
       status?: boolean;
       joinedAt?: boolean;
-      user?: boolean | UserDefaultArgs<ExtArgs>;
       project?: boolean | ProjectDefaultArgs<ExtArgs>;
+      user?: boolean | UserDefaultArgs<ExtArgs>;
     },
     ExtArgs["result"]["projectMember"]
   >;
@@ -8687,20 +8740,20 @@ export namespace Prisma {
   export type ProjectMemberInclude<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
-    user?: boolean | UserDefaultArgs<ExtArgs>;
     project?: boolean | ProjectDefaultArgs<ExtArgs>;
+    user?: boolean | UserDefaultArgs<ExtArgs>;
   };
   export type ProjectMemberIncludeCreateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
-    user?: boolean | UserDefaultArgs<ExtArgs>;
     project?: boolean | ProjectDefaultArgs<ExtArgs>;
+    user?: boolean | UserDefaultArgs<ExtArgs>;
   };
   export type ProjectMemberIncludeUpdateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
-    user?: boolean | UserDefaultArgs<ExtArgs>;
     project?: boolean | ProjectDefaultArgs<ExtArgs>;
+    user?: boolean | UserDefaultArgs<ExtArgs>;
   };
 
   export type $ProjectMemberPayload<
@@ -8708,8 +8761,8 @@ export namespace Prisma {
   > = {
     name: "ProjectMember";
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>;
       project: Prisma.$ProjectPayload<ExtArgs>;
+      user: Prisma.$UserPayload<ExtArgs>;
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -9269,11 +9322,11 @@ export namespace Prisma {
     GlobalOmitOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(
-      args?: Subset<T, UserDefaultArgs<ExtArgs>>
-    ): Prisma__UserClient<
+    project<T extends ProjectDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, ProjectDefaultArgs<ExtArgs>>
+    ): Prisma__ProjectClient<
       | $Result.GetResult<
-          Prisma.$UserPayload<ExtArgs>,
+          Prisma.$ProjectPayload<ExtArgs>,
           T,
           "findUniqueOrThrow",
           GlobalOmitOptions
@@ -9283,11 +9336,11 @@ export namespace Prisma {
       ExtArgs,
       GlobalOmitOptions
     >;
-    project<T extends ProjectDefaultArgs<ExtArgs> = {}>(
-      args?: Subset<T, ProjectDefaultArgs<ExtArgs>>
-    ): Prisma__ProjectClient<
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, UserDefaultArgs<ExtArgs>>
+    ): Prisma__UserClient<
       | $Result.GetResult<
-          Prisma.$ProjectPayload<ExtArgs>,
+          Prisma.$UserPayload<ExtArgs>,
           T,
           "findUniqueOrThrow",
           GlobalOmitOptions
@@ -10050,8 +10103,8 @@ export namespace Prisma {
       createdAt?: boolean;
       completedAt?: boolean;
       score?: boolean;
-      project?: boolean | ProjectDefaultArgs<ExtArgs>;
       assignee?: boolean | Task$assigneeArgs<ExtArgs>;
+      project?: boolean | ProjectDefaultArgs<ExtArgs>;
     },
     ExtArgs["result"]["task"]
   >;
@@ -10071,8 +10124,8 @@ export namespace Prisma {
       createdAt?: boolean;
       completedAt?: boolean;
       score?: boolean;
-      project?: boolean | ProjectDefaultArgs<ExtArgs>;
       assignee?: boolean | Task$assigneeArgs<ExtArgs>;
+      project?: boolean | ProjectDefaultArgs<ExtArgs>;
     },
     ExtArgs["result"]["task"]
   >;
@@ -10092,8 +10145,8 @@ export namespace Prisma {
       createdAt?: boolean;
       completedAt?: boolean;
       score?: boolean;
-      project?: boolean | ProjectDefaultArgs<ExtArgs>;
       assignee?: boolean | Task$assigneeArgs<ExtArgs>;
+      project?: boolean | ProjectDefaultArgs<ExtArgs>;
     },
     ExtArgs["result"]["task"]
   >;
@@ -10131,20 +10184,20 @@ export namespace Prisma {
   export type TaskInclude<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
-    project?: boolean | ProjectDefaultArgs<ExtArgs>;
     assignee?: boolean | Task$assigneeArgs<ExtArgs>;
+    project?: boolean | ProjectDefaultArgs<ExtArgs>;
   };
   export type TaskIncludeCreateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
-    project?: boolean | ProjectDefaultArgs<ExtArgs>;
     assignee?: boolean | Task$assigneeArgs<ExtArgs>;
+    project?: boolean | ProjectDefaultArgs<ExtArgs>;
   };
   export type TaskIncludeUpdateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
-    project?: boolean | ProjectDefaultArgs<ExtArgs>;
     assignee?: boolean | Task$assigneeArgs<ExtArgs>;
+    project?: boolean | ProjectDefaultArgs<ExtArgs>;
   };
 
   export type $TaskPayload<
@@ -10152,8 +10205,8 @@ export namespace Prisma {
   > = {
     name: "Task";
     objects: {
-      project: Prisma.$ProjectPayload<ExtArgs>;
       assignee: Prisma.$UserPayload<ExtArgs> | null;
+      project: Prisma.$ProjectPayload<ExtArgs>;
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -10713,6 +10766,19 @@ export namespace Prisma {
     GlobalOmitOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
+    assignee<T extends Task$assigneeArgs<ExtArgs> = {}>(
+      args?: Subset<T, Task$assigneeArgs<ExtArgs>>
+    ): Prisma__UserClient<
+      $Result.GetResult<
+        Prisma.$UserPayload<ExtArgs>,
+        T,
+        "findUniqueOrThrow",
+        GlobalOmitOptions
+      > | null,
+      null,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
     project<T extends ProjectDefaultArgs<ExtArgs> = {}>(
       args?: Subset<T, ProjectDefaultArgs<ExtArgs>>
     ): Prisma__ProjectClient<
@@ -10724,19 +10790,6 @@ export namespace Prisma {
         >
       | Null,
       Null,
-      ExtArgs,
-      GlobalOmitOptions
-    >;
-    assignee<T extends Task$assigneeArgs<ExtArgs> = {}>(
-      args?: Subset<T, Task$assigneeArgs<ExtArgs>>
-    ): Prisma__UserClient<
-      $Result.GetResult<
-        Prisma.$UserPayload<ExtArgs>,
-        T,
-        "findUniqueOrThrow",
-        GlobalOmitOptions
-      > | null,
-      null,
       ExtArgs,
       GlobalOmitOptions
     >;
@@ -11268,6 +11321,7 @@ export namespace Prisma {
     id: string | null;
     projectId: string | null;
     senderId: string | null;
+    recipientId: string | null;
     message: string | null;
     type: string | null;
     aiLabel: string | null;
@@ -11278,6 +11332,7 @@ export namespace Prisma {
     id: string | null;
     projectId: string | null;
     senderId: string | null;
+    recipientId: string | null;
     message: string | null;
     type: string | null;
     aiLabel: string | null;
@@ -11288,6 +11343,7 @@ export namespace Prisma {
     id: number;
     projectId: number;
     senderId: number;
+    recipientId: number;
     message: number;
     type: number;
     aiLabel: number;
@@ -11299,6 +11355,7 @@ export namespace Prisma {
     id?: true;
     projectId?: true;
     senderId?: true;
+    recipientId?: true;
     message?: true;
     type?: true;
     aiLabel?: true;
@@ -11309,6 +11366,7 @@ export namespace Prisma {
     id?: true;
     projectId?: true;
     senderId?: true;
+    recipientId?: true;
     message?: true;
     type?: true;
     aiLabel?: true;
@@ -11319,6 +11377,7 @@ export namespace Prisma {
     id?: true;
     projectId?: true;
     senderId?: true;
+    recipientId?: true;
     message?: true;
     type?: true;
     aiLabel?: true;
@@ -11408,6 +11467,7 @@ export namespace Prisma {
     id: string;
     projectId: string;
     senderId: string;
+    recipientId: string | null;
     message: string;
     type: string;
     aiLabel: string | null;
@@ -11438,12 +11498,14 @@ export namespace Prisma {
       id?: boolean;
       projectId?: boolean;
       senderId?: boolean;
+      recipientId?: boolean;
       message?: boolean;
       type?: boolean;
       aiLabel?: boolean;
       createdAt?: boolean;
       project?: boolean | ProjectDefaultArgs<ExtArgs>;
       sender?: boolean | UserDefaultArgs<ExtArgs>;
+      recipient?: boolean | ChatMessage$recipientArgs<ExtArgs>;
     },
     ExtArgs["result"]["chatMessage"]
   >;
@@ -11455,12 +11517,14 @@ export namespace Prisma {
       id?: boolean;
       projectId?: boolean;
       senderId?: boolean;
+      recipientId?: boolean;
       message?: boolean;
       type?: boolean;
       aiLabel?: boolean;
       createdAt?: boolean;
       project?: boolean | ProjectDefaultArgs<ExtArgs>;
       sender?: boolean | UserDefaultArgs<ExtArgs>;
+      recipient?: boolean | ChatMessage$recipientArgs<ExtArgs>;
     },
     ExtArgs["result"]["chatMessage"]
   >;
@@ -11472,12 +11536,14 @@ export namespace Prisma {
       id?: boolean;
       projectId?: boolean;
       senderId?: boolean;
+      recipientId?: boolean;
       message?: boolean;
       type?: boolean;
       aiLabel?: boolean;
       createdAt?: boolean;
       project?: boolean | ProjectDefaultArgs<ExtArgs>;
       sender?: boolean | UserDefaultArgs<ExtArgs>;
+      recipient?: boolean | ChatMessage$recipientArgs<ExtArgs>;
     },
     ExtArgs["result"]["chatMessage"]
   >;
@@ -11486,6 +11552,7 @@ export namespace Prisma {
     id?: boolean;
     projectId?: boolean;
     senderId?: boolean;
+    recipientId?: boolean;
     message?: boolean;
     type?: boolean;
     aiLabel?: boolean;
@@ -11498,6 +11565,7 @@ export namespace Prisma {
     | "id"
     | "projectId"
     | "senderId"
+    | "recipientId"
     | "message"
     | "type"
     | "aiLabel"
@@ -11509,18 +11577,21 @@ export namespace Prisma {
   > = {
     project?: boolean | ProjectDefaultArgs<ExtArgs>;
     sender?: boolean | UserDefaultArgs<ExtArgs>;
+    recipient?: boolean | ChatMessage$recipientArgs<ExtArgs>;
   };
   export type ChatMessageIncludeCreateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     project?: boolean | ProjectDefaultArgs<ExtArgs>;
     sender?: boolean | UserDefaultArgs<ExtArgs>;
+    recipient?: boolean | ChatMessage$recipientArgs<ExtArgs>;
   };
   export type ChatMessageIncludeUpdateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     project?: boolean | ProjectDefaultArgs<ExtArgs>;
     sender?: boolean | UserDefaultArgs<ExtArgs>;
+    recipient?: boolean | ChatMessage$recipientArgs<ExtArgs>;
   };
 
   export type $ChatMessagePayload<
@@ -11530,12 +11601,14 @@ export namespace Prisma {
     objects: {
       project: Prisma.$ProjectPayload<ExtArgs>;
       sender: Prisma.$UserPayload<ExtArgs>;
+      recipient: Prisma.$UserPayload<ExtArgs> | null;
     };
     scalars: $Extensions.GetPayloadResult<
       {
         id: string;
         projectId: string;
         senderId: string;
+        recipientId: string | null;
         message: string;
         type: string;
         aiLabel: string | null;
@@ -12118,6 +12191,19 @@ export namespace Prisma {
       ExtArgs,
       GlobalOmitOptions
     >;
+    recipient<T extends ChatMessage$recipientArgs<ExtArgs> = {}>(
+      args?: Subset<T, ChatMessage$recipientArgs<ExtArgs>>
+    ): Prisma__UserClient<
+      $Result.GetResult<
+        Prisma.$UserPayload<ExtArgs>,
+        T,
+        "findUniqueOrThrow",
+        GlobalOmitOptions
+      > | null,
+      null,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12161,6 +12247,7 @@ export namespace Prisma {
     readonly id: FieldRef<"ChatMessage", "String">;
     readonly projectId: FieldRef<"ChatMessage", "String">;
     readonly senderId: FieldRef<"ChatMessage", "String">;
+    readonly recipientId: FieldRef<"ChatMessage", "String">;
     readonly message: FieldRef<"ChatMessage", "String">;
     readonly type: FieldRef<"ChatMessage", "String">;
     readonly aiLabel: FieldRef<"ChatMessage", "String">;
@@ -12597,6 +12684,27 @@ export namespace Prisma {
      * Limit how many ChatMessages to delete.
      */
     limit?: number;
+  };
+
+  /**
+   * ChatMessage.recipient
+   */
+  export type ChatMessage$recipientArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null;
+    where?: UserWhereInput;
   };
 
   /**
@@ -16950,8 +17058,8 @@ export namespace Prisma {
       comment?: boolean;
       aiFlag?: boolean;
       createdAt?: boolean;
-      project?: boolean | ProjectDefaultArgs<ExtArgs>;
       fromUser?: boolean | UserDefaultArgs<ExtArgs>;
+      project?: boolean | ProjectDefaultArgs<ExtArgs>;
       toUser?: boolean | UserDefaultArgs<ExtArgs>;
     },
     ExtArgs["result"]["feedback"]
@@ -16971,8 +17079,8 @@ export namespace Prisma {
       comment?: boolean;
       aiFlag?: boolean;
       createdAt?: boolean;
-      project?: boolean | ProjectDefaultArgs<ExtArgs>;
       fromUser?: boolean | UserDefaultArgs<ExtArgs>;
+      project?: boolean | ProjectDefaultArgs<ExtArgs>;
       toUser?: boolean | UserDefaultArgs<ExtArgs>;
     },
     ExtArgs["result"]["feedback"]
@@ -16992,8 +17100,8 @@ export namespace Prisma {
       comment?: boolean;
       aiFlag?: boolean;
       createdAt?: boolean;
-      project?: boolean | ProjectDefaultArgs<ExtArgs>;
       fromUser?: boolean | UserDefaultArgs<ExtArgs>;
+      project?: boolean | ProjectDefaultArgs<ExtArgs>;
       toUser?: boolean | UserDefaultArgs<ExtArgs>;
     },
     ExtArgs["result"]["feedback"]
@@ -17030,22 +17138,22 @@ export namespace Prisma {
   export type FeedbackInclude<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
-    project?: boolean | ProjectDefaultArgs<ExtArgs>;
     fromUser?: boolean | UserDefaultArgs<ExtArgs>;
+    project?: boolean | ProjectDefaultArgs<ExtArgs>;
     toUser?: boolean | UserDefaultArgs<ExtArgs>;
   };
   export type FeedbackIncludeCreateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
-    project?: boolean | ProjectDefaultArgs<ExtArgs>;
     fromUser?: boolean | UserDefaultArgs<ExtArgs>;
+    project?: boolean | ProjectDefaultArgs<ExtArgs>;
     toUser?: boolean | UserDefaultArgs<ExtArgs>;
   };
   export type FeedbackIncludeUpdateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
-    project?: boolean | ProjectDefaultArgs<ExtArgs>;
     fromUser?: boolean | UserDefaultArgs<ExtArgs>;
+    project?: boolean | ProjectDefaultArgs<ExtArgs>;
     toUser?: boolean | UserDefaultArgs<ExtArgs>;
   };
 
@@ -17054,8 +17162,8 @@ export namespace Prisma {
   > = {
     name: "Feedback";
     objects: {
-      project: Prisma.$ProjectPayload<ExtArgs>;
       fromUser: Prisma.$UserPayload<ExtArgs>;
+      project: Prisma.$ProjectPayload<ExtArgs>;
       toUser: Prisma.$UserPayload<ExtArgs>;
     };
     scalars: $Extensions.GetPayloadResult<
@@ -17616,11 +17724,11 @@ export namespace Prisma {
     GlobalOmitOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
-    project<T extends ProjectDefaultArgs<ExtArgs> = {}>(
-      args?: Subset<T, ProjectDefaultArgs<ExtArgs>>
-    ): Prisma__ProjectClient<
+    fromUser<T extends UserDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, UserDefaultArgs<ExtArgs>>
+    ): Prisma__UserClient<
       | $Result.GetResult<
-          Prisma.$ProjectPayload<ExtArgs>,
+          Prisma.$UserPayload<ExtArgs>,
           T,
           "findUniqueOrThrow",
           GlobalOmitOptions
@@ -17630,11 +17738,11 @@ export namespace Prisma {
       ExtArgs,
       GlobalOmitOptions
     >;
-    fromUser<T extends UserDefaultArgs<ExtArgs> = {}>(
-      args?: Subset<T, UserDefaultArgs<ExtArgs>>
-    ): Prisma__UserClient<
+    project<T extends ProjectDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, ProjectDefaultArgs<ExtArgs>>
+    ): Prisma__ProjectClient<
       | $Result.GetResult<
-          Prisma.$UserPayload<ExtArgs>,
+          Prisma.$ProjectPayload<ExtArgs>,
           T,
           "findUniqueOrThrow",
           GlobalOmitOptions
@@ -19682,6 +19790,7 @@ export namespace Prisma {
     id: "id";
     projectId: "projectId";
     senderId: "senderId";
+    recipientId: "recipientId";
     message: "message";
     type: "type";
     aiLabel: "aiLabel";
@@ -19989,20 +20098,21 @@ export namespace Prisma {
     oauthProvider?: StringFilter<"User"> | string;
     oauthId?: StringFilter<"User"> | string;
     createdAt?: DateTimeFilter<"User"> | Date | string;
-    oauthAccounts?: UserOAuthListRelationFilter;
-    projectsCreated?: ProjectListRelationFilter;
+    messages?: ChatMessageListRelationFilter;
+    receivedMessages?: ChatMessageListRelationFilter;
+    feedbackGiven?: FeedbackListRelationFilter;
+    feedbackReceived?: FeedbackListRelationFilter;
+    githubActivities?: GitHubActivityListRelationFilter;
     googleDocsData?: XOR<
       GoogleDocsDataNullableScalarRelationFilter,
       GoogleDocsDataWhereInput
     > | null;
-    memberships?: ProjectMemberListRelationFilter;
-    messages?: ChatMessageListRelationFilter;
-    tasks?: TaskListRelationFilter;
-    feedbackGiven?: FeedbackListRelationFilter;
-    feedbackReceived?: FeedbackListRelationFilter;
-    githubActivities?: GitHubActivityListRelationFilter;
     presenceLogs?: PresenceLogListRelationFilter;
+    projectsCreated?: ProjectListRelationFilter;
+    memberships?: ProjectMemberListRelationFilter;
     refreshTokens?: RefreshTokenListRelationFilter;
+    tasks?: TaskListRelationFilter;
+    oauthAccounts?: UserOAuthListRelationFilter;
   };
 
   export type UserOrderByWithRelationInput = {
@@ -20013,17 +20123,18 @@ export namespace Prisma {
     oauthProvider?: SortOrder;
     oauthId?: SortOrder;
     createdAt?: SortOrder;
-    oauthAccounts?: UserOAuthOrderByRelationAggregateInput;
-    projectsCreated?: ProjectOrderByRelationAggregateInput;
-    googleDocsData?: GoogleDocsDataOrderByWithRelationInput;
-    memberships?: ProjectMemberOrderByRelationAggregateInput;
     messages?: ChatMessageOrderByRelationAggregateInput;
-    tasks?: TaskOrderByRelationAggregateInput;
+    receivedMessages?: ChatMessageOrderByRelationAggregateInput;
     feedbackGiven?: FeedbackOrderByRelationAggregateInput;
     feedbackReceived?: FeedbackOrderByRelationAggregateInput;
     githubActivities?: GitHubActivityOrderByRelationAggregateInput;
+    googleDocsData?: GoogleDocsDataOrderByWithRelationInput;
     presenceLogs?: PresenceLogOrderByRelationAggregateInput;
+    projectsCreated?: ProjectOrderByRelationAggregateInput;
+    memberships?: ProjectMemberOrderByRelationAggregateInput;
     refreshTokens?: RefreshTokenOrderByRelationAggregateInput;
+    tasks?: TaskOrderByRelationAggregateInput;
+    oauthAccounts?: UserOAuthOrderByRelationAggregateInput;
   };
 
   export type UserWhereUniqueInput = Prisma.AtLeast<
@@ -20038,20 +20149,21 @@ export namespace Prisma {
       avatarUrl?: StringNullableFilter<"User"> | string | null;
       oauthProvider?: StringFilter<"User"> | string;
       createdAt?: DateTimeFilter<"User"> | Date | string;
-      oauthAccounts?: UserOAuthListRelationFilter;
-      projectsCreated?: ProjectListRelationFilter;
+      messages?: ChatMessageListRelationFilter;
+      receivedMessages?: ChatMessageListRelationFilter;
+      feedbackGiven?: FeedbackListRelationFilter;
+      feedbackReceived?: FeedbackListRelationFilter;
+      githubActivities?: GitHubActivityListRelationFilter;
       googleDocsData?: XOR<
         GoogleDocsDataNullableScalarRelationFilter,
         GoogleDocsDataWhereInput
       > | null;
-      memberships?: ProjectMemberListRelationFilter;
-      messages?: ChatMessageListRelationFilter;
-      tasks?: TaskListRelationFilter;
-      feedbackGiven?: FeedbackListRelationFilter;
-      feedbackReceived?: FeedbackListRelationFilter;
-      githubActivities?: GitHubActivityListRelationFilter;
       presenceLogs?: PresenceLogListRelationFilter;
+      projectsCreated?: ProjectListRelationFilter;
+      memberships?: ProjectMemberListRelationFilter;
       refreshTokens?: RefreshTokenListRelationFilter;
+      tasks?: TaskListRelationFilter;
+      oauthAccounts?: UserOAuthListRelationFilter;
     },
     "id" | "email" | "oauthId"
   >;
@@ -20305,14 +20417,14 @@ export namespace Prisma {
     createdById?: StringFilter<"Project"> | string;
     createdAt?: DateTimeFilter<"Project"> | Date | string;
     lastActive?: DateTimeNullableFilter<"Project"> | Date | string | null;
-    members?: ProjectMemberListRelationFilter;
-    tasks?: TaskListRelationFilter;
     chatMessages?: ChatMessageListRelationFilter;
     feedbacks?: FeedbackListRelationFilter;
     githubData?: GitHubActivityListRelationFilter;
     insights?: InsightListRelationFilter;
     presenceLogs?: PresenceLogListRelationFilter;
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>;
+    members?: ProjectMemberListRelationFilter;
+    tasks?: TaskListRelationFilter;
   };
 
   export type ProjectOrderByWithRelationInput = {
@@ -20324,14 +20436,14 @@ export namespace Prisma {
     createdById?: SortOrder;
     createdAt?: SortOrder;
     lastActive?: SortOrderInput | SortOrder;
-    members?: ProjectMemberOrderByRelationAggregateInput;
-    tasks?: TaskOrderByRelationAggregateInput;
     chatMessages?: ChatMessageOrderByRelationAggregateInput;
     feedbacks?: FeedbackOrderByRelationAggregateInput;
     githubData?: GitHubActivityOrderByRelationAggregateInput;
     insights?: InsightOrderByRelationAggregateInput;
     presenceLogs?: PresenceLogOrderByRelationAggregateInput;
     createdBy?: UserOrderByWithRelationInput;
+    members?: ProjectMemberOrderByRelationAggregateInput;
+    tasks?: TaskOrderByRelationAggregateInput;
   };
 
   export type ProjectWhereUniqueInput = Prisma.AtLeast<
@@ -20347,14 +20459,14 @@ export namespace Prisma {
       createdById?: StringFilter<"Project"> | string;
       createdAt?: DateTimeFilter<"Project"> | Date | string;
       lastActive?: DateTimeNullableFilter<"Project"> | Date | string | null;
-      members?: ProjectMemberListRelationFilter;
-      tasks?: TaskListRelationFilter;
       chatMessages?: ChatMessageListRelationFilter;
       feedbacks?: FeedbackListRelationFilter;
       githubData?: GitHubActivityListRelationFilter;
       insights?: InsightListRelationFilter;
       presenceLogs?: PresenceLogListRelationFilter;
       createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>;
+      members?: ProjectMemberListRelationFilter;
+      tasks?: TaskListRelationFilter;
     },
     "id"
   >;
@@ -20407,8 +20519,8 @@ export namespace Prisma {
     role?: EnumProjectRoleFilter<"ProjectMember"> | $Enums.ProjectRole;
     status?: EnumMemberStatusFilter<"ProjectMember"> | $Enums.MemberStatus;
     joinedAt?: DateTimeNullableFilter<"ProjectMember"> | Date | string | null;
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>;
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>;
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>;
   };
 
   export type ProjectMemberOrderByWithRelationInput = {
@@ -20418,8 +20530,8 @@ export namespace Prisma {
     role?: SortOrder;
     status?: SortOrder;
     joinedAt?: SortOrderInput | SortOrder;
-    user?: UserOrderByWithRelationInput;
     project?: ProjectOrderByWithRelationInput;
+    user?: UserOrderByWithRelationInput;
   };
 
   export type ProjectMemberWhereUniqueInput = Prisma.AtLeast<
@@ -20434,8 +20546,8 @@ export namespace Prisma {
       role?: EnumProjectRoleFilter<"ProjectMember"> | $Enums.ProjectRole;
       status?: EnumMemberStatusFilter<"ProjectMember"> | $Enums.MemberStatus;
       joinedAt?: DateTimeNullableFilter<"ProjectMember"> | Date | string | null;
-      user?: XOR<UserScalarRelationFilter, UserWhereInput>;
       project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>;
+      user?: XOR<UserScalarRelationFilter, UserWhereInput>;
     },
     "id" | "userId_projectId"
   >;
@@ -20491,8 +20603,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Task"> | Date | string;
     completedAt?: DateTimeNullableFilter<"Task"> | Date | string | null;
     score?: FloatNullableFilter<"Task"> | number | null;
-    project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>;
     assignee?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null;
+    project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>;
   };
 
   export type TaskOrderByWithRelationInput = {
@@ -20507,8 +20619,8 @@ export namespace Prisma {
     createdAt?: SortOrder;
     completedAt?: SortOrderInput | SortOrder;
     score?: SortOrderInput | SortOrder;
-    project?: ProjectOrderByWithRelationInput;
     assignee?: UserOrderByWithRelationInput;
+    project?: ProjectOrderByWithRelationInput;
   };
 
   export type TaskWhereUniqueInput = Prisma.AtLeast<
@@ -20527,8 +20639,8 @@ export namespace Prisma {
       createdAt?: DateTimeFilter<"Task"> | Date | string;
       completedAt?: DateTimeNullableFilter<"Task"> | Date | string | null;
       score?: FloatNullableFilter<"Task"> | number | null;
-      project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>;
       assignee?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null;
+      project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>;
     },
     "id"
   >;
@@ -20586,24 +20698,28 @@ export namespace Prisma {
     id?: StringFilter<"ChatMessage"> | string;
     projectId?: StringFilter<"ChatMessage"> | string;
     senderId?: StringFilter<"ChatMessage"> | string;
+    recipientId?: StringNullableFilter<"ChatMessage"> | string | null;
     message?: StringFilter<"ChatMessage"> | string;
     type?: StringFilter<"ChatMessage"> | string;
     aiLabel?: StringNullableFilter<"ChatMessage"> | string | null;
     createdAt?: DateTimeFilter<"ChatMessage"> | Date | string;
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>;
     sender?: XOR<UserScalarRelationFilter, UserWhereInput>;
+    recipient?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null;
   };
 
   export type ChatMessageOrderByWithRelationInput = {
     id?: SortOrder;
     projectId?: SortOrder;
     senderId?: SortOrder;
+    recipientId?: SortOrderInput | SortOrder;
     message?: SortOrder;
     type?: SortOrder;
     aiLabel?: SortOrderInput | SortOrder;
     createdAt?: SortOrder;
     project?: ProjectOrderByWithRelationInput;
     sender?: UserOrderByWithRelationInput;
+    recipient?: UserOrderByWithRelationInput;
   };
 
   export type ChatMessageWhereUniqueInput = Prisma.AtLeast<
@@ -20614,12 +20730,14 @@ export namespace Prisma {
       NOT?: ChatMessageWhereInput | ChatMessageWhereInput[];
       projectId?: StringFilter<"ChatMessage"> | string;
       senderId?: StringFilter<"ChatMessage"> | string;
+      recipientId?: StringNullableFilter<"ChatMessage"> | string | null;
       message?: StringFilter<"ChatMessage"> | string;
       type?: StringFilter<"ChatMessage"> | string;
       aiLabel?: StringNullableFilter<"ChatMessage"> | string | null;
       createdAt?: DateTimeFilter<"ChatMessage"> | Date | string;
       project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>;
       sender?: XOR<UserScalarRelationFilter, UserWhereInput>;
+      recipient?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null;
     },
     "id"
   >;
@@ -20628,6 +20746,7 @@ export namespace Prisma {
     id?: SortOrder;
     projectId?: SortOrder;
     senderId?: SortOrder;
+    recipientId?: SortOrderInput | SortOrder;
     message?: SortOrder;
     type?: SortOrder;
     aiLabel?: SortOrderInput | SortOrder;
@@ -20648,6 +20767,10 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"ChatMessage"> | string;
     projectId?: StringWithAggregatesFilter<"ChatMessage"> | string;
     senderId?: StringWithAggregatesFilter<"ChatMessage"> | string;
+    recipientId?:
+      | StringNullableWithAggregatesFilter<"ChatMessage">
+      | string
+      | null;
     message?: StringWithAggregatesFilter<"ChatMessage"> | string;
     type?: StringWithAggregatesFilter<"ChatMessage"> | string;
     aiLabel?: StringNullableWithAggregatesFilter<"ChatMessage"> | string | null;
@@ -20897,8 +21020,8 @@ export namespace Prisma {
     comment?: StringNullableFilter<"Feedback"> | string | null;
     aiFlag?: StringNullableFilter<"Feedback"> | string | null;
     createdAt?: DateTimeFilter<"Feedback"> | Date | string;
-    project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>;
     fromUser?: XOR<UserScalarRelationFilter, UserWhereInput>;
+    project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>;
     toUser?: XOR<UserScalarRelationFilter, UserWhereInput>;
   };
 
@@ -20913,8 +21036,8 @@ export namespace Prisma {
     comment?: SortOrderInput | SortOrder;
     aiFlag?: SortOrderInput | SortOrder;
     createdAt?: SortOrder;
-    project?: ProjectOrderByWithRelationInput;
     fromUser?: UserOrderByWithRelationInput;
+    project?: ProjectOrderByWithRelationInput;
     toUser?: UserOrderByWithRelationInput;
   };
 
@@ -20933,8 +21056,8 @@ export namespace Prisma {
       comment?: StringNullableFilter<"Feedback"> | string | null;
       aiFlag?: StringNullableFilter<"Feedback"> | string | null;
       createdAt?: DateTimeFilter<"Feedback"> | Date | string;
-      project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>;
       fromUser?: XOR<UserScalarRelationFilter, UserWhereInput>;
+      project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>;
       toUser?: XOR<UserScalarRelationFilter, UserWhereInput>;
     },
     "id"
@@ -21074,17 +21197,18 @@ export namespace Prisma {
     oauthProvider?: string;
     oauthId: string;
     createdAt?: Date | string;
-    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
-    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
-    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
-    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
     messages?: ChatMessageCreateNestedManyWithoutSenderInput;
-    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
+    receivedMessages?: ChatMessageCreateNestedManyWithoutRecipientInput;
     feedbackGiven?: FeedbackCreateNestedManyWithoutFromUserInput;
     feedbackReceived?: FeedbackCreateNestedManyWithoutToUserInput;
     githubActivities?: GitHubActivityCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
     presenceLogs?: PresenceLogCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
     refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput;
+    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
   };
 
   export type UserUncheckedCreateInput = {
@@ -21095,17 +21219,18 @@ export namespace Prisma {
     oauthProvider?: string;
     oauthId: string;
     createdAt?: Date | string;
-    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
-    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
-    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
-    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
     messages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput;
-    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
+    receivedMessages?: ChatMessageUncheckedCreateNestedManyWithoutRecipientInput;
     feedbackGiven?: FeedbackUncheckedCreateNestedManyWithoutFromUserInput;
     feedbackReceived?: FeedbackUncheckedCreateNestedManyWithoutToUserInput;
     githubActivities?: GitHubActivityUncheckedCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
     presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
     refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput;
+    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
   };
 
   export type UserUpdateInput = {
@@ -21116,17 +21241,18 @@ export namespace Prisma {
     oauthProvider?: StringFieldUpdateOperationsInput | string;
     oauthId?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
-    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
-    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
-    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
     messages?: ChatMessageUpdateManyWithoutSenderNestedInput;
-    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
+    receivedMessages?: ChatMessageUpdateManyWithoutRecipientNestedInput;
     feedbackGiven?: FeedbackUpdateManyWithoutFromUserNestedInput;
     feedbackReceived?: FeedbackUpdateManyWithoutToUserNestedInput;
     githubActivities?: GitHubActivityUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
     presenceLogs?: PresenceLogUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
     refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
   };
 
   export type UserUncheckedUpdateInput = {
@@ -21137,17 +21263,18 @@ export namespace Prisma {
     oauthProvider?: StringFieldUpdateOperationsInput | string;
     oauthId?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
-    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
-    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
-    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
     messages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput;
-    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
+    receivedMessages?: ChatMessageUncheckedUpdateManyWithoutRecipientNestedInput;
     feedbackGiven?: FeedbackUncheckedUpdateManyWithoutFromUserNestedInput;
     feedbackReceived?: FeedbackUncheckedUpdateManyWithoutToUserNestedInput;
     githubActivities?: GitHubActivityUncheckedUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
     presenceLogs?: PresenceLogUncheckedUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
     refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
   };
 
   export type UserCreateManyInput = {
@@ -21407,14 +21534,14 @@ export namespace Prisma {
     githubRepo: string;
     createdAt?: Date | string;
     lastActive?: Date | string | null;
-    members?: ProjectMemberCreateNestedManyWithoutProjectInput;
-    tasks?: TaskCreateNestedManyWithoutProjectInput;
     chatMessages?: ChatMessageCreateNestedManyWithoutProjectInput;
     feedbacks?: FeedbackCreateNestedManyWithoutProjectInput;
     githubData?: GitHubActivityCreateNestedManyWithoutProjectInput;
     insights?: InsightCreateNestedManyWithoutProjectInput;
     presenceLogs?: PresenceLogCreateNestedManyWithoutProjectInput;
     createdBy: UserCreateNestedOneWithoutProjectsCreatedInput;
+    members?: ProjectMemberCreateNestedManyWithoutProjectInput;
+    tasks?: TaskCreateNestedManyWithoutProjectInput;
   };
 
   export type ProjectUncheckedCreateInput = {
@@ -21426,13 +21553,13 @@ export namespace Prisma {
     createdById: string;
     createdAt?: Date | string;
     lastActive?: Date | string | null;
-    members?: ProjectMemberUncheckedCreateNestedManyWithoutProjectInput;
-    tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput;
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutProjectInput;
     feedbacks?: FeedbackUncheckedCreateNestedManyWithoutProjectInput;
     githubData?: GitHubActivityUncheckedCreateNestedManyWithoutProjectInput;
     insights?: InsightUncheckedCreateNestedManyWithoutProjectInput;
     presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutProjectInput;
+    members?: ProjectMemberUncheckedCreateNestedManyWithoutProjectInput;
+    tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput;
   };
 
   export type ProjectUpdateInput = {
@@ -21447,14 +21574,14 @@ export namespace Prisma {
       | Date
       | string
       | null;
-    members?: ProjectMemberUpdateManyWithoutProjectNestedInput;
-    tasks?: TaskUpdateManyWithoutProjectNestedInput;
     chatMessages?: ChatMessageUpdateManyWithoutProjectNestedInput;
     feedbacks?: FeedbackUpdateManyWithoutProjectNestedInput;
     githubData?: GitHubActivityUpdateManyWithoutProjectNestedInput;
     insights?: InsightUpdateManyWithoutProjectNestedInput;
     presenceLogs?: PresenceLogUpdateManyWithoutProjectNestedInput;
     createdBy?: UserUpdateOneRequiredWithoutProjectsCreatedNestedInput;
+    members?: ProjectMemberUpdateManyWithoutProjectNestedInput;
+    tasks?: TaskUpdateManyWithoutProjectNestedInput;
   };
 
   export type ProjectUncheckedUpdateInput = {
@@ -21470,13 +21597,13 @@ export namespace Prisma {
       | Date
       | string
       | null;
-    members?: ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput;
-    tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput;
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutProjectNestedInput;
     feedbacks?: FeedbackUncheckedUpdateManyWithoutProjectNestedInput;
     githubData?: GitHubActivityUncheckedUpdateManyWithoutProjectNestedInput;
     insights?: InsightUncheckedUpdateManyWithoutProjectNestedInput;
     presenceLogs?: PresenceLogUncheckedUpdateManyWithoutProjectNestedInput;
+    members?: ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput;
+    tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput;
   };
 
   export type ProjectCreateManyInput = {
@@ -21524,8 +21651,8 @@ export namespace Prisma {
     role?: $Enums.ProjectRole;
     status?: $Enums.MemberStatus;
     joinedAt?: Date | string | null;
-    user: UserCreateNestedOneWithoutMembershipsInput;
     project: ProjectCreateNestedOneWithoutMembersInput;
+    user: UserCreateNestedOneWithoutMembershipsInput;
   };
 
   export type ProjectMemberUncheckedCreateInput = {
@@ -21546,8 +21673,8 @@ export namespace Prisma {
       | Date
       | string
       | null;
-    user?: UserUpdateOneRequiredWithoutMembershipsNestedInput;
     project?: ProjectUpdateOneRequiredWithoutMembersNestedInput;
+    user?: UserUpdateOneRequiredWithoutMembershipsNestedInput;
   };
 
   export type ProjectMemberUncheckedUpdateInput = {
@@ -21606,8 +21733,8 @@ export namespace Prisma {
     createdAt?: Date | string;
     completedAt?: Date | string | null;
     score?: number | null;
-    project: ProjectCreateNestedOneWithoutTasksInput;
     assignee?: UserCreateNestedOneWithoutTasksInput;
+    project: ProjectCreateNestedOneWithoutTasksInput;
   };
 
   export type TaskUncheckedCreateInput = {
@@ -21638,8 +21765,8 @@ export namespace Prisma {
       | string
       | null;
     score?: NullableFloatFieldUpdateOperationsInput | number | null;
-    project?: ProjectUpdateOneRequiredWithoutTasksNestedInput;
     assignee?: UserUpdateOneWithoutTasksNestedInput;
+    project?: ProjectUpdateOneRequiredWithoutTasksNestedInput;
   };
 
   export type TaskUncheckedUpdateInput = {
@@ -21716,12 +21843,14 @@ export namespace Prisma {
     createdAt?: Date | string;
     project: ProjectCreateNestedOneWithoutChatMessagesInput;
     sender: UserCreateNestedOneWithoutMessagesInput;
+    recipient?: UserCreateNestedOneWithoutReceivedMessagesInput;
   };
 
   export type ChatMessageUncheckedCreateInput = {
     id?: string;
     projectId: string;
     senderId: string;
+    recipientId?: string | null;
     message: string;
     type?: string;
     aiLabel?: string | null;
@@ -21736,12 +21865,14 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
     project?: ProjectUpdateOneRequiredWithoutChatMessagesNestedInput;
     sender?: UserUpdateOneRequiredWithoutMessagesNestedInput;
+    recipient?: UserUpdateOneWithoutReceivedMessagesNestedInput;
   };
 
   export type ChatMessageUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string;
     projectId?: StringFieldUpdateOperationsInput | string;
     senderId?: StringFieldUpdateOperationsInput | string;
+    recipientId?: NullableStringFieldUpdateOperationsInput | string | null;
     message?: StringFieldUpdateOperationsInput | string;
     type?: StringFieldUpdateOperationsInput | string;
     aiLabel?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -21752,6 +21883,7 @@ export namespace Prisma {
     id?: string;
     projectId: string;
     senderId: string;
+    recipientId?: string | null;
     message: string;
     type?: string;
     aiLabel?: string | null;
@@ -21770,6 +21902,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string;
     projectId?: StringFieldUpdateOperationsInput | string;
     senderId?: StringFieldUpdateOperationsInput | string;
+    recipientId?: NullableStringFieldUpdateOperationsInput | string | null;
     message?: StringFieldUpdateOperationsInput | string;
     type?: StringFieldUpdateOperationsInput | string;
     aiLabel?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -21992,8 +22125,8 @@ export namespace Prisma {
     comment?: string | null;
     aiFlag?: string | null;
     createdAt?: Date | string;
-    project: ProjectCreateNestedOneWithoutFeedbacksInput;
     fromUser: UserCreateNestedOneWithoutFeedbackGivenInput;
+    project: ProjectCreateNestedOneWithoutFeedbacksInput;
     toUser: UserCreateNestedOneWithoutFeedbackReceivedInput;
   };
 
@@ -22018,8 +22151,8 @@ export namespace Prisma {
     comment?: NullableStringFieldUpdateOperationsInput | string | null;
     aiFlag?: NullableStringFieldUpdateOperationsInput | string | null;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    project?: ProjectUpdateOneRequiredWithoutFeedbacksNestedInput;
     fromUser?: UserUpdateOneRequiredWithoutFeedbackGivenNestedInput;
+    project?: ProjectUpdateOneRequiredWithoutFeedbacksNestedInput;
     toUser?: UserUpdateOneRequiredWithoutFeedbackReceivedNestedInput;
   };
 
@@ -22212,39 +22345,10 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string;
   };
 
-  export type UserOAuthListRelationFilter = {
-    every?: UserOAuthWhereInput;
-    some?: UserOAuthWhereInput;
-    none?: UserOAuthWhereInput;
-  };
-
-  export type ProjectListRelationFilter = {
-    every?: ProjectWhereInput;
-    some?: ProjectWhereInput;
-    none?: ProjectWhereInput;
-  };
-
-  export type GoogleDocsDataNullableScalarRelationFilter = {
-    is?: GoogleDocsDataWhereInput | null;
-    isNot?: GoogleDocsDataWhereInput | null;
-  };
-
-  export type ProjectMemberListRelationFilter = {
-    every?: ProjectMemberWhereInput;
-    some?: ProjectMemberWhereInput;
-    none?: ProjectMemberWhereInput;
-  };
-
   export type ChatMessageListRelationFilter = {
     every?: ChatMessageWhereInput;
     some?: ChatMessageWhereInput;
     none?: ChatMessageWhereInput;
-  };
-
-  export type TaskListRelationFilter = {
-    every?: TaskWhereInput;
-    some?: TaskWhereInput;
-    none?: TaskWhereInput;
   };
 
   export type FeedbackListRelationFilter = {
@@ -22259,10 +22363,27 @@ export namespace Prisma {
     none?: GitHubActivityWhereInput;
   };
 
+  export type GoogleDocsDataNullableScalarRelationFilter = {
+    is?: GoogleDocsDataWhereInput | null;
+    isNot?: GoogleDocsDataWhereInput | null;
+  };
+
   export type PresenceLogListRelationFilter = {
     every?: PresenceLogWhereInput;
     some?: PresenceLogWhereInput;
     none?: PresenceLogWhereInput;
+  };
+
+  export type ProjectListRelationFilter = {
+    every?: ProjectWhereInput;
+    some?: ProjectWhereInput;
+    none?: ProjectWhereInput;
+  };
+
+  export type ProjectMemberListRelationFilter = {
+    every?: ProjectMemberWhereInput;
+    some?: ProjectMemberWhereInput;
+    none?: ProjectMemberWhereInput;
   };
 
   export type RefreshTokenListRelationFilter = {
@@ -22271,28 +22392,24 @@ export namespace Prisma {
     none?: RefreshTokenWhereInput;
   };
 
+  export type TaskListRelationFilter = {
+    every?: TaskWhereInput;
+    some?: TaskWhereInput;
+    none?: TaskWhereInput;
+  };
+
+  export type UserOAuthListRelationFilter = {
+    every?: UserOAuthWhereInput;
+    some?: UserOAuthWhereInput;
+    none?: UserOAuthWhereInput;
+  };
+
   export type SortOrderInput = {
     sort: SortOrder;
     nulls?: NullsOrder;
   };
 
-  export type UserOAuthOrderByRelationAggregateInput = {
-    _count?: SortOrder;
-  };
-
-  export type ProjectOrderByRelationAggregateInput = {
-    _count?: SortOrder;
-  };
-
-  export type ProjectMemberOrderByRelationAggregateInput = {
-    _count?: SortOrder;
-  };
-
   export type ChatMessageOrderByRelationAggregateInput = {
-    _count?: SortOrder;
-  };
-
-  export type TaskOrderByRelationAggregateInput = {
     _count?: SortOrder;
   };
 
@@ -22308,7 +22425,23 @@ export namespace Prisma {
     _count?: SortOrder;
   };
 
+  export type ProjectOrderByRelationAggregateInput = {
+    _count?: SortOrder;
+  };
+
+  export type ProjectMemberOrderByRelationAggregateInput = {
+    _count?: SortOrder;
+  };
+
   export type RefreshTokenOrderByRelationAggregateInput = {
+    _count?: SortOrder;
+  };
+
+  export type TaskOrderByRelationAggregateInput = {
+    _count?: SortOrder;
+  };
+
+  export type UserOAuthOrderByRelationAggregateInput = {
     _count?: SortOrder;
   };
 
@@ -22837,6 +22970,7 @@ export namespace Prisma {
     id?: SortOrder;
     projectId?: SortOrder;
     senderId?: SortOrder;
+    recipientId?: SortOrder;
     message?: SortOrder;
     type?: SortOrder;
     aiLabel?: SortOrder;
@@ -22847,6 +22981,7 @@ export namespace Prisma {
     id?: SortOrder;
     projectId?: SortOrder;
     senderId?: SortOrder;
+    recipientId?: SortOrder;
     message?: SortOrder;
     type?: SortOrder;
     aiLabel?: SortOrder;
@@ -22857,6 +22992,7 @@ export namespace Prisma {
     id?: SortOrder;
     projectId?: SortOrder;
     senderId?: SortOrder;
+    recipientId?: SortOrder;
     message?: SortOrder;
     type?: SortOrder;
     aiLabel?: SortOrder;
@@ -23238,60 +23374,6 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>;
   };
 
-  export type UserOAuthCreateNestedManyWithoutUserInput = {
-    create?:
-      | XOR<
-          UserOAuthCreateWithoutUserInput,
-          UserOAuthUncheckedCreateWithoutUserInput
-        >
-      | UserOAuthCreateWithoutUserInput[]
-      | UserOAuthUncheckedCreateWithoutUserInput[];
-    connectOrCreate?:
-      | UserOAuthCreateOrConnectWithoutUserInput
-      | UserOAuthCreateOrConnectWithoutUserInput[];
-    createMany?: UserOAuthCreateManyUserInputEnvelope;
-    connect?: UserOAuthWhereUniqueInput | UserOAuthWhereUniqueInput[];
-  };
-
-  export type ProjectCreateNestedManyWithoutCreatedByInput = {
-    create?:
-      | XOR<
-          ProjectCreateWithoutCreatedByInput,
-          ProjectUncheckedCreateWithoutCreatedByInput
-        >
-      | ProjectCreateWithoutCreatedByInput[]
-      | ProjectUncheckedCreateWithoutCreatedByInput[];
-    connectOrCreate?:
-      | ProjectCreateOrConnectWithoutCreatedByInput
-      | ProjectCreateOrConnectWithoutCreatedByInput[];
-    createMany?: ProjectCreateManyCreatedByInputEnvelope;
-    connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
-  };
-
-  export type GoogleDocsDataCreateNestedOneWithoutUserInput = {
-    create?: XOR<
-      GoogleDocsDataCreateWithoutUserInput,
-      GoogleDocsDataUncheckedCreateWithoutUserInput
-    >;
-    connectOrCreate?: GoogleDocsDataCreateOrConnectWithoutUserInput;
-    connect?: GoogleDocsDataWhereUniqueInput;
-  };
-
-  export type ProjectMemberCreateNestedManyWithoutUserInput = {
-    create?:
-      | XOR<
-          ProjectMemberCreateWithoutUserInput,
-          ProjectMemberUncheckedCreateWithoutUserInput
-        >
-      | ProjectMemberCreateWithoutUserInput[]
-      | ProjectMemberUncheckedCreateWithoutUserInput[];
-    connectOrCreate?:
-      | ProjectMemberCreateOrConnectWithoutUserInput
-      | ProjectMemberCreateOrConnectWithoutUserInput[];
-    createMany?: ProjectMemberCreateManyUserInputEnvelope;
-    connect?: ProjectMemberWhereUniqueInput | ProjectMemberWhereUniqueInput[];
-  };
-
   export type ChatMessageCreateNestedManyWithoutSenderInput = {
     create?:
       | XOR<
@@ -23307,19 +23389,19 @@ export namespace Prisma {
     connect?: ChatMessageWhereUniqueInput | ChatMessageWhereUniqueInput[];
   };
 
-  export type TaskCreateNestedManyWithoutAssigneeInput = {
+  export type ChatMessageCreateNestedManyWithoutRecipientInput = {
     create?:
       | XOR<
-          TaskCreateWithoutAssigneeInput,
-          TaskUncheckedCreateWithoutAssigneeInput
+          ChatMessageCreateWithoutRecipientInput,
+          ChatMessageUncheckedCreateWithoutRecipientInput
         >
-      | TaskCreateWithoutAssigneeInput[]
-      | TaskUncheckedCreateWithoutAssigneeInput[];
+      | ChatMessageCreateWithoutRecipientInput[]
+      | ChatMessageUncheckedCreateWithoutRecipientInput[];
     connectOrCreate?:
-      | TaskCreateOrConnectWithoutAssigneeInput
-      | TaskCreateOrConnectWithoutAssigneeInput[];
-    createMany?: TaskCreateManyAssigneeInputEnvelope;
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
+      | ChatMessageCreateOrConnectWithoutRecipientInput
+      | ChatMessageCreateOrConnectWithoutRecipientInput[];
+    createMany?: ChatMessageCreateManyRecipientInputEnvelope;
+    connect?: ChatMessageWhereUniqueInput | ChatMessageWhereUniqueInput[];
   };
 
   export type FeedbackCreateNestedManyWithoutFromUserInput = {
@@ -23367,6 +23449,15 @@ export namespace Prisma {
     connect?: GitHubActivityWhereUniqueInput | GitHubActivityWhereUniqueInput[];
   };
 
+  export type GoogleDocsDataCreateNestedOneWithoutUserInput = {
+    create?: XOR<
+      GoogleDocsDataCreateWithoutUserInput,
+      GoogleDocsDataUncheckedCreateWithoutUserInput
+    >;
+    connectOrCreate?: GoogleDocsDataCreateOrConnectWithoutUserInput;
+    connect?: GoogleDocsDataWhereUniqueInput;
+  };
+
   export type PresenceLogCreateNestedManyWithoutUserInput = {
     create?:
       | XOR<
@@ -23380,6 +23471,36 @@ export namespace Prisma {
       | PresenceLogCreateOrConnectWithoutUserInput[];
     createMany?: PresenceLogCreateManyUserInputEnvelope;
     connect?: PresenceLogWhereUniqueInput | PresenceLogWhereUniqueInput[];
+  };
+
+  export type ProjectCreateNestedManyWithoutCreatedByInput = {
+    create?:
+      | XOR<
+          ProjectCreateWithoutCreatedByInput,
+          ProjectUncheckedCreateWithoutCreatedByInput
+        >
+      | ProjectCreateWithoutCreatedByInput[]
+      | ProjectUncheckedCreateWithoutCreatedByInput[];
+    connectOrCreate?:
+      | ProjectCreateOrConnectWithoutCreatedByInput
+      | ProjectCreateOrConnectWithoutCreatedByInput[];
+    createMany?: ProjectCreateManyCreatedByInputEnvelope;
+    connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
+  };
+
+  export type ProjectMemberCreateNestedManyWithoutUserInput = {
+    create?:
+      | XOR<
+          ProjectMemberCreateWithoutUserInput,
+          ProjectMemberUncheckedCreateWithoutUserInput
+        >
+      | ProjectMemberCreateWithoutUserInput[]
+      | ProjectMemberUncheckedCreateWithoutUserInput[];
+    connectOrCreate?:
+      | ProjectMemberCreateOrConnectWithoutUserInput
+      | ProjectMemberCreateOrConnectWithoutUserInput[];
+    createMany?: ProjectMemberCreateManyUserInputEnvelope;
+    connect?: ProjectMemberWhereUniqueInput | ProjectMemberWhereUniqueInput[];
   };
 
   export type RefreshTokenCreateNestedManyWithoutUserInput = {
@@ -23397,7 +23518,22 @@ export namespace Prisma {
     connect?: RefreshTokenWhereUniqueInput | RefreshTokenWhereUniqueInput[];
   };
 
-  export type UserOAuthUncheckedCreateNestedManyWithoutUserInput = {
+  export type TaskCreateNestedManyWithoutAssigneeInput = {
+    create?:
+      | XOR<
+          TaskCreateWithoutAssigneeInput,
+          TaskUncheckedCreateWithoutAssigneeInput
+        >
+      | TaskCreateWithoutAssigneeInput[]
+      | TaskUncheckedCreateWithoutAssigneeInput[];
+    connectOrCreate?:
+      | TaskCreateOrConnectWithoutAssigneeInput
+      | TaskCreateOrConnectWithoutAssigneeInput[];
+    createMany?: TaskCreateManyAssigneeInputEnvelope;
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
+  };
+
+  export type UserOAuthCreateNestedManyWithoutUserInput = {
     create?:
       | XOR<
           UserOAuthCreateWithoutUserInput,
@@ -23410,45 +23546,6 @@ export namespace Prisma {
       | UserOAuthCreateOrConnectWithoutUserInput[];
     createMany?: UserOAuthCreateManyUserInputEnvelope;
     connect?: UserOAuthWhereUniqueInput | UserOAuthWhereUniqueInput[];
-  };
-
-  export type ProjectUncheckedCreateNestedManyWithoutCreatedByInput = {
-    create?:
-      | XOR<
-          ProjectCreateWithoutCreatedByInput,
-          ProjectUncheckedCreateWithoutCreatedByInput
-        >
-      | ProjectCreateWithoutCreatedByInput[]
-      | ProjectUncheckedCreateWithoutCreatedByInput[];
-    connectOrCreate?:
-      | ProjectCreateOrConnectWithoutCreatedByInput
-      | ProjectCreateOrConnectWithoutCreatedByInput[];
-    createMany?: ProjectCreateManyCreatedByInputEnvelope;
-    connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
-  };
-
-  export type GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput = {
-    create?: XOR<
-      GoogleDocsDataCreateWithoutUserInput,
-      GoogleDocsDataUncheckedCreateWithoutUserInput
-    >;
-    connectOrCreate?: GoogleDocsDataCreateOrConnectWithoutUserInput;
-    connect?: GoogleDocsDataWhereUniqueInput;
-  };
-
-  export type ProjectMemberUncheckedCreateNestedManyWithoutUserInput = {
-    create?:
-      | XOR<
-          ProjectMemberCreateWithoutUserInput,
-          ProjectMemberUncheckedCreateWithoutUserInput
-        >
-      | ProjectMemberCreateWithoutUserInput[]
-      | ProjectMemberUncheckedCreateWithoutUserInput[];
-    connectOrCreate?:
-      | ProjectMemberCreateOrConnectWithoutUserInput
-      | ProjectMemberCreateOrConnectWithoutUserInput[];
-    createMany?: ProjectMemberCreateManyUserInputEnvelope;
-    connect?: ProjectMemberWhereUniqueInput | ProjectMemberWhereUniqueInput[];
   };
 
   export type ChatMessageUncheckedCreateNestedManyWithoutSenderInput = {
@@ -23466,19 +23563,19 @@ export namespace Prisma {
     connect?: ChatMessageWhereUniqueInput | ChatMessageWhereUniqueInput[];
   };
 
-  export type TaskUncheckedCreateNestedManyWithoutAssigneeInput = {
+  export type ChatMessageUncheckedCreateNestedManyWithoutRecipientInput = {
     create?:
       | XOR<
-          TaskCreateWithoutAssigneeInput,
-          TaskUncheckedCreateWithoutAssigneeInput
+          ChatMessageCreateWithoutRecipientInput,
+          ChatMessageUncheckedCreateWithoutRecipientInput
         >
-      | TaskCreateWithoutAssigneeInput[]
-      | TaskUncheckedCreateWithoutAssigneeInput[];
+      | ChatMessageCreateWithoutRecipientInput[]
+      | ChatMessageUncheckedCreateWithoutRecipientInput[];
     connectOrCreate?:
-      | TaskCreateOrConnectWithoutAssigneeInput
-      | TaskCreateOrConnectWithoutAssigneeInput[];
-    createMany?: TaskCreateManyAssigneeInputEnvelope;
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
+      | ChatMessageCreateOrConnectWithoutRecipientInput
+      | ChatMessageCreateOrConnectWithoutRecipientInput[];
+    createMany?: ChatMessageCreateManyRecipientInputEnvelope;
+    connect?: ChatMessageWhereUniqueInput | ChatMessageWhereUniqueInput[];
   };
 
   export type FeedbackUncheckedCreateNestedManyWithoutFromUserInput = {
@@ -23526,6 +23623,15 @@ export namespace Prisma {
     connect?: GitHubActivityWhereUniqueInput | GitHubActivityWhereUniqueInput[];
   };
 
+  export type GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<
+      GoogleDocsDataCreateWithoutUserInput,
+      GoogleDocsDataUncheckedCreateWithoutUserInput
+    >;
+    connectOrCreate?: GoogleDocsDataCreateOrConnectWithoutUserInput;
+    connect?: GoogleDocsDataWhereUniqueInput;
+  };
+
   export type PresenceLogUncheckedCreateNestedManyWithoutUserInput = {
     create?:
       | XOR<
@@ -23539,6 +23645,36 @@ export namespace Prisma {
       | PresenceLogCreateOrConnectWithoutUserInput[];
     createMany?: PresenceLogCreateManyUserInputEnvelope;
     connect?: PresenceLogWhereUniqueInput | PresenceLogWhereUniqueInput[];
+  };
+
+  export type ProjectUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?:
+      | XOR<
+          ProjectCreateWithoutCreatedByInput,
+          ProjectUncheckedCreateWithoutCreatedByInput
+        >
+      | ProjectCreateWithoutCreatedByInput[]
+      | ProjectUncheckedCreateWithoutCreatedByInput[];
+    connectOrCreate?:
+      | ProjectCreateOrConnectWithoutCreatedByInput
+      | ProjectCreateOrConnectWithoutCreatedByInput[];
+    createMany?: ProjectCreateManyCreatedByInputEnvelope;
+    connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
+  };
+
+  export type ProjectMemberUncheckedCreateNestedManyWithoutUserInput = {
+    create?:
+      | XOR<
+          ProjectMemberCreateWithoutUserInput,
+          ProjectMemberUncheckedCreateWithoutUserInput
+        >
+      | ProjectMemberCreateWithoutUserInput[]
+      | ProjectMemberUncheckedCreateWithoutUserInput[];
+    connectOrCreate?:
+      | ProjectMemberCreateOrConnectWithoutUserInput
+      | ProjectMemberCreateOrConnectWithoutUserInput[];
+    createMany?: ProjectMemberCreateManyUserInputEnvelope;
+    connect?: ProjectMemberWhereUniqueInput | ProjectMemberWhereUniqueInput[];
   };
 
   export type RefreshTokenUncheckedCreateNestedManyWithoutUserInput = {
@@ -23556,19 +23692,22 @@ export namespace Prisma {
     connect?: RefreshTokenWhereUniqueInput | RefreshTokenWhereUniqueInput[];
   };
 
-  export type StringFieldUpdateOperationsInput = {
-    set?: string;
+  export type TaskUncheckedCreateNestedManyWithoutAssigneeInput = {
+    create?:
+      | XOR<
+          TaskCreateWithoutAssigneeInput,
+          TaskUncheckedCreateWithoutAssigneeInput
+        >
+      | TaskCreateWithoutAssigneeInput[]
+      | TaskUncheckedCreateWithoutAssigneeInput[];
+    connectOrCreate?:
+      | TaskCreateOrConnectWithoutAssigneeInput
+      | TaskCreateOrConnectWithoutAssigneeInput[];
+    createMany?: TaskCreateManyAssigneeInputEnvelope;
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
   };
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null;
-  };
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string;
-  };
-
-  export type UserOAuthUpdateManyWithoutUserNestedInput = {
+  export type UserOAuthUncheckedCreateNestedManyWithoutUserInput = {
     create?:
       | XOR<
           UserOAuthCreateWithoutUserInput,
@@ -23579,100 +23718,20 @@ export namespace Prisma {
     connectOrCreate?:
       | UserOAuthCreateOrConnectWithoutUserInput
       | UserOAuthCreateOrConnectWithoutUserInput[];
-    upsert?:
-      | UserOAuthUpsertWithWhereUniqueWithoutUserInput
-      | UserOAuthUpsertWithWhereUniqueWithoutUserInput[];
     createMany?: UserOAuthCreateManyUserInputEnvelope;
-    set?: UserOAuthWhereUniqueInput | UserOAuthWhereUniqueInput[];
-    disconnect?: UserOAuthWhereUniqueInput | UserOAuthWhereUniqueInput[];
-    delete?: UserOAuthWhereUniqueInput | UserOAuthWhereUniqueInput[];
     connect?: UserOAuthWhereUniqueInput | UserOAuthWhereUniqueInput[];
-    update?:
-      | UserOAuthUpdateWithWhereUniqueWithoutUserInput
-      | UserOAuthUpdateWithWhereUniqueWithoutUserInput[];
-    updateMany?:
-      | UserOAuthUpdateManyWithWhereWithoutUserInput
-      | UserOAuthUpdateManyWithWhereWithoutUserInput[];
-    deleteMany?: UserOAuthScalarWhereInput | UserOAuthScalarWhereInput[];
   };
 
-  export type ProjectUpdateManyWithoutCreatedByNestedInput = {
-    create?:
-      | XOR<
-          ProjectCreateWithoutCreatedByInput,
-          ProjectUncheckedCreateWithoutCreatedByInput
-        >
-      | ProjectCreateWithoutCreatedByInput[]
-      | ProjectUncheckedCreateWithoutCreatedByInput[];
-    connectOrCreate?:
-      | ProjectCreateOrConnectWithoutCreatedByInput
-      | ProjectCreateOrConnectWithoutCreatedByInput[];
-    upsert?:
-      | ProjectUpsertWithWhereUniqueWithoutCreatedByInput
-      | ProjectUpsertWithWhereUniqueWithoutCreatedByInput[];
-    createMany?: ProjectCreateManyCreatedByInputEnvelope;
-    set?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
-    disconnect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
-    delete?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
-    connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
-    update?:
-      | ProjectUpdateWithWhereUniqueWithoutCreatedByInput
-      | ProjectUpdateWithWhereUniqueWithoutCreatedByInput[];
-    updateMany?:
-      | ProjectUpdateManyWithWhereWithoutCreatedByInput
-      | ProjectUpdateManyWithWhereWithoutCreatedByInput[];
-    deleteMany?: ProjectScalarWhereInput | ProjectScalarWhereInput[];
+  export type StringFieldUpdateOperationsInput = {
+    set?: string;
   };
 
-  export type GoogleDocsDataUpdateOneWithoutUserNestedInput = {
-    create?: XOR<
-      GoogleDocsDataCreateWithoutUserInput,
-      GoogleDocsDataUncheckedCreateWithoutUserInput
-    >;
-    connectOrCreate?: GoogleDocsDataCreateOrConnectWithoutUserInput;
-    upsert?: GoogleDocsDataUpsertWithoutUserInput;
-    disconnect?: GoogleDocsDataWhereInput | boolean;
-    delete?: GoogleDocsDataWhereInput | boolean;
-    connect?: GoogleDocsDataWhereUniqueInput;
-    update?: XOR<
-      XOR<
-        GoogleDocsDataUpdateToOneWithWhereWithoutUserInput,
-        GoogleDocsDataUpdateWithoutUserInput
-      >,
-      GoogleDocsDataUncheckedUpdateWithoutUserInput
-    >;
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null;
   };
 
-  export type ProjectMemberUpdateManyWithoutUserNestedInput = {
-    create?:
-      | XOR<
-          ProjectMemberCreateWithoutUserInput,
-          ProjectMemberUncheckedCreateWithoutUserInput
-        >
-      | ProjectMemberCreateWithoutUserInput[]
-      | ProjectMemberUncheckedCreateWithoutUserInput[];
-    connectOrCreate?:
-      | ProjectMemberCreateOrConnectWithoutUserInput
-      | ProjectMemberCreateOrConnectWithoutUserInput[];
-    upsert?:
-      | ProjectMemberUpsertWithWhereUniqueWithoutUserInput
-      | ProjectMemberUpsertWithWhereUniqueWithoutUserInput[];
-    createMany?: ProjectMemberCreateManyUserInputEnvelope;
-    set?: ProjectMemberWhereUniqueInput | ProjectMemberWhereUniqueInput[];
-    disconnect?:
-      | ProjectMemberWhereUniqueInput
-      | ProjectMemberWhereUniqueInput[];
-    delete?: ProjectMemberWhereUniqueInput | ProjectMemberWhereUniqueInput[];
-    connect?: ProjectMemberWhereUniqueInput | ProjectMemberWhereUniqueInput[];
-    update?:
-      | ProjectMemberUpdateWithWhereUniqueWithoutUserInput
-      | ProjectMemberUpdateWithWhereUniqueWithoutUserInput[];
-    updateMany?:
-      | ProjectMemberUpdateManyWithWhereWithoutUserInput
-      | ProjectMemberUpdateManyWithWhereWithoutUserInput[];
-    deleteMany?:
-      | ProjectMemberScalarWhereInput
-      | ProjectMemberScalarWhereInput[];
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string;
   };
 
   export type ChatMessageUpdateManyWithoutSenderNestedInput = {
@@ -23703,32 +23762,32 @@ export namespace Prisma {
     deleteMany?: ChatMessageScalarWhereInput | ChatMessageScalarWhereInput[];
   };
 
-  export type TaskUpdateManyWithoutAssigneeNestedInput = {
+  export type ChatMessageUpdateManyWithoutRecipientNestedInput = {
     create?:
       | XOR<
-          TaskCreateWithoutAssigneeInput,
-          TaskUncheckedCreateWithoutAssigneeInput
+          ChatMessageCreateWithoutRecipientInput,
+          ChatMessageUncheckedCreateWithoutRecipientInput
         >
-      | TaskCreateWithoutAssigneeInput[]
-      | TaskUncheckedCreateWithoutAssigneeInput[];
+      | ChatMessageCreateWithoutRecipientInput[]
+      | ChatMessageUncheckedCreateWithoutRecipientInput[];
     connectOrCreate?:
-      | TaskCreateOrConnectWithoutAssigneeInput
-      | TaskCreateOrConnectWithoutAssigneeInput[];
+      | ChatMessageCreateOrConnectWithoutRecipientInput
+      | ChatMessageCreateOrConnectWithoutRecipientInput[];
     upsert?:
-      | TaskUpsertWithWhereUniqueWithoutAssigneeInput
-      | TaskUpsertWithWhereUniqueWithoutAssigneeInput[];
-    createMany?: TaskCreateManyAssigneeInputEnvelope;
-    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
-    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
-    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
+      | ChatMessageUpsertWithWhereUniqueWithoutRecipientInput
+      | ChatMessageUpsertWithWhereUniqueWithoutRecipientInput[];
+    createMany?: ChatMessageCreateManyRecipientInputEnvelope;
+    set?: ChatMessageWhereUniqueInput | ChatMessageWhereUniqueInput[];
+    disconnect?: ChatMessageWhereUniqueInput | ChatMessageWhereUniqueInput[];
+    delete?: ChatMessageWhereUniqueInput | ChatMessageWhereUniqueInput[];
+    connect?: ChatMessageWhereUniqueInput | ChatMessageWhereUniqueInput[];
     update?:
-      | TaskUpdateWithWhereUniqueWithoutAssigneeInput
-      | TaskUpdateWithWhereUniqueWithoutAssigneeInput[];
+      | ChatMessageUpdateWithWhereUniqueWithoutRecipientInput
+      | ChatMessageUpdateWithWhereUniqueWithoutRecipientInput[];
     updateMany?:
-      | TaskUpdateManyWithWhereWithoutAssigneeInput
-      | TaskUpdateManyWithWhereWithoutAssigneeInput[];
-    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[];
+      | ChatMessageUpdateManyWithWhereWithoutRecipientInput
+      | ChatMessageUpdateManyWithWhereWithoutRecipientInput[];
+    deleteMany?: ChatMessageScalarWhereInput | ChatMessageScalarWhereInput[];
   };
 
   export type FeedbackUpdateManyWithoutFromUserNestedInput = {
@@ -23819,6 +23878,25 @@ export namespace Prisma {
       | GitHubActivityScalarWhereInput[];
   };
 
+  export type GoogleDocsDataUpdateOneWithoutUserNestedInput = {
+    create?: XOR<
+      GoogleDocsDataCreateWithoutUserInput,
+      GoogleDocsDataUncheckedCreateWithoutUserInput
+    >;
+    connectOrCreate?: GoogleDocsDataCreateOrConnectWithoutUserInput;
+    upsert?: GoogleDocsDataUpsertWithoutUserInput;
+    disconnect?: GoogleDocsDataWhereInput | boolean;
+    delete?: GoogleDocsDataWhereInput | boolean;
+    connect?: GoogleDocsDataWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        GoogleDocsDataUpdateToOneWithWhereWithoutUserInput,
+        GoogleDocsDataUpdateWithoutUserInput
+      >,
+      GoogleDocsDataUncheckedUpdateWithoutUserInput
+    >;
+  };
+
   export type PresenceLogUpdateManyWithoutUserNestedInput = {
     create?:
       | XOR<
@@ -23847,63 +23925,7 @@ export namespace Prisma {
     deleteMany?: PresenceLogScalarWhereInput | PresenceLogScalarWhereInput[];
   };
 
-  export type RefreshTokenUpdateManyWithoutUserNestedInput = {
-    create?:
-      | XOR<
-          RefreshTokenCreateWithoutUserInput,
-          RefreshTokenUncheckedCreateWithoutUserInput
-        >
-      | RefreshTokenCreateWithoutUserInput[]
-      | RefreshTokenUncheckedCreateWithoutUserInput[];
-    connectOrCreate?:
-      | RefreshTokenCreateOrConnectWithoutUserInput
-      | RefreshTokenCreateOrConnectWithoutUserInput[];
-    upsert?:
-      | RefreshTokenUpsertWithWhereUniqueWithoutUserInput
-      | RefreshTokenUpsertWithWhereUniqueWithoutUserInput[];
-    createMany?: RefreshTokenCreateManyUserInputEnvelope;
-    set?: RefreshTokenWhereUniqueInput | RefreshTokenWhereUniqueInput[];
-    disconnect?: RefreshTokenWhereUniqueInput | RefreshTokenWhereUniqueInput[];
-    delete?: RefreshTokenWhereUniqueInput | RefreshTokenWhereUniqueInput[];
-    connect?: RefreshTokenWhereUniqueInput | RefreshTokenWhereUniqueInput[];
-    update?:
-      | RefreshTokenUpdateWithWhereUniqueWithoutUserInput
-      | RefreshTokenUpdateWithWhereUniqueWithoutUserInput[];
-    updateMany?:
-      | RefreshTokenUpdateManyWithWhereWithoutUserInput
-      | RefreshTokenUpdateManyWithWhereWithoutUserInput[];
-    deleteMany?: RefreshTokenScalarWhereInput | RefreshTokenScalarWhereInput[];
-  };
-
-  export type UserOAuthUncheckedUpdateManyWithoutUserNestedInput = {
-    create?:
-      | XOR<
-          UserOAuthCreateWithoutUserInput,
-          UserOAuthUncheckedCreateWithoutUserInput
-        >
-      | UserOAuthCreateWithoutUserInput[]
-      | UserOAuthUncheckedCreateWithoutUserInput[];
-    connectOrCreate?:
-      | UserOAuthCreateOrConnectWithoutUserInput
-      | UserOAuthCreateOrConnectWithoutUserInput[];
-    upsert?:
-      | UserOAuthUpsertWithWhereUniqueWithoutUserInput
-      | UserOAuthUpsertWithWhereUniqueWithoutUserInput[];
-    createMany?: UserOAuthCreateManyUserInputEnvelope;
-    set?: UserOAuthWhereUniqueInput | UserOAuthWhereUniqueInput[];
-    disconnect?: UserOAuthWhereUniqueInput | UserOAuthWhereUniqueInput[];
-    delete?: UserOAuthWhereUniqueInput | UserOAuthWhereUniqueInput[];
-    connect?: UserOAuthWhereUniqueInput | UserOAuthWhereUniqueInput[];
-    update?:
-      | UserOAuthUpdateWithWhereUniqueWithoutUserInput
-      | UserOAuthUpdateWithWhereUniqueWithoutUserInput[];
-    updateMany?:
-      | UserOAuthUpdateManyWithWhereWithoutUserInput
-      | UserOAuthUpdateManyWithWhereWithoutUserInput[];
-    deleteMany?: UserOAuthScalarWhereInput | UserOAuthScalarWhereInput[];
-  };
-
-  export type ProjectUncheckedUpdateManyWithoutCreatedByNestedInput = {
+  export type ProjectUpdateManyWithoutCreatedByNestedInput = {
     create?:
       | XOR<
           ProjectCreateWithoutCreatedByInput,
@@ -23931,26 +23953,7 @@ export namespace Prisma {
     deleteMany?: ProjectScalarWhereInput | ProjectScalarWhereInput[];
   };
 
-  export type GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput = {
-    create?: XOR<
-      GoogleDocsDataCreateWithoutUserInput,
-      GoogleDocsDataUncheckedCreateWithoutUserInput
-    >;
-    connectOrCreate?: GoogleDocsDataCreateOrConnectWithoutUserInput;
-    upsert?: GoogleDocsDataUpsertWithoutUserInput;
-    disconnect?: GoogleDocsDataWhereInput | boolean;
-    delete?: GoogleDocsDataWhereInput | boolean;
-    connect?: GoogleDocsDataWhereUniqueInput;
-    update?: XOR<
-      XOR<
-        GoogleDocsDataUpdateToOneWithWhereWithoutUserInput,
-        GoogleDocsDataUpdateWithoutUserInput
-      >,
-      GoogleDocsDataUncheckedUpdateWithoutUserInput
-    >;
-  };
-
-  export type ProjectMemberUncheckedUpdateManyWithoutUserNestedInput = {
+  export type ProjectMemberUpdateManyWithoutUserNestedInput = {
     create?:
       | XOR<
           ProjectMemberCreateWithoutUserInput,
@@ -23982,6 +23985,90 @@ export namespace Prisma {
       | ProjectMemberScalarWhereInput[];
   };
 
+  export type RefreshTokenUpdateManyWithoutUserNestedInput = {
+    create?:
+      | XOR<
+          RefreshTokenCreateWithoutUserInput,
+          RefreshTokenUncheckedCreateWithoutUserInput
+        >
+      | RefreshTokenCreateWithoutUserInput[]
+      | RefreshTokenUncheckedCreateWithoutUserInput[];
+    connectOrCreate?:
+      | RefreshTokenCreateOrConnectWithoutUserInput
+      | RefreshTokenCreateOrConnectWithoutUserInput[];
+    upsert?:
+      | RefreshTokenUpsertWithWhereUniqueWithoutUserInput
+      | RefreshTokenUpsertWithWhereUniqueWithoutUserInput[];
+    createMany?: RefreshTokenCreateManyUserInputEnvelope;
+    set?: RefreshTokenWhereUniqueInput | RefreshTokenWhereUniqueInput[];
+    disconnect?: RefreshTokenWhereUniqueInput | RefreshTokenWhereUniqueInput[];
+    delete?: RefreshTokenWhereUniqueInput | RefreshTokenWhereUniqueInput[];
+    connect?: RefreshTokenWhereUniqueInput | RefreshTokenWhereUniqueInput[];
+    update?:
+      | RefreshTokenUpdateWithWhereUniqueWithoutUserInput
+      | RefreshTokenUpdateWithWhereUniqueWithoutUserInput[];
+    updateMany?:
+      | RefreshTokenUpdateManyWithWhereWithoutUserInput
+      | RefreshTokenUpdateManyWithWhereWithoutUserInput[];
+    deleteMany?: RefreshTokenScalarWhereInput | RefreshTokenScalarWhereInput[];
+  };
+
+  export type TaskUpdateManyWithoutAssigneeNestedInput = {
+    create?:
+      | XOR<
+          TaskCreateWithoutAssigneeInput,
+          TaskUncheckedCreateWithoutAssigneeInput
+        >
+      | TaskCreateWithoutAssigneeInput[]
+      | TaskUncheckedCreateWithoutAssigneeInput[];
+    connectOrCreate?:
+      | TaskCreateOrConnectWithoutAssigneeInput
+      | TaskCreateOrConnectWithoutAssigneeInput[];
+    upsert?:
+      | TaskUpsertWithWhereUniqueWithoutAssigneeInput
+      | TaskUpsertWithWhereUniqueWithoutAssigneeInput[];
+    createMany?: TaskCreateManyAssigneeInputEnvelope;
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
+    update?:
+      | TaskUpdateWithWhereUniqueWithoutAssigneeInput
+      | TaskUpdateWithWhereUniqueWithoutAssigneeInput[];
+    updateMany?:
+      | TaskUpdateManyWithWhereWithoutAssigneeInput
+      | TaskUpdateManyWithWhereWithoutAssigneeInput[];
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[];
+  };
+
+  export type UserOAuthUpdateManyWithoutUserNestedInput = {
+    create?:
+      | XOR<
+          UserOAuthCreateWithoutUserInput,
+          UserOAuthUncheckedCreateWithoutUserInput
+        >
+      | UserOAuthCreateWithoutUserInput[]
+      | UserOAuthUncheckedCreateWithoutUserInput[];
+    connectOrCreate?:
+      | UserOAuthCreateOrConnectWithoutUserInput
+      | UserOAuthCreateOrConnectWithoutUserInput[];
+    upsert?:
+      | UserOAuthUpsertWithWhereUniqueWithoutUserInput
+      | UserOAuthUpsertWithWhereUniqueWithoutUserInput[];
+    createMany?: UserOAuthCreateManyUserInputEnvelope;
+    set?: UserOAuthWhereUniqueInput | UserOAuthWhereUniqueInput[];
+    disconnect?: UserOAuthWhereUniqueInput | UserOAuthWhereUniqueInput[];
+    delete?: UserOAuthWhereUniqueInput | UserOAuthWhereUniqueInput[];
+    connect?: UserOAuthWhereUniqueInput | UserOAuthWhereUniqueInput[];
+    update?:
+      | UserOAuthUpdateWithWhereUniqueWithoutUserInput
+      | UserOAuthUpdateWithWhereUniqueWithoutUserInput[];
+    updateMany?:
+      | UserOAuthUpdateManyWithWhereWithoutUserInput
+      | UserOAuthUpdateManyWithWhereWithoutUserInput[];
+    deleteMany?: UserOAuthScalarWhereInput | UserOAuthScalarWhereInput[];
+  };
+
   export type ChatMessageUncheckedUpdateManyWithoutSenderNestedInput = {
     create?:
       | XOR<
@@ -24010,32 +24097,32 @@ export namespace Prisma {
     deleteMany?: ChatMessageScalarWhereInput | ChatMessageScalarWhereInput[];
   };
 
-  export type TaskUncheckedUpdateManyWithoutAssigneeNestedInput = {
+  export type ChatMessageUncheckedUpdateManyWithoutRecipientNestedInput = {
     create?:
       | XOR<
-          TaskCreateWithoutAssigneeInput,
-          TaskUncheckedCreateWithoutAssigneeInput
+          ChatMessageCreateWithoutRecipientInput,
+          ChatMessageUncheckedCreateWithoutRecipientInput
         >
-      | TaskCreateWithoutAssigneeInput[]
-      | TaskUncheckedCreateWithoutAssigneeInput[];
+      | ChatMessageCreateWithoutRecipientInput[]
+      | ChatMessageUncheckedCreateWithoutRecipientInput[];
     connectOrCreate?:
-      | TaskCreateOrConnectWithoutAssigneeInput
-      | TaskCreateOrConnectWithoutAssigneeInput[];
+      | ChatMessageCreateOrConnectWithoutRecipientInput
+      | ChatMessageCreateOrConnectWithoutRecipientInput[];
     upsert?:
-      | TaskUpsertWithWhereUniqueWithoutAssigneeInput
-      | TaskUpsertWithWhereUniqueWithoutAssigneeInput[];
-    createMany?: TaskCreateManyAssigneeInputEnvelope;
-    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
-    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
-    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
+      | ChatMessageUpsertWithWhereUniqueWithoutRecipientInput
+      | ChatMessageUpsertWithWhereUniqueWithoutRecipientInput[];
+    createMany?: ChatMessageCreateManyRecipientInputEnvelope;
+    set?: ChatMessageWhereUniqueInput | ChatMessageWhereUniqueInput[];
+    disconnect?: ChatMessageWhereUniqueInput | ChatMessageWhereUniqueInput[];
+    delete?: ChatMessageWhereUniqueInput | ChatMessageWhereUniqueInput[];
+    connect?: ChatMessageWhereUniqueInput | ChatMessageWhereUniqueInput[];
     update?:
-      | TaskUpdateWithWhereUniqueWithoutAssigneeInput
-      | TaskUpdateWithWhereUniqueWithoutAssigneeInput[];
+      | ChatMessageUpdateWithWhereUniqueWithoutRecipientInput
+      | ChatMessageUpdateWithWhereUniqueWithoutRecipientInput[];
     updateMany?:
-      | TaskUpdateManyWithWhereWithoutAssigneeInput
-      | TaskUpdateManyWithWhereWithoutAssigneeInput[];
-    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[];
+      | ChatMessageUpdateManyWithWhereWithoutRecipientInput
+      | ChatMessageUpdateManyWithWhereWithoutRecipientInput[];
+    deleteMany?: ChatMessageScalarWhereInput | ChatMessageScalarWhereInput[];
   };
 
   export type FeedbackUncheckedUpdateManyWithoutFromUserNestedInput = {
@@ -24126,6 +24213,25 @@ export namespace Prisma {
       | GitHubActivityScalarWhereInput[];
   };
 
+  export type GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<
+      GoogleDocsDataCreateWithoutUserInput,
+      GoogleDocsDataUncheckedCreateWithoutUserInput
+    >;
+    connectOrCreate?: GoogleDocsDataCreateOrConnectWithoutUserInput;
+    upsert?: GoogleDocsDataUpsertWithoutUserInput;
+    disconnect?: GoogleDocsDataWhereInput | boolean;
+    delete?: GoogleDocsDataWhereInput | boolean;
+    connect?: GoogleDocsDataWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        GoogleDocsDataUpdateToOneWithWhereWithoutUserInput,
+        GoogleDocsDataUpdateWithoutUserInput
+      >,
+      GoogleDocsDataUncheckedUpdateWithoutUserInput
+    >;
+  };
+
   export type PresenceLogUncheckedUpdateManyWithoutUserNestedInput = {
     create?:
       | XOR<
@@ -24154,6 +24260,66 @@ export namespace Prisma {
     deleteMany?: PresenceLogScalarWhereInput | PresenceLogScalarWhereInput[];
   };
 
+  export type ProjectUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?:
+      | XOR<
+          ProjectCreateWithoutCreatedByInput,
+          ProjectUncheckedCreateWithoutCreatedByInput
+        >
+      | ProjectCreateWithoutCreatedByInput[]
+      | ProjectUncheckedCreateWithoutCreatedByInput[];
+    connectOrCreate?:
+      | ProjectCreateOrConnectWithoutCreatedByInput
+      | ProjectCreateOrConnectWithoutCreatedByInput[];
+    upsert?:
+      | ProjectUpsertWithWhereUniqueWithoutCreatedByInput
+      | ProjectUpsertWithWhereUniqueWithoutCreatedByInput[];
+    createMany?: ProjectCreateManyCreatedByInputEnvelope;
+    set?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
+    disconnect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
+    delete?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
+    connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[];
+    update?:
+      | ProjectUpdateWithWhereUniqueWithoutCreatedByInput
+      | ProjectUpdateWithWhereUniqueWithoutCreatedByInput[];
+    updateMany?:
+      | ProjectUpdateManyWithWhereWithoutCreatedByInput
+      | ProjectUpdateManyWithWhereWithoutCreatedByInput[];
+    deleteMany?: ProjectScalarWhereInput | ProjectScalarWhereInput[];
+  };
+
+  export type ProjectMemberUncheckedUpdateManyWithoutUserNestedInput = {
+    create?:
+      | XOR<
+          ProjectMemberCreateWithoutUserInput,
+          ProjectMemberUncheckedCreateWithoutUserInput
+        >
+      | ProjectMemberCreateWithoutUserInput[]
+      | ProjectMemberUncheckedCreateWithoutUserInput[];
+    connectOrCreate?:
+      | ProjectMemberCreateOrConnectWithoutUserInput
+      | ProjectMemberCreateOrConnectWithoutUserInput[];
+    upsert?:
+      | ProjectMemberUpsertWithWhereUniqueWithoutUserInput
+      | ProjectMemberUpsertWithWhereUniqueWithoutUserInput[];
+    createMany?: ProjectMemberCreateManyUserInputEnvelope;
+    set?: ProjectMemberWhereUniqueInput | ProjectMemberWhereUniqueInput[];
+    disconnect?:
+      | ProjectMemberWhereUniqueInput
+      | ProjectMemberWhereUniqueInput[];
+    delete?: ProjectMemberWhereUniqueInput | ProjectMemberWhereUniqueInput[];
+    connect?: ProjectMemberWhereUniqueInput | ProjectMemberWhereUniqueInput[];
+    update?:
+      | ProjectMemberUpdateWithWhereUniqueWithoutUserInput
+      | ProjectMemberUpdateWithWhereUniqueWithoutUserInput[];
+    updateMany?:
+      | ProjectMemberUpdateManyWithWhereWithoutUserInput
+      | ProjectMemberUpdateManyWithWhereWithoutUserInput[];
+    deleteMany?:
+      | ProjectMemberScalarWhereInput
+      | ProjectMemberScalarWhereInput[];
+  };
+
   export type RefreshTokenUncheckedUpdateManyWithoutUserNestedInput = {
     create?:
       | XOR<
@@ -24180,6 +24346,62 @@ export namespace Prisma {
       | RefreshTokenUpdateManyWithWhereWithoutUserInput
       | RefreshTokenUpdateManyWithWhereWithoutUserInput[];
     deleteMany?: RefreshTokenScalarWhereInput | RefreshTokenScalarWhereInput[];
+  };
+
+  export type TaskUncheckedUpdateManyWithoutAssigneeNestedInput = {
+    create?:
+      | XOR<
+          TaskCreateWithoutAssigneeInput,
+          TaskUncheckedCreateWithoutAssigneeInput
+        >
+      | TaskCreateWithoutAssigneeInput[]
+      | TaskUncheckedCreateWithoutAssigneeInput[];
+    connectOrCreate?:
+      | TaskCreateOrConnectWithoutAssigneeInput
+      | TaskCreateOrConnectWithoutAssigneeInput[];
+    upsert?:
+      | TaskUpsertWithWhereUniqueWithoutAssigneeInput
+      | TaskUpsertWithWhereUniqueWithoutAssigneeInput[];
+    createMany?: TaskCreateManyAssigneeInputEnvelope;
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
+    update?:
+      | TaskUpdateWithWhereUniqueWithoutAssigneeInput
+      | TaskUpdateWithWhereUniqueWithoutAssigneeInput[];
+    updateMany?:
+      | TaskUpdateManyWithWhereWithoutAssigneeInput
+      | TaskUpdateManyWithWhereWithoutAssigneeInput[];
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[];
+  };
+
+  export type UserOAuthUncheckedUpdateManyWithoutUserNestedInput = {
+    create?:
+      | XOR<
+          UserOAuthCreateWithoutUserInput,
+          UserOAuthUncheckedCreateWithoutUserInput
+        >
+      | UserOAuthCreateWithoutUserInput[]
+      | UserOAuthUncheckedCreateWithoutUserInput[];
+    connectOrCreate?:
+      | UserOAuthCreateOrConnectWithoutUserInput
+      | UserOAuthCreateOrConnectWithoutUserInput[];
+    upsert?:
+      | UserOAuthUpsertWithWhereUniqueWithoutUserInput
+      | UserOAuthUpsertWithWhereUniqueWithoutUserInput[];
+    createMany?: UserOAuthCreateManyUserInputEnvelope;
+    set?: UserOAuthWhereUniqueInput | UserOAuthWhereUniqueInput[];
+    disconnect?: UserOAuthWhereUniqueInput | UserOAuthWhereUniqueInput[];
+    delete?: UserOAuthWhereUniqueInput | UserOAuthWhereUniqueInput[];
+    connect?: UserOAuthWhereUniqueInput | UserOAuthWhereUniqueInput[];
+    update?:
+      | UserOAuthUpdateWithWhereUniqueWithoutUserInput
+      | UserOAuthUpdateWithWhereUniqueWithoutUserInput[];
+    updateMany?:
+      | UserOAuthUpdateManyWithWhereWithoutUserInput
+      | UserOAuthUpdateManyWithWhereWithoutUserInput[];
+    deleteMany?: UserOAuthScalarWhereInput | UserOAuthScalarWhereInput[];
   };
 
   export type UserCreateNestedOneWithoutOauthAccountsInput = {
@@ -24236,36 +24458,6 @@ export namespace Prisma {
       >,
       UserUncheckedUpdateWithoutRefreshTokensInput
     >;
-  };
-
-  export type ProjectMemberCreateNestedManyWithoutProjectInput = {
-    create?:
-      | XOR<
-          ProjectMemberCreateWithoutProjectInput,
-          ProjectMemberUncheckedCreateWithoutProjectInput
-        >
-      | ProjectMemberCreateWithoutProjectInput[]
-      | ProjectMemberUncheckedCreateWithoutProjectInput[];
-    connectOrCreate?:
-      | ProjectMemberCreateOrConnectWithoutProjectInput
-      | ProjectMemberCreateOrConnectWithoutProjectInput[];
-    createMany?: ProjectMemberCreateManyProjectInputEnvelope;
-    connect?: ProjectMemberWhereUniqueInput | ProjectMemberWhereUniqueInput[];
-  };
-
-  export type TaskCreateNestedManyWithoutProjectInput = {
-    create?:
-      | XOR<
-          TaskCreateWithoutProjectInput,
-          TaskUncheckedCreateWithoutProjectInput
-        >
-      | TaskCreateWithoutProjectInput[]
-      | TaskUncheckedCreateWithoutProjectInput[];
-    connectOrCreate?:
-      | TaskCreateOrConnectWithoutProjectInput
-      | TaskCreateOrConnectWithoutProjectInput[];
-    createMany?: TaskCreateManyProjectInputEnvelope;
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
   };
 
   export type ChatMessageCreateNestedManyWithoutProjectInput = {
@@ -24352,7 +24544,7 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput;
   };
 
-  export type ProjectMemberUncheckedCreateNestedManyWithoutProjectInput = {
+  export type ProjectMemberCreateNestedManyWithoutProjectInput = {
     create?:
       | XOR<
           ProjectMemberCreateWithoutProjectInput,
@@ -24367,7 +24559,7 @@ export namespace Prisma {
     connect?: ProjectMemberWhereUniqueInput | ProjectMemberWhereUniqueInput[];
   };
 
-  export type TaskUncheckedCreateNestedManyWithoutProjectInput = {
+  export type TaskCreateNestedManyWithoutProjectInput = {
     create?:
       | XOR<
           TaskCreateWithoutProjectInput,
@@ -24457,11 +24649,7 @@ export namespace Prisma {
     connect?: PresenceLogWhereUniqueInput | PresenceLogWhereUniqueInput[];
   };
 
-  export type EnumProjectStatusFieldUpdateOperationsInput = {
-    set?: $Enums.ProjectStatus;
-  };
-
-  export type ProjectMemberUpdateManyWithoutProjectNestedInput = {
+  export type ProjectMemberUncheckedCreateNestedManyWithoutProjectInput = {
     create?:
       | XOR<
           ProjectMemberCreateWithoutProjectInput,
@@ -24472,28 +24660,11 @@ export namespace Prisma {
     connectOrCreate?:
       | ProjectMemberCreateOrConnectWithoutProjectInput
       | ProjectMemberCreateOrConnectWithoutProjectInput[];
-    upsert?:
-      | ProjectMemberUpsertWithWhereUniqueWithoutProjectInput
-      | ProjectMemberUpsertWithWhereUniqueWithoutProjectInput[];
     createMany?: ProjectMemberCreateManyProjectInputEnvelope;
-    set?: ProjectMemberWhereUniqueInput | ProjectMemberWhereUniqueInput[];
-    disconnect?:
-      | ProjectMemberWhereUniqueInput
-      | ProjectMemberWhereUniqueInput[];
-    delete?: ProjectMemberWhereUniqueInput | ProjectMemberWhereUniqueInput[];
     connect?: ProjectMemberWhereUniqueInput | ProjectMemberWhereUniqueInput[];
-    update?:
-      | ProjectMemberUpdateWithWhereUniqueWithoutProjectInput
-      | ProjectMemberUpdateWithWhereUniqueWithoutProjectInput[];
-    updateMany?:
-      | ProjectMemberUpdateManyWithWhereWithoutProjectInput
-      | ProjectMemberUpdateManyWithWhereWithoutProjectInput[];
-    deleteMany?:
-      | ProjectMemberScalarWhereInput
-      | ProjectMemberScalarWhereInput[];
   };
 
-  export type TaskUpdateManyWithoutProjectNestedInput = {
+  export type TaskUncheckedCreateNestedManyWithoutProjectInput = {
     create?:
       | XOR<
           TaskCreateWithoutProjectInput,
@@ -24504,21 +24675,12 @@ export namespace Prisma {
     connectOrCreate?:
       | TaskCreateOrConnectWithoutProjectInput
       | TaskCreateOrConnectWithoutProjectInput[];
-    upsert?:
-      | TaskUpsertWithWhereUniqueWithoutProjectInput
-      | TaskUpsertWithWhereUniqueWithoutProjectInput[];
     createMany?: TaskCreateManyProjectInputEnvelope;
-    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
-    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
-    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
     connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
-    update?:
-      | TaskUpdateWithWhereUniqueWithoutProjectInput
-      | TaskUpdateWithWhereUniqueWithoutProjectInput[];
-    updateMany?:
-      | TaskUpdateManyWithWhereWithoutProjectInput
-      | TaskUpdateManyWithWhereWithoutProjectInput[];
-    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[];
+  };
+
+  export type EnumProjectStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ProjectStatus;
   };
 
   export type ChatMessageUpdateManyWithoutProjectNestedInput = {
@@ -24682,7 +24844,7 @@ export namespace Prisma {
     >;
   };
 
-  export type ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput = {
+  export type ProjectMemberUpdateManyWithoutProjectNestedInput = {
     create?:
       | XOR<
           ProjectMemberCreateWithoutProjectInput,
@@ -24714,7 +24876,7 @@ export namespace Prisma {
       | ProjectMemberScalarWhereInput[];
   };
 
-  export type TaskUncheckedUpdateManyWithoutProjectNestedInput = {
+  export type TaskUpdateManyWithoutProjectNestedInput = {
     create?:
       | XOR<
           TaskCreateWithoutProjectInput,
@@ -24886,13 +25048,64 @@ export namespace Prisma {
     deleteMany?: PresenceLogScalarWhereInput | PresenceLogScalarWhereInput[];
   };
 
-  export type UserCreateNestedOneWithoutMembershipsInput = {
-    create?: XOR<
-      UserCreateWithoutMembershipsInput,
-      UserUncheckedCreateWithoutMembershipsInput
-    >;
-    connectOrCreate?: UserCreateOrConnectWithoutMembershipsInput;
-    connect?: UserWhereUniqueInput;
+  export type ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput = {
+    create?:
+      | XOR<
+          ProjectMemberCreateWithoutProjectInput,
+          ProjectMemberUncheckedCreateWithoutProjectInput
+        >
+      | ProjectMemberCreateWithoutProjectInput[]
+      | ProjectMemberUncheckedCreateWithoutProjectInput[];
+    connectOrCreate?:
+      | ProjectMemberCreateOrConnectWithoutProjectInput
+      | ProjectMemberCreateOrConnectWithoutProjectInput[];
+    upsert?:
+      | ProjectMemberUpsertWithWhereUniqueWithoutProjectInput
+      | ProjectMemberUpsertWithWhereUniqueWithoutProjectInput[];
+    createMany?: ProjectMemberCreateManyProjectInputEnvelope;
+    set?: ProjectMemberWhereUniqueInput | ProjectMemberWhereUniqueInput[];
+    disconnect?:
+      | ProjectMemberWhereUniqueInput
+      | ProjectMemberWhereUniqueInput[];
+    delete?: ProjectMemberWhereUniqueInput | ProjectMemberWhereUniqueInput[];
+    connect?: ProjectMemberWhereUniqueInput | ProjectMemberWhereUniqueInput[];
+    update?:
+      | ProjectMemberUpdateWithWhereUniqueWithoutProjectInput
+      | ProjectMemberUpdateWithWhereUniqueWithoutProjectInput[];
+    updateMany?:
+      | ProjectMemberUpdateManyWithWhereWithoutProjectInput
+      | ProjectMemberUpdateManyWithWhereWithoutProjectInput[];
+    deleteMany?:
+      | ProjectMemberScalarWhereInput
+      | ProjectMemberScalarWhereInput[];
+  };
+
+  export type TaskUncheckedUpdateManyWithoutProjectNestedInput = {
+    create?:
+      | XOR<
+          TaskCreateWithoutProjectInput,
+          TaskUncheckedCreateWithoutProjectInput
+        >
+      | TaskCreateWithoutProjectInput[]
+      | TaskUncheckedCreateWithoutProjectInput[];
+    connectOrCreate?:
+      | TaskCreateOrConnectWithoutProjectInput
+      | TaskCreateOrConnectWithoutProjectInput[];
+    upsert?:
+      | TaskUpsertWithWhereUniqueWithoutProjectInput
+      | TaskUpsertWithWhereUniqueWithoutProjectInput[];
+    createMany?: TaskCreateManyProjectInputEnvelope;
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[];
+    update?:
+      | TaskUpdateWithWhereUniqueWithoutProjectInput
+      | TaskUpdateWithWhereUniqueWithoutProjectInput[];
+    updateMany?:
+      | TaskUpdateManyWithWhereWithoutProjectInput
+      | TaskUpdateManyWithWhereWithoutProjectInput[];
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[];
   };
 
   export type ProjectCreateNestedOneWithoutMembersInput = {
@@ -24904,29 +25117,21 @@ export namespace Prisma {
     connect?: ProjectWhereUniqueInput;
   };
 
+  export type UserCreateNestedOneWithoutMembershipsInput = {
+    create?: XOR<
+      UserCreateWithoutMembershipsInput,
+      UserUncheckedCreateWithoutMembershipsInput
+    >;
+    connectOrCreate?: UserCreateOrConnectWithoutMembershipsInput;
+    connect?: UserWhereUniqueInput;
+  };
+
   export type EnumProjectRoleFieldUpdateOperationsInput = {
     set?: $Enums.ProjectRole;
   };
 
   export type EnumMemberStatusFieldUpdateOperationsInput = {
     set?: $Enums.MemberStatus;
-  };
-
-  export type UserUpdateOneRequiredWithoutMembershipsNestedInput = {
-    create?: XOR<
-      UserCreateWithoutMembershipsInput,
-      UserUncheckedCreateWithoutMembershipsInput
-    >;
-    connectOrCreate?: UserCreateOrConnectWithoutMembershipsInput;
-    upsert?: UserUpsertWithoutMembershipsInput;
-    connect?: UserWhereUniqueInput;
-    update?: XOR<
-      XOR<
-        UserUpdateToOneWithWhereWithoutMembershipsInput,
-        UserUpdateWithoutMembershipsInput
-      >,
-      UserUncheckedUpdateWithoutMembershipsInput
-    >;
   };
 
   export type ProjectUpdateOneRequiredWithoutMembersNestedInput = {
@@ -24946,13 +25151,21 @@ export namespace Prisma {
     >;
   };
 
-  export type ProjectCreateNestedOneWithoutTasksInput = {
+  export type UserUpdateOneRequiredWithoutMembershipsNestedInput = {
     create?: XOR<
-      ProjectCreateWithoutTasksInput,
-      ProjectUncheckedCreateWithoutTasksInput
+      UserCreateWithoutMembershipsInput,
+      UserUncheckedCreateWithoutMembershipsInput
     >;
-    connectOrCreate?: ProjectCreateOrConnectWithoutTasksInput;
-    connect?: ProjectWhereUniqueInput;
+    connectOrCreate?: UserCreateOrConnectWithoutMembershipsInput;
+    upsert?: UserUpsertWithoutMembershipsInput;
+    connect?: UserWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        UserUpdateToOneWithWhereWithoutMembershipsInput,
+        UserUpdateWithoutMembershipsInput
+      >,
+      UserUncheckedUpdateWithoutMembershipsInput
+    >;
   };
 
   export type UserCreateNestedOneWithoutTasksInput = {
@@ -24962,6 +25175,15 @@ export namespace Prisma {
     >;
     connectOrCreate?: UserCreateOrConnectWithoutTasksInput;
     connect?: UserWhereUniqueInput;
+  };
+
+  export type ProjectCreateNestedOneWithoutTasksInput = {
+    create?: XOR<
+      ProjectCreateWithoutTasksInput,
+      ProjectUncheckedCreateWithoutTasksInput
+    >;
+    connectOrCreate?: ProjectCreateOrConnectWithoutTasksInput;
+    connect?: ProjectWhereUniqueInput;
   };
 
   export type EnumTaskPriorityFieldUpdateOperationsInput = {
@@ -24988,23 +25210,6 @@ export namespace Prisma {
     divide?: number;
   };
 
-  export type ProjectUpdateOneRequiredWithoutTasksNestedInput = {
-    create?: XOR<
-      ProjectCreateWithoutTasksInput,
-      ProjectUncheckedCreateWithoutTasksInput
-    >;
-    connectOrCreate?: ProjectCreateOrConnectWithoutTasksInput;
-    upsert?: ProjectUpsertWithoutTasksInput;
-    connect?: ProjectWhereUniqueInput;
-    update?: XOR<
-      XOR<
-        ProjectUpdateToOneWithWhereWithoutTasksInput,
-        ProjectUpdateWithoutTasksInput
-      >,
-      ProjectUncheckedUpdateWithoutTasksInput
-    >;
-  };
-
   export type UserUpdateOneWithoutTasksNestedInput = {
     create?: XOR<
       UserCreateWithoutTasksInput,
@@ -25024,6 +25229,23 @@ export namespace Prisma {
     >;
   };
 
+  export type ProjectUpdateOneRequiredWithoutTasksNestedInput = {
+    create?: XOR<
+      ProjectCreateWithoutTasksInput,
+      ProjectUncheckedCreateWithoutTasksInput
+    >;
+    connectOrCreate?: ProjectCreateOrConnectWithoutTasksInput;
+    upsert?: ProjectUpsertWithoutTasksInput;
+    connect?: ProjectWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        ProjectUpdateToOneWithWhereWithoutTasksInput,
+        ProjectUpdateWithoutTasksInput
+      >,
+      ProjectUncheckedUpdateWithoutTasksInput
+    >;
+  };
+
   export type ProjectCreateNestedOneWithoutChatMessagesInput = {
     create?: XOR<
       ProjectCreateWithoutChatMessagesInput,
@@ -25039,6 +25261,15 @@ export namespace Prisma {
       UserUncheckedCreateWithoutMessagesInput
     >;
     connectOrCreate?: UserCreateOrConnectWithoutMessagesInput;
+    connect?: UserWhereUniqueInput;
+  };
+
+  export type UserCreateNestedOneWithoutReceivedMessagesInput = {
+    create?: XOR<
+      UserCreateWithoutReceivedMessagesInput,
+      UserUncheckedCreateWithoutReceivedMessagesInput
+    >;
+    connectOrCreate?: UserCreateOrConnectWithoutReceivedMessagesInput;
     connect?: UserWhereUniqueInput;
   };
 
@@ -25073,6 +25304,25 @@ export namespace Prisma {
         UserUpdateWithoutMessagesInput
       >,
       UserUncheckedUpdateWithoutMessagesInput
+    >;
+  };
+
+  export type UserUpdateOneWithoutReceivedMessagesNestedInput = {
+    create?: XOR<
+      UserCreateWithoutReceivedMessagesInput,
+      UserUncheckedCreateWithoutReceivedMessagesInput
+    >;
+    connectOrCreate?: UserCreateOrConnectWithoutReceivedMessagesInput;
+    upsert?: UserUpsertWithoutReceivedMessagesInput;
+    disconnect?: UserWhereInput | boolean;
+    delete?: UserWhereInput | boolean;
+    connect?: UserWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        UserUpdateToOneWithWhereWithoutReceivedMessagesInput,
+        UserUpdateWithoutReceivedMessagesInput
+      >,
+      UserUncheckedUpdateWithoutReceivedMessagesInput
     >;
   };
 
@@ -25196,15 +25446,6 @@ export namespace Prisma {
     >;
   };
 
-  export type ProjectCreateNestedOneWithoutFeedbacksInput = {
-    create?: XOR<
-      ProjectCreateWithoutFeedbacksInput,
-      ProjectUncheckedCreateWithoutFeedbacksInput
-    >;
-    connectOrCreate?: ProjectCreateOrConnectWithoutFeedbacksInput;
-    connect?: ProjectWhereUniqueInput;
-  };
-
   export type UserCreateNestedOneWithoutFeedbackGivenInput = {
     create?: XOR<
       UserCreateWithoutFeedbackGivenInput,
@@ -25214,6 +25455,15 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput;
   };
 
+  export type ProjectCreateNestedOneWithoutFeedbacksInput = {
+    create?: XOR<
+      ProjectCreateWithoutFeedbacksInput,
+      ProjectUncheckedCreateWithoutFeedbacksInput
+    >;
+    connectOrCreate?: ProjectCreateOrConnectWithoutFeedbacksInput;
+    connect?: ProjectWhereUniqueInput;
+  };
+
   export type UserCreateNestedOneWithoutFeedbackReceivedInput = {
     create?: XOR<
       UserCreateWithoutFeedbackReceivedInput,
@@ -25221,23 +25471,6 @@ export namespace Prisma {
     >;
     connectOrCreate?: UserCreateOrConnectWithoutFeedbackReceivedInput;
     connect?: UserWhereUniqueInput;
-  };
-
-  export type ProjectUpdateOneRequiredWithoutFeedbacksNestedInput = {
-    create?: XOR<
-      ProjectCreateWithoutFeedbacksInput,
-      ProjectUncheckedCreateWithoutFeedbacksInput
-    >;
-    connectOrCreate?: ProjectCreateOrConnectWithoutFeedbacksInput;
-    upsert?: ProjectUpsertWithoutFeedbacksInput;
-    connect?: ProjectWhereUniqueInput;
-    update?: XOR<
-      XOR<
-        ProjectUpdateToOneWithWhereWithoutFeedbacksInput,
-        ProjectUpdateWithoutFeedbacksInput
-      >,
-      ProjectUncheckedUpdateWithoutFeedbacksInput
-    >;
   };
 
   export type UserUpdateOneRequiredWithoutFeedbackGivenNestedInput = {
@@ -25254,6 +25487,23 @@ export namespace Prisma {
         UserUpdateWithoutFeedbackGivenInput
       >,
       UserUncheckedUpdateWithoutFeedbackGivenInput
+    >;
+  };
+
+  export type ProjectUpdateOneRequiredWithoutFeedbacksNestedInput = {
+    create?: XOR<
+      ProjectCreateWithoutFeedbacksInput,
+      ProjectUncheckedCreateWithoutFeedbacksInput
+    >;
+    connectOrCreate?: ProjectCreateOrConnectWithoutFeedbacksInput;
+    upsert?: ProjectUpsertWithoutFeedbacksInput;
+    connect?: ProjectWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        ProjectUpdateToOneWithWhereWithoutFeedbacksInput,
+        ProjectUpdateWithoutFeedbacksInput
+      >,
+      ProjectUncheckedUpdateWithoutFeedbacksInput
     >;
   };
 
@@ -25787,137 +26037,6 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>;
   };
 
-  export type UserOAuthCreateWithoutUserInput = {
-    id?: string;
-    provider: string;
-    providerUserId: string;
-    accessTokenEnc: string;
-    tokenExpiresAt?: Date | string | null;
-    scopes?: string | null;
-    createdAt?: Date | string;
-    updatedAt?: Date | string;
-  };
-
-  export type UserOAuthUncheckedCreateWithoutUserInput = {
-    id?: string;
-    provider: string;
-    providerUserId: string;
-    accessTokenEnc: string;
-    tokenExpiresAt?: Date | string | null;
-    scopes?: string | null;
-    createdAt?: Date | string;
-    updatedAt?: Date | string;
-  };
-
-  export type UserOAuthCreateOrConnectWithoutUserInput = {
-    where: UserOAuthWhereUniqueInput;
-    create: XOR<
-      UserOAuthCreateWithoutUserInput,
-      UserOAuthUncheckedCreateWithoutUserInput
-    >;
-  };
-
-  export type UserOAuthCreateManyUserInputEnvelope = {
-    data: UserOAuthCreateManyUserInput | UserOAuthCreateManyUserInput[];
-    skipDuplicates?: boolean;
-  };
-
-  export type ProjectCreateWithoutCreatedByInput = {
-    id?: string;
-    name: string;
-    status?: $Enums.ProjectStatus;
-    description?: string | null;
-    githubRepo: string;
-    createdAt?: Date | string;
-    lastActive?: Date | string | null;
-    members?: ProjectMemberCreateNestedManyWithoutProjectInput;
-    tasks?: TaskCreateNestedManyWithoutProjectInput;
-    chatMessages?: ChatMessageCreateNestedManyWithoutProjectInput;
-    feedbacks?: FeedbackCreateNestedManyWithoutProjectInput;
-    githubData?: GitHubActivityCreateNestedManyWithoutProjectInput;
-    insights?: InsightCreateNestedManyWithoutProjectInput;
-    presenceLogs?: PresenceLogCreateNestedManyWithoutProjectInput;
-  };
-
-  export type ProjectUncheckedCreateWithoutCreatedByInput = {
-    id?: string;
-    name: string;
-    status?: $Enums.ProjectStatus;
-    description?: string | null;
-    githubRepo: string;
-    createdAt?: Date | string;
-    lastActive?: Date | string | null;
-    members?: ProjectMemberUncheckedCreateNestedManyWithoutProjectInput;
-    tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput;
-    chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutProjectInput;
-    feedbacks?: FeedbackUncheckedCreateNestedManyWithoutProjectInput;
-    githubData?: GitHubActivityUncheckedCreateNestedManyWithoutProjectInput;
-    insights?: InsightUncheckedCreateNestedManyWithoutProjectInput;
-    presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutProjectInput;
-  };
-
-  export type ProjectCreateOrConnectWithoutCreatedByInput = {
-    where: ProjectWhereUniqueInput;
-    create: XOR<
-      ProjectCreateWithoutCreatedByInput,
-      ProjectUncheckedCreateWithoutCreatedByInput
-    >;
-  };
-
-  export type ProjectCreateManyCreatedByInputEnvelope = {
-    data: ProjectCreateManyCreatedByInput | ProjectCreateManyCreatedByInput[];
-    skipDuplicates?: boolean;
-  };
-
-  export type GoogleDocsDataCreateWithoutUserInput = {
-    id?: string;
-    editsCount?: number | null;
-    lastActivity?: Date | string | null;
-  };
-
-  export type GoogleDocsDataUncheckedCreateWithoutUserInput = {
-    id?: string;
-    editsCount?: number | null;
-    lastActivity?: Date | string | null;
-  };
-
-  export type GoogleDocsDataCreateOrConnectWithoutUserInput = {
-    where: GoogleDocsDataWhereUniqueInput;
-    create: XOR<
-      GoogleDocsDataCreateWithoutUserInput,
-      GoogleDocsDataUncheckedCreateWithoutUserInput
-    >;
-  };
-
-  export type ProjectMemberCreateWithoutUserInput = {
-    id?: string;
-    role?: $Enums.ProjectRole;
-    status?: $Enums.MemberStatus;
-    joinedAt?: Date | string | null;
-    project: ProjectCreateNestedOneWithoutMembersInput;
-  };
-
-  export type ProjectMemberUncheckedCreateWithoutUserInput = {
-    id?: string;
-    projectId: string;
-    role?: $Enums.ProjectRole;
-    status?: $Enums.MemberStatus;
-    joinedAt?: Date | string | null;
-  };
-
-  export type ProjectMemberCreateOrConnectWithoutUserInput = {
-    where: ProjectMemberWhereUniqueInput;
-    create: XOR<
-      ProjectMemberCreateWithoutUserInput,
-      ProjectMemberUncheckedCreateWithoutUserInput
-    >;
-  };
-
-  export type ProjectMemberCreateManyUserInputEnvelope = {
-    data: ProjectMemberCreateManyUserInput | ProjectMemberCreateManyUserInput[];
-    skipDuplicates?: boolean;
-  };
-
   export type ChatMessageCreateWithoutSenderInput = {
     id?: string;
     message: string;
@@ -25925,11 +26044,13 @@ export namespace Prisma {
     aiLabel?: string | null;
     createdAt?: Date | string;
     project: ProjectCreateNestedOneWithoutChatMessagesInput;
+    recipient?: UserCreateNestedOneWithoutReceivedMessagesInput;
   };
 
   export type ChatMessageUncheckedCreateWithoutSenderInput = {
     id?: string;
     projectId: string;
+    recipientId?: string | null;
     message: string;
     type?: string;
     aiLabel?: string | null;
@@ -25949,42 +26070,38 @@ export namespace Prisma {
     skipDuplicates?: boolean;
   };
 
-  export type TaskCreateWithoutAssigneeInput = {
+  export type ChatMessageCreateWithoutRecipientInput = {
     id?: string;
-    priority?: $Enums.TaskPriority;
-    title: string;
-    description?: string | null;
-    weight?: number;
-    status?: $Enums.TaskStatus;
+    message: string;
+    type?: string;
+    aiLabel?: string | null;
     createdAt?: Date | string;
-    completedAt?: Date | string | null;
-    score?: number | null;
-    project: ProjectCreateNestedOneWithoutTasksInput;
+    project: ProjectCreateNestedOneWithoutChatMessagesInput;
+    sender: UserCreateNestedOneWithoutMessagesInput;
   };
 
-  export type TaskUncheckedCreateWithoutAssigneeInput = {
+  export type ChatMessageUncheckedCreateWithoutRecipientInput = {
     id?: string;
-    priority?: $Enums.TaskPriority;
     projectId: string;
-    title: string;
-    description?: string | null;
-    weight?: number;
-    status?: $Enums.TaskStatus;
+    senderId: string;
+    message: string;
+    type?: string;
+    aiLabel?: string | null;
     createdAt?: Date | string;
-    completedAt?: Date | string | null;
-    score?: number | null;
   };
 
-  export type TaskCreateOrConnectWithoutAssigneeInput = {
-    where: TaskWhereUniqueInput;
+  export type ChatMessageCreateOrConnectWithoutRecipientInput = {
+    where: ChatMessageWhereUniqueInput;
     create: XOR<
-      TaskCreateWithoutAssigneeInput,
-      TaskUncheckedCreateWithoutAssigneeInput
+      ChatMessageCreateWithoutRecipientInput,
+      ChatMessageUncheckedCreateWithoutRecipientInput
     >;
   };
 
-  export type TaskCreateManyAssigneeInputEnvelope = {
-    data: TaskCreateManyAssigneeInput | TaskCreateManyAssigneeInput[];
+  export type ChatMessageCreateManyRecipientInputEnvelope = {
+    data:
+      | ChatMessageCreateManyRecipientInput
+      | ChatMessageCreateManyRecipientInput[];
     skipDuplicates?: boolean;
   };
 
@@ -26033,8 +26150,8 @@ export namespace Prisma {
     comment?: string | null;
     aiFlag?: string | null;
     createdAt?: Date | string;
-    project: ProjectCreateNestedOneWithoutFeedbacksInput;
     fromUser: UserCreateNestedOneWithoutFeedbackGivenInput;
+    project: ProjectCreateNestedOneWithoutFeedbacksInput;
   };
 
   export type FeedbackUncheckedCreateWithoutToUserInput = {
@@ -26099,6 +26216,26 @@ export namespace Prisma {
     skipDuplicates?: boolean;
   };
 
+  export type GoogleDocsDataCreateWithoutUserInput = {
+    id?: string;
+    editsCount?: number | null;
+    lastActivity?: Date | string | null;
+  };
+
+  export type GoogleDocsDataUncheckedCreateWithoutUserInput = {
+    id?: string;
+    editsCount?: number | null;
+    lastActivity?: Date | string | null;
+  };
+
+  export type GoogleDocsDataCreateOrConnectWithoutUserInput = {
+    where: GoogleDocsDataWhereUniqueInput;
+    create: XOR<
+      GoogleDocsDataCreateWithoutUserInput,
+      GoogleDocsDataUncheckedCreateWithoutUserInput
+    >;
+  };
+
   export type PresenceLogCreateWithoutUserInput = {
     id?: string;
     status?: $Enums.PresenceStatus;
@@ -26129,6 +26266,82 @@ export namespace Prisma {
 
   export type PresenceLogCreateManyUserInputEnvelope = {
     data: PresenceLogCreateManyUserInput | PresenceLogCreateManyUserInput[];
+    skipDuplicates?: boolean;
+  };
+
+  export type ProjectCreateWithoutCreatedByInput = {
+    id?: string;
+    name: string;
+    status?: $Enums.ProjectStatus;
+    description?: string | null;
+    githubRepo: string;
+    createdAt?: Date | string;
+    lastActive?: Date | string | null;
+    chatMessages?: ChatMessageCreateNestedManyWithoutProjectInput;
+    feedbacks?: FeedbackCreateNestedManyWithoutProjectInput;
+    githubData?: GitHubActivityCreateNestedManyWithoutProjectInput;
+    insights?: InsightCreateNestedManyWithoutProjectInput;
+    presenceLogs?: PresenceLogCreateNestedManyWithoutProjectInput;
+    members?: ProjectMemberCreateNestedManyWithoutProjectInput;
+    tasks?: TaskCreateNestedManyWithoutProjectInput;
+  };
+
+  export type ProjectUncheckedCreateWithoutCreatedByInput = {
+    id?: string;
+    name: string;
+    status?: $Enums.ProjectStatus;
+    description?: string | null;
+    githubRepo: string;
+    createdAt?: Date | string;
+    lastActive?: Date | string | null;
+    chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutProjectInput;
+    feedbacks?: FeedbackUncheckedCreateNestedManyWithoutProjectInput;
+    githubData?: GitHubActivityUncheckedCreateNestedManyWithoutProjectInput;
+    insights?: InsightUncheckedCreateNestedManyWithoutProjectInput;
+    presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutProjectInput;
+    members?: ProjectMemberUncheckedCreateNestedManyWithoutProjectInput;
+    tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput;
+  };
+
+  export type ProjectCreateOrConnectWithoutCreatedByInput = {
+    where: ProjectWhereUniqueInput;
+    create: XOR<
+      ProjectCreateWithoutCreatedByInput,
+      ProjectUncheckedCreateWithoutCreatedByInput
+    >;
+  };
+
+  export type ProjectCreateManyCreatedByInputEnvelope = {
+    data: ProjectCreateManyCreatedByInput | ProjectCreateManyCreatedByInput[];
+    skipDuplicates?: boolean;
+  };
+
+  export type ProjectMemberCreateWithoutUserInput = {
+    id?: string;
+    role?: $Enums.ProjectRole;
+    status?: $Enums.MemberStatus;
+    joinedAt?: Date | string | null;
+    project: ProjectCreateNestedOneWithoutMembersInput;
+  };
+
+  export type ProjectMemberUncheckedCreateWithoutUserInput = {
+    id?: string;
+    projectId: string;
+    role?: $Enums.ProjectRole;
+    status?: $Enums.MemberStatus;
+    joinedAt?: Date | string | null;
+  };
+
+  export type ProjectMemberCreateOrConnectWithoutUserInput = {
+    where: ProjectMemberWhereUniqueInput;
+    create: XOR<
+      ProjectMemberCreateWithoutUserInput,
+      ProjectMemberUncheckedCreateWithoutUserInput
+    >;
+  };
+
+  export type ProjectMemberCreateManyUserInputEnvelope = {
+    data: ProjectMemberCreateManyUserInput | ProjectMemberCreateManyUserInput[];
     skipDuplicates?: boolean;
   };
 
@@ -26173,169 +26386,78 @@ export namespace Prisma {
     skipDuplicates?: boolean;
   };
 
-  export type UserOAuthUpsertWithWhereUniqueWithoutUserInput = {
-    where: UserOAuthWhereUniqueInput;
-    update: XOR<
-      UserOAuthUpdateWithoutUserInput,
-      UserOAuthUncheckedUpdateWithoutUserInput
+  export type TaskCreateWithoutAssigneeInput = {
+    id?: string;
+    priority?: $Enums.TaskPriority;
+    title: string;
+    description?: string | null;
+    weight?: number;
+    status?: $Enums.TaskStatus;
+    createdAt?: Date | string;
+    completedAt?: Date | string | null;
+    score?: number | null;
+    project: ProjectCreateNestedOneWithoutTasksInput;
+  };
+
+  export type TaskUncheckedCreateWithoutAssigneeInput = {
+    id?: string;
+    priority?: $Enums.TaskPriority;
+    projectId: string;
+    title: string;
+    description?: string | null;
+    weight?: number;
+    status?: $Enums.TaskStatus;
+    createdAt?: Date | string;
+    completedAt?: Date | string | null;
+    score?: number | null;
+  };
+
+  export type TaskCreateOrConnectWithoutAssigneeInput = {
+    where: TaskWhereUniqueInput;
+    create: XOR<
+      TaskCreateWithoutAssigneeInput,
+      TaskUncheckedCreateWithoutAssigneeInput
     >;
+  };
+
+  export type TaskCreateManyAssigneeInputEnvelope = {
+    data: TaskCreateManyAssigneeInput | TaskCreateManyAssigneeInput[];
+    skipDuplicates?: boolean;
+  };
+
+  export type UserOAuthCreateWithoutUserInput = {
+    id?: string;
+    provider: string;
+    providerUserId: string;
+    accessTokenEnc: string;
+    tokenExpiresAt?: Date | string | null;
+    scopes?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+  };
+
+  export type UserOAuthUncheckedCreateWithoutUserInput = {
+    id?: string;
+    provider: string;
+    providerUserId: string;
+    accessTokenEnc: string;
+    tokenExpiresAt?: Date | string | null;
+    scopes?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+  };
+
+  export type UserOAuthCreateOrConnectWithoutUserInput = {
+    where: UserOAuthWhereUniqueInput;
     create: XOR<
       UserOAuthCreateWithoutUserInput,
       UserOAuthUncheckedCreateWithoutUserInput
     >;
   };
 
-  export type UserOAuthUpdateWithWhereUniqueWithoutUserInput = {
-    where: UserOAuthWhereUniqueInput;
-    data: XOR<
-      UserOAuthUpdateWithoutUserInput,
-      UserOAuthUncheckedUpdateWithoutUserInput
-    >;
-  };
-
-  export type UserOAuthUpdateManyWithWhereWithoutUserInput = {
-    where: UserOAuthScalarWhereInput;
-    data: XOR<
-      UserOAuthUpdateManyMutationInput,
-      UserOAuthUncheckedUpdateManyWithoutUserInput
-    >;
-  };
-
-  export type UserOAuthScalarWhereInput = {
-    AND?: UserOAuthScalarWhereInput | UserOAuthScalarWhereInput[];
-    OR?: UserOAuthScalarWhereInput[];
-    NOT?: UserOAuthScalarWhereInput | UserOAuthScalarWhereInput[];
-    id?: StringFilter<"UserOAuth"> | string;
-    userId?: StringFilter<"UserOAuth"> | string;
-    provider?: StringFilter<"UserOAuth"> | string;
-    providerUserId?: StringFilter<"UserOAuth"> | string;
-    accessTokenEnc?: StringFilter<"UserOAuth"> | string;
-    tokenExpiresAt?: DateTimeNullableFilter<"UserOAuth"> | Date | string | null;
-    scopes?: StringNullableFilter<"UserOAuth"> | string | null;
-    createdAt?: DateTimeFilter<"UserOAuth"> | Date | string;
-    updatedAt?: DateTimeFilter<"UserOAuth"> | Date | string;
-  };
-
-  export type ProjectUpsertWithWhereUniqueWithoutCreatedByInput = {
-    where: ProjectWhereUniqueInput;
-    update: XOR<
-      ProjectUpdateWithoutCreatedByInput,
-      ProjectUncheckedUpdateWithoutCreatedByInput
-    >;
-    create: XOR<
-      ProjectCreateWithoutCreatedByInput,
-      ProjectUncheckedCreateWithoutCreatedByInput
-    >;
-  };
-
-  export type ProjectUpdateWithWhereUniqueWithoutCreatedByInput = {
-    where: ProjectWhereUniqueInput;
-    data: XOR<
-      ProjectUpdateWithoutCreatedByInput,
-      ProjectUncheckedUpdateWithoutCreatedByInput
-    >;
-  };
-
-  export type ProjectUpdateManyWithWhereWithoutCreatedByInput = {
-    where: ProjectScalarWhereInput;
-    data: XOR<
-      ProjectUpdateManyMutationInput,
-      ProjectUncheckedUpdateManyWithoutCreatedByInput
-    >;
-  };
-
-  export type ProjectScalarWhereInput = {
-    AND?: ProjectScalarWhereInput | ProjectScalarWhereInput[];
-    OR?: ProjectScalarWhereInput[];
-    NOT?: ProjectScalarWhereInput | ProjectScalarWhereInput[];
-    id?: StringFilter<"Project"> | string;
-    name?: StringFilter<"Project"> | string;
-    status?: EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus;
-    description?: StringNullableFilter<"Project"> | string | null;
-    githubRepo?: StringFilter<"Project"> | string;
-    createdById?: StringFilter<"Project"> | string;
-    createdAt?: DateTimeFilter<"Project"> | Date | string;
-    lastActive?: DateTimeNullableFilter<"Project"> | Date | string | null;
-  };
-
-  export type GoogleDocsDataUpsertWithoutUserInput = {
-    update: XOR<
-      GoogleDocsDataUpdateWithoutUserInput,
-      GoogleDocsDataUncheckedUpdateWithoutUserInput
-    >;
-    create: XOR<
-      GoogleDocsDataCreateWithoutUserInput,
-      GoogleDocsDataUncheckedCreateWithoutUserInput
-    >;
-    where?: GoogleDocsDataWhereInput;
-  };
-
-  export type GoogleDocsDataUpdateToOneWithWhereWithoutUserInput = {
-    where?: GoogleDocsDataWhereInput;
-    data: XOR<
-      GoogleDocsDataUpdateWithoutUserInput,
-      GoogleDocsDataUncheckedUpdateWithoutUserInput
-    >;
-  };
-
-  export type GoogleDocsDataUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    editsCount?: NullableIntFieldUpdateOperationsInput | number | null;
-    lastActivity?:
-      | NullableDateTimeFieldUpdateOperationsInput
-      | Date
-      | string
-      | null;
-  };
-
-  export type GoogleDocsDataUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    editsCount?: NullableIntFieldUpdateOperationsInput | number | null;
-    lastActivity?:
-      | NullableDateTimeFieldUpdateOperationsInput
-      | Date
-      | string
-      | null;
-  };
-
-  export type ProjectMemberUpsertWithWhereUniqueWithoutUserInput = {
-    where: ProjectMemberWhereUniqueInput;
-    update: XOR<
-      ProjectMemberUpdateWithoutUserInput,
-      ProjectMemberUncheckedUpdateWithoutUserInput
-    >;
-    create: XOR<
-      ProjectMemberCreateWithoutUserInput,
-      ProjectMemberUncheckedCreateWithoutUserInput
-    >;
-  };
-
-  export type ProjectMemberUpdateWithWhereUniqueWithoutUserInput = {
-    where: ProjectMemberWhereUniqueInput;
-    data: XOR<
-      ProjectMemberUpdateWithoutUserInput,
-      ProjectMemberUncheckedUpdateWithoutUserInput
-    >;
-  };
-
-  export type ProjectMemberUpdateManyWithWhereWithoutUserInput = {
-    where: ProjectMemberScalarWhereInput;
-    data: XOR<
-      ProjectMemberUpdateManyMutationInput,
-      ProjectMemberUncheckedUpdateManyWithoutUserInput
-    >;
-  };
-
-  export type ProjectMemberScalarWhereInput = {
-    AND?: ProjectMemberScalarWhereInput | ProjectMemberScalarWhereInput[];
-    OR?: ProjectMemberScalarWhereInput[];
-    NOT?: ProjectMemberScalarWhereInput | ProjectMemberScalarWhereInput[];
-    id?: StringFilter<"ProjectMember"> | string;
-    userId?: StringFilter<"ProjectMember"> | string;
-    projectId?: StringFilter<"ProjectMember"> | string;
-    role?: EnumProjectRoleFilter<"ProjectMember"> | $Enums.ProjectRole;
-    status?: EnumMemberStatusFilter<"ProjectMember"> | $Enums.MemberStatus;
-    joinedAt?: DateTimeNullableFilter<"ProjectMember"> | Date | string | null;
+  export type UserOAuthCreateManyUserInputEnvelope = {
+    data: UserOAuthCreateManyUserInput | UserOAuthCreateManyUserInput[];
+    skipDuplicates?: boolean;
   };
 
   export type ChatMessageUpsertWithWhereUniqueWithoutSenderInput = {
@@ -26373,55 +26495,39 @@ export namespace Prisma {
     id?: StringFilter<"ChatMessage"> | string;
     projectId?: StringFilter<"ChatMessage"> | string;
     senderId?: StringFilter<"ChatMessage"> | string;
+    recipientId?: StringNullableFilter<"ChatMessage"> | string | null;
     message?: StringFilter<"ChatMessage"> | string;
     type?: StringFilter<"ChatMessage"> | string;
     aiLabel?: StringNullableFilter<"ChatMessage"> | string | null;
     createdAt?: DateTimeFilter<"ChatMessage"> | Date | string;
   };
 
-  export type TaskUpsertWithWhereUniqueWithoutAssigneeInput = {
-    where: TaskWhereUniqueInput;
+  export type ChatMessageUpsertWithWhereUniqueWithoutRecipientInput = {
+    where: ChatMessageWhereUniqueInput;
     update: XOR<
-      TaskUpdateWithoutAssigneeInput,
-      TaskUncheckedUpdateWithoutAssigneeInput
+      ChatMessageUpdateWithoutRecipientInput,
+      ChatMessageUncheckedUpdateWithoutRecipientInput
     >;
     create: XOR<
-      TaskCreateWithoutAssigneeInput,
-      TaskUncheckedCreateWithoutAssigneeInput
+      ChatMessageCreateWithoutRecipientInput,
+      ChatMessageUncheckedCreateWithoutRecipientInput
     >;
   };
 
-  export type TaskUpdateWithWhereUniqueWithoutAssigneeInput = {
-    where: TaskWhereUniqueInput;
+  export type ChatMessageUpdateWithWhereUniqueWithoutRecipientInput = {
+    where: ChatMessageWhereUniqueInput;
     data: XOR<
-      TaskUpdateWithoutAssigneeInput,
-      TaskUncheckedUpdateWithoutAssigneeInput
+      ChatMessageUpdateWithoutRecipientInput,
+      ChatMessageUncheckedUpdateWithoutRecipientInput
     >;
   };
 
-  export type TaskUpdateManyWithWhereWithoutAssigneeInput = {
-    where: TaskScalarWhereInput;
+  export type ChatMessageUpdateManyWithWhereWithoutRecipientInput = {
+    where: ChatMessageScalarWhereInput;
     data: XOR<
-      TaskUpdateManyMutationInput,
-      TaskUncheckedUpdateManyWithoutAssigneeInput
+      ChatMessageUpdateManyMutationInput,
+      ChatMessageUncheckedUpdateManyWithoutRecipientInput
     >;
-  };
-
-  export type TaskScalarWhereInput = {
-    AND?: TaskScalarWhereInput | TaskScalarWhereInput[];
-    OR?: TaskScalarWhereInput[];
-    NOT?: TaskScalarWhereInput | TaskScalarWhereInput[];
-    id?: StringFilter<"Task"> | string;
-    priority?: EnumTaskPriorityFilter<"Task"> | $Enums.TaskPriority;
-    projectId?: StringFilter<"Task"> | string;
-    title?: StringFilter<"Task"> | string;
-    description?: StringNullableFilter<"Task"> | string | null;
-    weight?: FloatFilter<"Task"> | number;
-    status?: EnumTaskStatusFilter<"Task"> | $Enums.TaskStatus;
-    assigneeId?: StringNullableFilter<"Task"> | string | null;
-    createdAt?: DateTimeFilter<"Task"> | Date | string;
-    completedAt?: DateTimeNullableFilter<"Task"> | Date | string | null;
-    score?: FloatNullableFilter<"Task"> | number | null;
   };
 
   export type FeedbackUpsertWithWhereUniqueWithoutFromUserInput = {
@@ -26539,6 +26645,46 @@ export namespace Prisma {
     commitDetails?: JsonNullableFilter<"GitHubActivity">;
   };
 
+  export type GoogleDocsDataUpsertWithoutUserInput = {
+    update: XOR<
+      GoogleDocsDataUpdateWithoutUserInput,
+      GoogleDocsDataUncheckedUpdateWithoutUserInput
+    >;
+    create: XOR<
+      GoogleDocsDataCreateWithoutUserInput,
+      GoogleDocsDataUncheckedCreateWithoutUserInput
+    >;
+    where?: GoogleDocsDataWhereInput;
+  };
+
+  export type GoogleDocsDataUpdateToOneWithWhereWithoutUserInput = {
+    where?: GoogleDocsDataWhereInput;
+    data: XOR<
+      GoogleDocsDataUpdateWithoutUserInput,
+      GoogleDocsDataUncheckedUpdateWithoutUserInput
+    >;
+  };
+
+  export type GoogleDocsDataUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    editsCount?: NullableIntFieldUpdateOperationsInput | number | null;
+    lastActivity?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+  };
+
+  export type GoogleDocsDataUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    editsCount?: NullableIntFieldUpdateOperationsInput | number | null;
+    lastActivity?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+  };
+
   export type PresenceLogUpsertWithWhereUniqueWithoutUserInput = {
     where: PresenceLogWhereUniqueInput;
     update: XOR<
@@ -26579,6 +26725,88 @@ export namespace Prisma {
     sessionEnd?: DateTimeNullableFilter<"PresenceLog"> | Date | string | null;
     duration?: IntNullableFilter<"PresenceLog"> | number | null;
     isActive?: BoolFilter<"PresenceLog"> | boolean;
+  };
+
+  export type ProjectUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: ProjectWhereUniqueInput;
+    update: XOR<
+      ProjectUpdateWithoutCreatedByInput,
+      ProjectUncheckedUpdateWithoutCreatedByInput
+    >;
+    create: XOR<
+      ProjectCreateWithoutCreatedByInput,
+      ProjectUncheckedCreateWithoutCreatedByInput
+    >;
+  };
+
+  export type ProjectUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: ProjectWhereUniqueInput;
+    data: XOR<
+      ProjectUpdateWithoutCreatedByInput,
+      ProjectUncheckedUpdateWithoutCreatedByInput
+    >;
+  };
+
+  export type ProjectUpdateManyWithWhereWithoutCreatedByInput = {
+    where: ProjectScalarWhereInput;
+    data: XOR<
+      ProjectUpdateManyMutationInput,
+      ProjectUncheckedUpdateManyWithoutCreatedByInput
+    >;
+  };
+
+  export type ProjectScalarWhereInput = {
+    AND?: ProjectScalarWhereInput | ProjectScalarWhereInput[];
+    OR?: ProjectScalarWhereInput[];
+    NOT?: ProjectScalarWhereInput | ProjectScalarWhereInput[];
+    id?: StringFilter<"Project"> | string;
+    name?: StringFilter<"Project"> | string;
+    status?: EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus;
+    description?: StringNullableFilter<"Project"> | string | null;
+    githubRepo?: StringFilter<"Project"> | string;
+    createdById?: StringFilter<"Project"> | string;
+    createdAt?: DateTimeFilter<"Project"> | Date | string;
+    lastActive?: DateTimeNullableFilter<"Project"> | Date | string | null;
+  };
+
+  export type ProjectMemberUpsertWithWhereUniqueWithoutUserInput = {
+    where: ProjectMemberWhereUniqueInput;
+    update: XOR<
+      ProjectMemberUpdateWithoutUserInput,
+      ProjectMemberUncheckedUpdateWithoutUserInput
+    >;
+    create: XOR<
+      ProjectMemberCreateWithoutUserInput,
+      ProjectMemberUncheckedCreateWithoutUserInput
+    >;
+  };
+
+  export type ProjectMemberUpdateWithWhereUniqueWithoutUserInput = {
+    where: ProjectMemberWhereUniqueInput;
+    data: XOR<
+      ProjectMemberUpdateWithoutUserInput,
+      ProjectMemberUncheckedUpdateWithoutUserInput
+    >;
+  };
+
+  export type ProjectMemberUpdateManyWithWhereWithoutUserInput = {
+    where: ProjectMemberScalarWhereInput;
+    data: XOR<
+      ProjectMemberUpdateManyMutationInput,
+      ProjectMemberUncheckedUpdateManyWithoutUserInput
+    >;
+  };
+
+  export type ProjectMemberScalarWhereInput = {
+    AND?: ProjectMemberScalarWhereInput | ProjectMemberScalarWhereInput[];
+    OR?: ProjectMemberScalarWhereInput[];
+    NOT?: ProjectMemberScalarWhereInput | ProjectMemberScalarWhereInput[];
+    id?: StringFilter<"ProjectMember"> | string;
+    userId?: StringFilter<"ProjectMember"> | string;
+    projectId?: StringFilter<"ProjectMember"> | string;
+    role?: EnumProjectRoleFilter<"ProjectMember"> | $Enums.ProjectRole;
+    status?: EnumMemberStatusFilter<"ProjectMember"> | $Enums.MemberStatus;
+    joinedAt?: DateTimeNullableFilter<"ProjectMember"> | Date | string | null;
   };
 
   export type RefreshTokenUpsertWithWhereUniqueWithoutUserInput = {
@@ -26627,6 +26855,94 @@ export namespace Prisma {
     deviceName?: StringNullableFilter<"RefreshToken"> | string | null;
   };
 
+  export type TaskUpsertWithWhereUniqueWithoutAssigneeInput = {
+    where: TaskWhereUniqueInput;
+    update: XOR<
+      TaskUpdateWithoutAssigneeInput,
+      TaskUncheckedUpdateWithoutAssigneeInput
+    >;
+    create: XOR<
+      TaskCreateWithoutAssigneeInput,
+      TaskUncheckedCreateWithoutAssigneeInput
+    >;
+  };
+
+  export type TaskUpdateWithWhereUniqueWithoutAssigneeInput = {
+    where: TaskWhereUniqueInput;
+    data: XOR<
+      TaskUpdateWithoutAssigneeInput,
+      TaskUncheckedUpdateWithoutAssigneeInput
+    >;
+  };
+
+  export type TaskUpdateManyWithWhereWithoutAssigneeInput = {
+    where: TaskScalarWhereInput;
+    data: XOR<
+      TaskUpdateManyMutationInput,
+      TaskUncheckedUpdateManyWithoutAssigneeInput
+    >;
+  };
+
+  export type TaskScalarWhereInput = {
+    AND?: TaskScalarWhereInput | TaskScalarWhereInput[];
+    OR?: TaskScalarWhereInput[];
+    NOT?: TaskScalarWhereInput | TaskScalarWhereInput[];
+    id?: StringFilter<"Task"> | string;
+    priority?: EnumTaskPriorityFilter<"Task"> | $Enums.TaskPriority;
+    projectId?: StringFilter<"Task"> | string;
+    title?: StringFilter<"Task"> | string;
+    description?: StringNullableFilter<"Task"> | string | null;
+    weight?: FloatFilter<"Task"> | number;
+    status?: EnumTaskStatusFilter<"Task"> | $Enums.TaskStatus;
+    assigneeId?: StringNullableFilter<"Task"> | string | null;
+    createdAt?: DateTimeFilter<"Task"> | Date | string;
+    completedAt?: DateTimeNullableFilter<"Task"> | Date | string | null;
+    score?: FloatNullableFilter<"Task"> | number | null;
+  };
+
+  export type UserOAuthUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserOAuthWhereUniqueInput;
+    update: XOR<
+      UserOAuthUpdateWithoutUserInput,
+      UserOAuthUncheckedUpdateWithoutUserInput
+    >;
+    create: XOR<
+      UserOAuthCreateWithoutUserInput,
+      UserOAuthUncheckedCreateWithoutUserInput
+    >;
+  };
+
+  export type UserOAuthUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserOAuthWhereUniqueInput;
+    data: XOR<
+      UserOAuthUpdateWithoutUserInput,
+      UserOAuthUncheckedUpdateWithoutUserInput
+    >;
+  };
+
+  export type UserOAuthUpdateManyWithWhereWithoutUserInput = {
+    where: UserOAuthScalarWhereInput;
+    data: XOR<
+      UserOAuthUpdateManyMutationInput,
+      UserOAuthUncheckedUpdateManyWithoutUserInput
+    >;
+  };
+
+  export type UserOAuthScalarWhereInput = {
+    AND?: UserOAuthScalarWhereInput | UserOAuthScalarWhereInput[];
+    OR?: UserOAuthScalarWhereInput[];
+    NOT?: UserOAuthScalarWhereInput | UserOAuthScalarWhereInput[];
+    id?: StringFilter<"UserOAuth"> | string;
+    userId?: StringFilter<"UserOAuth"> | string;
+    provider?: StringFilter<"UserOAuth"> | string;
+    providerUserId?: StringFilter<"UserOAuth"> | string;
+    accessTokenEnc?: StringFilter<"UserOAuth"> | string;
+    tokenExpiresAt?: DateTimeNullableFilter<"UserOAuth"> | Date | string | null;
+    scopes?: StringNullableFilter<"UserOAuth"> | string | null;
+    createdAt?: DateTimeFilter<"UserOAuth"> | Date | string;
+    updatedAt?: DateTimeFilter<"UserOAuth"> | Date | string;
+  };
+
   export type UserCreateWithoutOauthAccountsInput = {
     id?: string;
     name: string;
@@ -26635,16 +26951,17 @@ export namespace Prisma {
     oauthProvider?: string;
     oauthId: string;
     createdAt?: Date | string;
-    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
-    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
-    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
     messages?: ChatMessageCreateNestedManyWithoutSenderInput;
-    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
+    receivedMessages?: ChatMessageCreateNestedManyWithoutRecipientInput;
     feedbackGiven?: FeedbackCreateNestedManyWithoutFromUserInput;
     feedbackReceived?: FeedbackCreateNestedManyWithoutToUserInput;
     githubActivities?: GitHubActivityCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
     presenceLogs?: PresenceLogCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
     refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput;
+    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
   };
 
   export type UserUncheckedCreateWithoutOauthAccountsInput = {
@@ -26655,16 +26972,17 @@ export namespace Prisma {
     oauthProvider?: string;
     oauthId: string;
     createdAt?: Date | string;
-    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
-    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
-    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
     messages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput;
-    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
+    receivedMessages?: ChatMessageUncheckedCreateNestedManyWithoutRecipientInput;
     feedbackGiven?: FeedbackUncheckedCreateNestedManyWithoutFromUserInput;
     feedbackReceived?: FeedbackUncheckedCreateNestedManyWithoutToUserInput;
     githubActivities?: GitHubActivityUncheckedCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
     presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
     refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput;
+    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
   };
 
   export type UserCreateOrConnectWithoutOauthAccountsInput = {
@@ -26703,16 +27021,17 @@ export namespace Prisma {
     oauthProvider?: StringFieldUpdateOperationsInput | string;
     oauthId?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
-    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
-    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
     messages?: ChatMessageUpdateManyWithoutSenderNestedInput;
-    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
+    receivedMessages?: ChatMessageUpdateManyWithoutRecipientNestedInput;
     feedbackGiven?: FeedbackUpdateManyWithoutFromUserNestedInput;
     feedbackReceived?: FeedbackUpdateManyWithoutToUserNestedInput;
     githubActivities?: GitHubActivityUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
     presenceLogs?: PresenceLogUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
     refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
   };
 
   export type UserUncheckedUpdateWithoutOauthAccountsInput = {
@@ -26723,16 +27042,17 @@ export namespace Prisma {
     oauthProvider?: StringFieldUpdateOperationsInput | string;
     oauthId?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
-    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
-    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
     messages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput;
-    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
+    receivedMessages?: ChatMessageUncheckedUpdateManyWithoutRecipientNestedInput;
     feedbackGiven?: FeedbackUncheckedUpdateManyWithoutFromUserNestedInput;
     feedbackReceived?: FeedbackUncheckedUpdateManyWithoutToUserNestedInput;
     githubActivities?: GitHubActivityUncheckedUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
     presenceLogs?: PresenceLogUncheckedUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
     refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
   };
 
   export type UserCreateWithoutRefreshTokensInput = {
@@ -26743,16 +27063,17 @@ export namespace Prisma {
     oauthProvider?: string;
     oauthId: string;
     createdAt?: Date | string;
-    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
-    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
-    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
-    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
     messages?: ChatMessageCreateNestedManyWithoutSenderInput;
-    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
+    receivedMessages?: ChatMessageCreateNestedManyWithoutRecipientInput;
     feedbackGiven?: FeedbackCreateNestedManyWithoutFromUserInput;
     feedbackReceived?: FeedbackCreateNestedManyWithoutToUserInput;
     githubActivities?: GitHubActivityCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
     presenceLogs?: PresenceLogCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
+    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
   };
 
   export type UserUncheckedCreateWithoutRefreshTokensInput = {
@@ -26763,16 +27084,17 @@ export namespace Prisma {
     oauthProvider?: string;
     oauthId: string;
     createdAt?: Date | string;
-    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
-    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
-    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
-    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
     messages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput;
-    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
+    receivedMessages?: ChatMessageUncheckedCreateNestedManyWithoutRecipientInput;
     feedbackGiven?: FeedbackUncheckedCreateNestedManyWithoutFromUserInput;
     feedbackReceived?: FeedbackUncheckedCreateNestedManyWithoutToUserInput;
     githubActivities?: GitHubActivityUncheckedCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
     presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
+    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
   };
 
   export type UserCreateOrConnectWithoutRefreshTokensInput = {
@@ -26811,16 +27133,17 @@ export namespace Prisma {
     oauthProvider?: StringFieldUpdateOperationsInput | string;
     oauthId?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
-    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
-    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
-    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
     messages?: ChatMessageUpdateManyWithoutSenderNestedInput;
-    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
+    receivedMessages?: ChatMessageUpdateManyWithoutRecipientNestedInput;
     feedbackGiven?: FeedbackUpdateManyWithoutFromUserNestedInput;
     feedbackReceived?: FeedbackUpdateManyWithoutToUserNestedInput;
     githubActivities?: GitHubActivityUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
     presenceLogs?: PresenceLogUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
   };
 
   export type UserUncheckedUpdateWithoutRefreshTokensInput = {
@@ -26831,86 +27154,17 @@ export namespace Prisma {
     oauthProvider?: StringFieldUpdateOperationsInput | string;
     oauthId?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
-    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
-    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
-    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
     messages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput;
-    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
+    receivedMessages?: ChatMessageUncheckedUpdateManyWithoutRecipientNestedInput;
     feedbackGiven?: FeedbackUncheckedUpdateManyWithoutFromUserNestedInput;
     feedbackReceived?: FeedbackUncheckedUpdateManyWithoutToUserNestedInput;
     githubActivities?: GitHubActivityUncheckedUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
     presenceLogs?: PresenceLogUncheckedUpdateManyWithoutUserNestedInput;
-  };
-
-  export type ProjectMemberCreateWithoutProjectInput = {
-    id?: string;
-    role?: $Enums.ProjectRole;
-    status?: $Enums.MemberStatus;
-    joinedAt?: Date | string | null;
-    user: UserCreateNestedOneWithoutMembershipsInput;
-  };
-
-  export type ProjectMemberUncheckedCreateWithoutProjectInput = {
-    id?: string;
-    userId: string;
-    role?: $Enums.ProjectRole;
-    status?: $Enums.MemberStatus;
-    joinedAt?: Date | string | null;
-  };
-
-  export type ProjectMemberCreateOrConnectWithoutProjectInput = {
-    where: ProjectMemberWhereUniqueInput;
-    create: XOR<
-      ProjectMemberCreateWithoutProjectInput,
-      ProjectMemberUncheckedCreateWithoutProjectInput
-    >;
-  };
-
-  export type ProjectMemberCreateManyProjectInputEnvelope = {
-    data:
-      | ProjectMemberCreateManyProjectInput
-      | ProjectMemberCreateManyProjectInput[];
-    skipDuplicates?: boolean;
-  };
-
-  export type TaskCreateWithoutProjectInput = {
-    id?: string;
-    priority?: $Enums.TaskPriority;
-    title: string;
-    description?: string | null;
-    weight?: number;
-    status?: $Enums.TaskStatus;
-    createdAt?: Date | string;
-    completedAt?: Date | string | null;
-    score?: number | null;
-    assignee?: UserCreateNestedOneWithoutTasksInput;
-  };
-
-  export type TaskUncheckedCreateWithoutProjectInput = {
-    id?: string;
-    priority?: $Enums.TaskPriority;
-    title: string;
-    description?: string | null;
-    weight?: number;
-    status?: $Enums.TaskStatus;
-    assigneeId?: string | null;
-    createdAt?: Date | string;
-    completedAt?: Date | string | null;
-    score?: number | null;
-  };
-
-  export type TaskCreateOrConnectWithoutProjectInput = {
-    where: TaskWhereUniqueInput;
-    create: XOR<
-      TaskCreateWithoutProjectInput,
-      TaskUncheckedCreateWithoutProjectInput
-    >;
-  };
-
-  export type TaskCreateManyProjectInputEnvelope = {
-    data: TaskCreateManyProjectInput | TaskCreateManyProjectInput[];
-    skipDuplicates?: boolean;
+    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
   };
 
   export type ChatMessageCreateWithoutProjectInput = {
@@ -26920,11 +27174,13 @@ export namespace Prisma {
     aiLabel?: string | null;
     createdAt?: Date | string;
     sender: UserCreateNestedOneWithoutMessagesInput;
+    recipient?: UserCreateNestedOneWithoutReceivedMessagesInput;
   };
 
   export type ChatMessageUncheckedCreateWithoutProjectInput = {
     id?: string;
     senderId: string;
+    recipientId?: string | null;
     message: string;
     type?: string;
     aiLabel?: string | null;
@@ -27092,16 +27348,17 @@ export namespace Prisma {
     oauthProvider?: string;
     oauthId: string;
     createdAt?: Date | string;
-    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
-    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
-    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
     messages?: ChatMessageCreateNestedManyWithoutSenderInput;
-    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
+    receivedMessages?: ChatMessageCreateNestedManyWithoutRecipientInput;
     feedbackGiven?: FeedbackCreateNestedManyWithoutFromUserInput;
     feedbackReceived?: FeedbackCreateNestedManyWithoutToUserInput;
     githubActivities?: GitHubActivityCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
     presenceLogs?: PresenceLogCreateNestedManyWithoutUserInput;
+    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
     refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput;
+    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
   };
 
   export type UserUncheckedCreateWithoutProjectsCreatedInput = {
@@ -27112,16 +27369,17 @@ export namespace Prisma {
     oauthProvider?: string;
     oauthId: string;
     createdAt?: Date | string;
-    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
-    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
-    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
     messages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput;
-    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
+    receivedMessages?: ChatMessageUncheckedCreateNestedManyWithoutRecipientInput;
     feedbackGiven?: FeedbackUncheckedCreateNestedManyWithoutFromUserInput;
     feedbackReceived?: FeedbackUncheckedCreateNestedManyWithoutToUserInput;
     githubActivities?: GitHubActivityUncheckedCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
     presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutUserInput;
+    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
     refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput;
+    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
   };
 
   export type UserCreateOrConnectWithoutProjectsCreatedInput = {
@@ -27132,60 +27390,74 @@ export namespace Prisma {
     >;
   };
 
-  export type ProjectMemberUpsertWithWhereUniqueWithoutProjectInput = {
+  export type ProjectMemberCreateWithoutProjectInput = {
+    id?: string;
+    role?: $Enums.ProjectRole;
+    status?: $Enums.MemberStatus;
+    joinedAt?: Date | string | null;
+    user: UserCreateNestedOneWithoutMembershipsInput;
+  };
+
+  export type ProjectMemberUncheckedCreateWithoutProjectInput = {
+    id?: string;
+    userId: string;
+    role?: $Enums.ProjectRole;
+    status?: $Enums.MemberStatus;
+    joinedAt?: Date | string | null;
+  };
+
+  export type ProjectMemberCreateOrConnectWithoutProjectInput = {
     where: ProjectMemberWhereUniqueInput;
-    update: XOR<
-      ProjectMemberUpdateWithoutProjectInput,
-      ProjectMemberUncheckedUpdateWithoutProjectInput
-    >;
     create: XOR<
       ProjectMemberCreateWithoutProjectInput,
       ProjectMemberUncheckedCreateWithoutProjectInput
     >;
   };
 
-  export type ProjectMemberUpdateWithWhereUniqueWithoutProjectInput = {
-    where: ProjectMemberWhereUniqueInput;
-    data: XOR<
-      ProjectMemberUpdateWithoutProjectInput,
-      ProjectMemberUncheckedUpdateWithoutProjectInput
-    >;
+  export type ProjectMemberCreateManyProjectInputEnvelope = {
+    data:
+      | ProjectMemberCreateManyProjectInput
+      | ProjectMemberCreateManyProjectInput[];
+    skipDuplicates?: boolean;
   };
 
-  export type ProjectMemberUpdateManyWithWhereWithoutProjectInput = {
-    where: ProjectMemberScalarWhereInput;
-    data: XOR<
-      ProjectMemberUpdateManyMutationInput,
-      ProjectMemberUncheckedUpdateManyWithoutProjectInput
-    >;
+  export type TaskCreateWithoutProjectInput = {
+    id?: string;
+    priority?: $Enums.TaskPriority;
+    title: string;
+    description?: string | null;
+    weight?: number;
+    status?: $Enums.TaskStatus;
+    createdAt?: Date | string;
+    completedAt?: Date | string | null;
+    score?: number | null;
+    assignee?: UserCreateNestedOneWithoutTasksInput;
   };
 
-  export type TaskUpsertWithWhereUniqueWithoutProjectInput = {
+  export type TaskUncheckedCreateWithoutProjectInput = {
+    id?: string;
+    priority?: $Enums.TaskPriority;
+    title: string;
+    description?: string | null;
+    weight?: number;
+    status?: $Enums.TaskStatus;
+    assigneeId?: string | null;
+    createdAt?: Date | string;
+    completedAt?: Date | string | null;
+    score?: number | null;
+  };
+
+  export type TaskCreateOrConnectWithoutProjectInput = {
     where: TaskWhereUniqueInput;
-    update: XOR<
-      TaskUpdateWithoutProjectInput,
-      TaskUncheckedUpdateWithoutProjectInput
-    >;
     create: XOR<
       TaskCreateWithoutProjectInput,
       TaskUncheckedCreateWithoutProjectInput
     >;
   };
 
-  export type TaskUpdateWithWhereUniqueWithoutProjectInput = {
-    where: TaskWhereUniqueInput;
-    data: XOR<
-      TaskUpdateWithoutProjectInput,
-      TaskUncheckedUpdateWithoutProjectInput
-    >;
-  };
-
-  export type TaskUpdateManyWithWhereWithoutProjectInput = {
-    where: TaskScalarWhereInput;
-    data: XOR<
-      TaskUpdateManyMutationInput,
-      TaskUncheckedUpdateManyWithoutProjectInput
-    >;
+  export type TaskCreateManyProjectInputEnvelope = {
+    data: TaskCreateManyProjectInput | TaskCreateManyProjectInput[];
+    skipDuplicates?: boolean;
   };
 
   export type ChatMessageUpsertWithWhereUniqueWithoutProjectInput = {
@@ -27368,16 +27640,17 @@ export namespace Prisma {
     oauthProvider?: StringFieldUpdateOperationsInput | string;
     oauthId?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
-    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
-    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
     messages?: ChatMessageUpdateManyWithoutSenderNestedInput;
-    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
+    receivedMessages?: ChatMessageUpdateManyWithoutRecipientNestedInput;
     feedbackGiven?: FeedbackUpdateManyWithoutFromUserNestedInput;
     feedbackReceived?: FeedbackUpdateManyWithoutToUserNestedInput;
     githubActivities?: GitHubActivityUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
     presenceLogs?: PresenceLogUpdateManyWithoutUserNestedInput;
+    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
     refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
   };
 
   export type UserUncheckedUpdateWithoutProjectsCreatedInput = {
@@ -27388,63 +27661,72 @@ export namespace Prisma {
     oauthProvider?: StringFieldUpdateOperationsInput | string;
     oauthId?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
-    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
-    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
     messages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput;
-    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
+    receivedMessages?: ChatMessageUncheckedUpdateManyWithoutRecipientNestedInput;
     feedbackGiven?: FeedbackUncheckedUpdateManyWithoutFromUserNestedInput;
     feedbackReceived?: FeedbackUncheckedUpdateManyWithoutToUserNestedInput;
     githubActivities?: GitHubActivityUncheckedUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
     presenceLogs?: PresenceLogUncheckedUpdateManyWithoutUserNestedInput;
+    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
     refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
   };
 
-  export type UserCreateWithoutMembershipsInput = {
-    id?: string;
-    name: string;
-    email: string;
-    avatarUrl?: string | null;
-    oauthProvider?: string;
-    oauthId: string;
-    createdAt?: Date | string;
-    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
-    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
-    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
-    messages?: ChatMessageCreateNestedManyWithoutSenderInput;
-    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
-    feedbackGiven?: FeedbackCreateNestedManyWithoutFromUserInput;
-    feedbackReceived?: FeedbackCreateNestedManyWithoutToUserInput;
-    githubActivities?: GitHubActivityCreateNestedManyWithoutUserInput;
-    presenceLogs?: PresenceLogCreateNestedManyWithoutUserInput;
-    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput;
-  };
-
-  export type UserUncheckedCreateWithoutMembershipsInput = {
-    id?: string;
-    name: string;
-    email: string;
-    avatarUrl?: string | null;
-    oauthProvider?: string;
-    oauthId: string;
-    createdAt?: Date | string;
-    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
-    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
-    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
-    messages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput;
-    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
-    feedbackGiven?: FeedbackUncheckedCreateNestedManyWithoutFromUserInput;
-    feedbackReceived?: FeedbackUncheckedCreateNestedManyWithoutToUserInput;
-    githubActivities?: GitHubActivityUncheckedCreateNestedManyWithoutUserInput;
-    presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutUserInput;
-    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput;
-  };
-
-  export type UserCreateOrConnectWithoutMembershipsInput = {
-    where: UserWhereUniqueInput;
+  export type ProjectMemberUpsertWithWhereUniqueWithoutProjectInput = {
+    where: ProjectMemberWhereUniqueInput;
+    update: XOR<
+      ProjectMemberUpdateWithoutProjectInput,
+      ProjectMemberUncheckedUpdateWithoutProjectInput
+    >;
     create: XOR<
-      UserCreateWithoutMembershipsInput,
-      UserUncheckedCreateWithoutMembershipsInput
+      ProjectMemberCreateWithoutProjectInput,
+      ProjectMemberUncheckedCreateWithoutProjectInput
+    >;
+  };
+
+  export type ProjectMemberUpdateWithWhereUniqueWithoutProjectInput = {
+    where: ProjectMemberWhereUniqueInput;
+    data: XOR<
+      ProjectMemberUpdateWithoutProjectInput,
+      ProjectMemberUncheckedUpdateWithoutProjectInput
+    >;
+  };
+
+  export type ProjectMemberUpdateManyWithWhereWithoutProjectInput = {
+    where: ProjectMemberScalarWhereInput;
+    data: XOR<
+      ProjectMemberUpdateManyMutationInput,
+      ProjectMemberUncheckedUpdateManyWithoutProjectInput
+    >;
+  };
+
+  export type TaskUpsertWithWhereUniqueWithoutProjectInput = {
+    where: TaskWhereUniqueInput;
+    update: XOR<
+      TaskUpdateWithoutProjectInput,
+      TaskUncheckedUpdateWithoutProjectInput
+    >;
+    create: XOR<
+      TaskCreateWithoutProjectInput,
+      TaskUncheckedCreateWithoutProjectInput
+    >;
+  };
+
+  export type TaskUpdateWithWhereUniqueWithoutProjectInput = {
+    where: TaskWhereUniqueInput;
+    data: XOR<
+      TaskUpdateWithoutProjectInput,
+      TaskUncheckedUpdateWithoutProjectInput
+    >;
+  };
+
+  export type TaskUpdateManyWithWhereWithoutProjectInput = {
+    where: TaskScalarWhereInput;
+    data: XOR<
+      TaskUpdateManyMutationInput,
+      TaskUncheckedUpdateManyWithoutProjectInput
     >;
   };
 
@@ -27456,13 +27738,13 @@ export namespace Prisma {
     githubRepo: string;
     createdAt?: Date | string;
     lastActive?: Date | string | null;
-    tasks?: TaskCreateNestedManyWithoutProjectInput;
     chatMessages?: ChatMessageCreateNestedManyWithoutProjectInput;
     feedbacks?: FeedbackCreateNestedManyWithoutProjectInput;
     githubData?: GitHubActivityCreateNestedManyWithoutProjectInput;
     insights?: InsightCreateNestedManyWithoutProjectInput;
     presenceLogs?: PresenceLogCreateNestedManyWithoutProjectInput;
     createdBy: UserCreateNestedOneWithoutProjectsCreatedInput;
+    tasks?: TaskCreateNestedManyWithoutProjectInput;
   };
 
   export type ProjectUncheckedCreateWithoutMembersInput = {
@@ -27474,12 +27756,12 @@ export namespace Prisma {
     createdById: string;
     createdAt?: Date | string;
     lastActive?: Date | string | null;
-    tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput;
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutProjectInput;
     feedbacks?: FeedbackUncheckedCreateNestedManyWithoutProjectInput;
     githubData?: GitHubActivityUncheckedCreateNestedManyWithoutProjectInput;
     insights?: InsightUncheckedCreateNestedManyWithoutProjectInput;
     presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutProjectInput;
+    tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput;
   };
 
   export type ProjectCreateOrConnectWithoutMembersInput = {
@@ -27490,64 +27772,54 @@ export namespace Prisma {
     >;
   };
 
-  export type UserUpsertWithoutMembershipsInput = {
-    update: XOR<
-      UserUpdateWithoutMembershipsInput,
-      UserUncheckedUpdateWithoutMembershipsInput
-    >;
+  export type UserCreateWithoutMembershipsInput = {
+    id?: string;
+    name: string;
+    email: string;
+    avatarUrl?: string | null;
+    oauthProvider?: string;
+    oauthId: string;
+    createdAt?: Date | string;
+    messages?: ChatMessageCreateNestedManyWithoutSenderInput;
+    receivedMessages?: ChatMessageCreateNestedManyWithoutRecipientInput;
+    feedbackGiven?: FeedbackCreateNestedManyWithoutFromUserInput;
+    feedbackReceived?: FeedbackCreateNestedManyWithoutToUserInput;
+    githubActivities?: GitHubActivityCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
+    presenceLogs?: PresenceLogCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput;
+    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
+  };
+
+  export type UserUncheckedCreateWithoutMembershipsInput = {
+    id?: string;
+    name: string;
+    email: string;
+    avatarUrl?: string | null;
+    oauthProvider?: string;
+    oauthId: string;
+    createdAt?: Date | string;
+    messages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput;
+    receivedMessages?: ChatMessageUncheckedCreateNestedManyWithoutRecipientInput;
+    feedbackGiven?: FeedbackUncheckedCreateNestedManyWithoutFromUserInput;
+    feedbackReceived?: FeedbackUncheckedCreateNestedManyWithoutToUserInput;
+    githubActivities?: GitHubActivityUncheckedCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
+    presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput;
+    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
+  };
+
+  export type UserCreateOrConnectWithoutMembershipsInput = {
+    where: UserWhereUniqueInput;
     create: XOR<
       UserCreateWithoutMembershipsInput,
       UserUncheckedCreateWithoutMembershipsInput
     >;
-    where?: UserWhereInput;
-  };
-
-  export type UserUpdateToOneWithWhereWithoutMembershipsInput = {
-    where?: UserWhereInput;
-    data: XOR<
-      UserUpdateWithoutMembershipsInput,
-      UserUncheckedUpdateWithoutMembershipsInput
-    >;
-  };
-
-  export type UserUpdateWithoutMembershipsInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    name?: StringFieldUpdateOperationsInput | string;
-    email?: StringFieldUpdateOperationsInput | string;
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
-    oauthProvider?: StringFieldUpdateOperationsInput | string;
-    oauthId?: StringFieldUpdateOperationsInput | string;
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
-    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
-    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
-    messages?: ChatMessageUpdateManyWithoutSenderNestedInput;
-    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
-    feedbackGiven?: FeedbackUpdateManyWithoutFromUserNestedInput;
-    feedbackReceived?: FeedbackUpdateManyWithoutToUserNestedInput;
-    githubActivities?: GitHubActivityUpdateManyWithoutUserNestedInput;
-    presenceLogs?: PresenceLogUpdateManyWithoutUserNestedInput;
-    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput;
-  };
-
-  export type UserUncheckedUpdateWithoutMembershipsInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    name?: StringFieldUpdateOperationsInput | string;
-    email?: StringFieldUpdateOperationsInput | string;
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
-    oauthProvider?: StringFieldUpdateOperationsInput | string;
-    oauthId?: StringFieldUpdateOperationsInput | string;
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
-    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
-    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
-    messages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput;
-    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
-    feedbackGiven?: FeedbackUncheckedUpdateManyWithoutFromUserNestedInput;
-    feedbackReceived?: FeedbackUncheckedUpdateManyWithoutToUserNestedInput;
-    githubActivities?: GitHubActivityUncheckedUpdateManyWithoutUserNestedInput;
-    presenceLogs?: PresenceLogUncheckedUpdateManyWithoutUserNestedInput;
-    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput;
   };
 
   export type ProjectUpsertWithoutMembersInput = {
@@ -27582,13 +27854,13 @@ export namespace Prisma {
       | Date
       | string
       | null;
-    tasks?: TaskUpdateManyWithoutProjectNestedInput;
     chatMessages?: ChatMessageUpdateManyWithoutProjectNestedInput;
     feedbacks?: FeedbackUpdateManyWithoutProjectNestedInput;
     githubData?: GitHubActivityUpdateManyWithoutProjectNestedInput;
     insights?: InsightUpdateManyWithoutProjectNestedInput;
     presenceLogs?: PresenceLogUpdateManyWithoutProjectNestedInput;
     createdBy?: UserUpdateOneRequiredWithoutProjectsCreatedNestedInput;
+    tasks?: TaskUpdateManyWithoutProjectNestedInput;
   };
 
   export type ProjectUncheckedUpdateWithoutMembersInput = {
@@ -27604,12 +27876,124 @@ export namespace Prisma {
       | Date
       | string
       | null;
-    tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput;
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutProjectNestedInput;
     feedbacks?: FeedbackUncheckedUpdateManyWithoutProjectNestedInput;
     githubData?: GitHubActivityUncheckedUpdateManyWithoutProjectNestedInput;
     insights?: InsightUncheckedUpdateManyWithoutProjectNestedInput;
     presenceLogs?: PresenceLogUncheckedUpdateManyWithoutProjectNestedInput;
+    tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput;
+  };
+
+  export type UserUpsertWithoutMembershipsInput = {
+    update: XOR<
+      UserUpdateWithoutMembershipsInput,
+      UserUncheckedUpdateWithoutMembershipsInput
+    >;
+    create: XOR<
+      UserCreateWithoutMembershipsInput,
+      UserUncheckedCreateWithoutMembershipsInput
+    >;
+    where?: UserWhereInput;
+  };
+
+  export type UserUpdateToOneWithWhereWithoutMembershipsInput = {
+    where?: UserWhereInput;
+    data: XOR<
+      UserUpdateWithoutMembershipsInput,
+      UserUncheckedUpdateWithoutMembershipsInput
+    >;
+  };
+
+  export type UserUpdateWithoutMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    email?: StringFieldUpdateOperationsInput | string;
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    oauthProvider?: StringFieldUpdateOperationsInput | string;
+    oauthId?: StringFieldUpdateOperationsInput | string;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    messages?: ChatMessageUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: ChatMessageUpdateManyWithoutRecipientNestedInput;
+    feedbackGiven?: FeedbackUpdateManyWithoutFromUserNestedInput;
+    feedbackReceived?: FeedbackUpdateManyWithoutToUserNestedInput;
+    githubActivities?: GitHubActivityUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
+    presenceLogs?: PresenceLogUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
+  };
+
+  export type UserUncheckedUpdateWithoutMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    email?: StringFieldUpdateOperationsInput | string;
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    oauthProvider?: StringFieldUpdateOperationsInput | string;
+    oauthId?: StringFieldUpdateOperationsInput | string;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    messages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: ChatMessageUncheckedUpdateManyWithoutRecipientNestedInput;
+    feedbackGiven?: FeedbackUncheckedUpdateManyWithoutFromUserNestedInput;
+    feedbackReceived?: FeedbackUncheckedUpdateManyWithoutToUserNestedInput;
+    githubActivities?: GitHubActivityUncheckedUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
+    presenceLogs?: PresenceLogUncheckedUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
+  };
+
+  export type UserCreateWithoutTasksInput = {
+    id?: string;
+    name: string;
+    email: string;
+    avatarUrl?: string | null;
+    oauthProvider?: string;
+    oauthId: string;
+    createdAt?: Date | string;
+    messages?: ChatMessageCreateNestedManyWithoutSenderInput;
+    receivedMessages?: ChatMessageCreateNestedManyWithoutRecipientInput;
+    feedbackGiven?: FeedbackCreateNestedManyWithoutFromUserInput;
+    feedbackReceived?: FeedbackCreateNestedManyWithoutToUserInput;
+    githubActivities?: GitHubActivityCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
+    presenceLogs?: PresenceLogCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput;
+    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
+  };
+
+  export type UserUncheckedCreateWithoutTasksInput = {
+    id?: string;
+    name: string;
+    email: string;
+    avatarUrl?: string | null;
+    oauthProvider?: string;
+    oauthId: string;
+    createdAt?: Date | string;
+    messages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput;
+    receivedMessages?: ChatMessageUncheckedCreateNestedManyWithoutRecipientInput;
+    feedbackGiven?: FeedbackUncheckedCreateNestedManyWithoutFromUserInput;
+    feedbackReceived?: FeedbackUncheckedCreateNestedManyWithoutToUserInput;
+    githubActivities?: GitHubActivityUncheckedCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
+    presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput;
+    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
+  };
+
+  export type UserCreateOrConnectWithoutTasksInput = {
+    where: UserWhereUniqueInput;
+    create: XOR<
+      UserCreateWithoutTasksInput,
+      UserUncheckedCreateWithoutTasksInput
+    >;
   };
 
   export type ProjectCreateWithoutTasksInput = {
@@ -27620,13 +28004,13 @@ export namespace Prisma {
     githubRepo: string;
     createdAt?: Date | string;
     lastActive?: Date | string | null;
-    members?: ProjectMemberCreateNestedManyWithoutProjectInput;
     chatMessages?: ChatMessageCreateNestedManyWithoutProjectInput;
     feedbacks?: FeedbackCreateNestedManyWithoutProjectInput;
     githubData?: GitHubActivityCreateNestedManyWithoutProjectInput;
     insights?: InsightCreateNestedManyWithoutProjectInput;
     presenceLogs?: PresenceLogCreateNestedManyWithoutProjectInput;
     createdBy: UserCreateNestedOneWithoutProjectsCreatedInput;
+    members?: ProjectMemberCreateNestedManyWithoutProjectInput;
   };
 
   export type ProjectUncheckedCreateWithoutTasksInput = {
@@ -27638,12 +28022,12 @@ export namespace Prisma {
     createdById: string;
     createdAt?: Date | string;
     lastActive?: Date | string | null;
-    members?: ProjectMemberUncheckedCreateNestedManyWithoutProjectInput;
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutProjectInput;
     feedbacks?: FeedbackUncheckedCreateNestedManyWithoutProjectInput;
     githubData?: GitHubActivityUncheckedCreateNestedManyWithoutProjectInput;
     insights?: InsightUncheckedCreateNestedManyWithoutProjectInput;
     presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutProjectInput;
+    members?: ProjectMemberUncheckedCreateNestedManyWithoutProjectInput;
   };
 
   export type ProjectCreateOrConnectWithoutTasksInput = {
@@ -27654,52 +28038,66 @@ export namespace Prisma {
     >;
   };
 
-  export type UserCreateWithoutTasksInput = {
-    id?: string;
-    name: string;
-    email: string;
-    avatarUrl?: string | null;
-    oauthProvider?: string;
-    oauthId: string;
-    createdAt?: Date | string;
-    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
-    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
-    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
-    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
-    messages?: ChatMessageCreateNestedManyWithoutSenderInput;
-    feedbackGiven?: FeedbackCreateNestedManyWithoutFromUserInput;
-    feedbackReceived?: FeedbackCreateNestedManyWithoutToUserInput;
-    githubActivities?: GitHubActivityCreateNestedManyWithoutUserInput;
-    presenceLogs?: PresenceLogCreateNestedManyWithoutUserInput;
-    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput;
-  };
-
-  export type UserUncheckedCreateWithoutTasksInput = {
-    id?: string;
-    name: string;
-    email: string;
-    avatarUrl?: string | null;
-    oauthProvider?: string;
-    oauthId: string;
-    createdAt?: Date | string;
-    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
-    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
-    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
-    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
-    messages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput;
-    feedbackGiven?: FeedbackUncheckedCreateNestedManyWithoutFromUserInput;
-    feedbackReceived?: FeedbackUncheckedCreateNestedManyWithoutToUserInput;
-    githubActivities?: GitHubActivityUncheckedCreateNestedManyWithoutUserInput;
-    presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutUserInput;
-    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput;
-  };
-
-  export type UserCreateOrConnectWithoutTasksInput = {
-    where: UserWhereUniqueInput;
+  export type UserUpsertWithoutTasksInput = {
+    update: XOR<
+      UserUpdateWithoutTasksInput,
+      UserUncheckedUpdateWithoutTasksInput
+    >;
     create: XOR<
       UserCreateWithoutTasksInput,
       UserUncheckedCreateWithoutTasksInput
     >;
+    where?: UserWhereInput;
+  };
+
+  export type UserUpdateToOneWithWhereWithoutTasksInput = {
+    where?: UserWhereInput;
+    data: XOR<
+      UserUpdateWithoutTasksInput,
+      UserUncheckedUpdateWithoutTasksInput
+    >;
+  };
+
+  export type UserUpdateWithoutTasksInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    email?: StringFieldUpdateOperationsInput | string;
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    oauthProvider?: StringFieldUpdateOperationsInput | string;
+    oauthId?: StringFieldUpdateOperationsInput | string;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    messages?: ChatMessageUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: ChatMessageUpdateManyWithoutRecipientNestedInput;
+    feedbackGiven?: FeedbackUpdateManyWithoutFromUserNestedInput;
+    feedbackReceived?: FeedbackUpdateManyWithoutToUserNestedInput;
+    githubActivities?: GitHubActivityUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
+    presenceLogs?: PresenceLogUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput;
+    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
+  };
+
+  export type UserUncheckedUpdateWithoutTasksInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    email?: StringFieldUpdateOperationsInput | string;
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    oauthProvider?: StringFieldUpdateOperationsInput | string;
+    oauthId?: StringFieldUpdateOperationsInput | string;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    messages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: ChatMessageUncheckedUpdateManyWithoutRecipientNestedInput;
+    feedbackGiven?: FeedbackUncheckedUpdateManyWithoutFromUserNestedInput;
+    feedbackReceived?: FeedbackUncheckedUpdateManyWithoutToUserNestedInput;
+    githubActivities?: GitHubActivityUncheckedUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
+    presenceLogs?: PresenceLogUncheckedUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput;
+    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
   };
 
   export type ProjectUpsertWithoutTasksInput = {
@@ -27734,13 +28132,13 @@ export namespace Prisma {
       | Date
       | string
       | null;
-    members?: ProjectMemberUpdateManyWithoutProjectNestedInput;
     chatMessages?: ChatMessageUpdateManyWithoutProjectNestedInput;
     feedbacks?: FeedbackUpdateManyWithoutProjectNestedInput;
     githubData?: GitHubActivityUpdateManyWithoutProjectNestedInput;
     insights?: InsightUpdateManyWithoutProjectNestedInput;
     presenceLogs?: PresenceLogUpdateManyWithoutProjectNestedInput;
     createdBy?: UserUpdateOneRequiredWithoutProjectsCreatedNestedInput;
+    members?: ProjectMemberUpdateManyWithoutProjectNestedInput;
   };
 
   export type ProjectUncheckedUpdateWithoutTasksInput = {
@@ -27756,72 +28154,12 @@ export namespace Prisma {
       | Date
       | string
       | null;
-    members?: ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput;
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutProjectNestedInput;
     feedbacks?: FeedbackUncheckedUpdateManyWithoutProjectNestedInput;
     githubData?: GitHubActivityUncheckedUpdateManyWithoutProjectNestedInput;
     insights?: InsightUncheckedUpdateManyWithoutProjectNestedInput;
     presenceLogs?: PresenceLogUncheckedUpdateManyWithoutProjectNestedInput;
-  };
-
-  export type UserUpsertWithoutTasksInput = {
-    update: XOR<
-      UserUpdateWithoutTasksInput,
-      UserUncheckedUpdateWithoutTasksInput
-    >;
-    create: XOR<
-      UserCreateWithoutTasksInput,
-      UserUncheckedCreateWithoutTasksInput
-    >;
-    where?: UserWhereInput;
-  };
-
-  export type UserUpdateToOneWithWhereWithoutTasksInput = {
-    where?: UserWhereInput;
-    data: XOR<
-      UserUpdateWithoutTasksInput,
-      UserUncheckedUpdateWithoutTasksInput
-    >;
-  };
-
-  export type UserUpdateWithoutTasksInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    name?: StringFieldUpdateOperationsInput | string;
-    email?: StringFieldUpdateOperationsInput | string;
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
-    oauthProvider?: StringFieldUpdateOperationsInput | string;
-    oauthId?: StringFieldUpdateOperationsInput | string;
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
-    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
-    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
-    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
-    messages?: ChatMessageUpdateManyWithoutSenderNestedInput;
-    feedbackGiven?: FeedbackUpdateManyWithoutFromUserNestedInput;
-    feedbackReceived?: FeedbackUpdateManyWithoutToUserNestedInput;
-    githubActivities?: GitHubActivityUpdateManyWithoutUserNestedInput;
-    presenceLogs?: PresenceLogUpdateManyWithoutUserNestedInput;
-    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput;
-  };
-
-  export type UserUncheckedUpdateWithoutTasksInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    name?: StringFieldUpdateOperationsInput | string;
-    email?: StringFieldUpdateOperationsInput | string;
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
-    oauthProvider?: StringFieldUpdateOperationsInput | string;
-    oauthId?: StringFieldUpdateOperationsInput | string;
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
-    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
-    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
-    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
-    messages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput;
-    feedbackGiven?: FeedbackUncheckedUpdateManyWithoutFromUserNestedInput;
-    feedbackReceived?: FeedbackUncheckedUpdateManyWithoutToUserNestedInput;
-    githubActivities?: GitHubActivityUncheckedUpdateManyWithoutUserNestedInput;
-    presenceLogs?: PresenceLogUncheckedUpdateManyWithoutUserNestedInput;
-    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput;
+    members?: ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput;
   };
 
   export type ProjectCreateWithoutChatMessagesInput = {
@@ -27832,13 +28170,13 @@ export namespace Prisma {
     githubRepo: string;
     createdAt?: Date | string;
     lastActive?: Date | string | null;
-    members?: ProjectMemberCreateNestedManyWithoutProjectInput;
-    tasks?: TaskCreateNestedManyWithoutProjectInput;
     feedbacks?: FeedbackCreateNestedManyWithoutProjectInput;
     githubData?: GitHubActivityCreateNestedManyWithoutProjectInput;
     insights?: InsightCreateNestedManyWithoutProjectInput;
     presenceLogs?: PresenceLogCreateNestedManyWithoutProjectInput;
     createdBy: UserCreateNestedOneWithoutProjectsCreatedInput;
+    members?: ProjectMemberCreateNestedManyWithoutProjectInput;
+    tasks?: TaskCreateNestedManyWithoutProjectInput;
   };
 
   export type ProjectUncheckedCreateWithoutChatMessagesInput = {
@@ -27850,12 +28188,12 @@ export namespace Prisma {
     createdById: string;
     createdAt?: Date | string;
     lastActive?: Date | string | null;
-    members?: ProjectMemberUncheckedCreateNestedManyWithoutProjectInput;
-    tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput;
     feedbacks?: FeedbackUncheckedCreateNestedManyWithoutProjectInput;
     githubData?: GitHubActivityUncheckedCreateNestedManyWithoutProjectInput;
     insights?: InsightUncheckedCreateNestedManyWithoutProjectInput;
     presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutProjectInput;
+    members?: ProjectMemberUncheckedCreateNestedManyWithoutProjectInput;
+    tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput;
   };
 
   export type ProjectCreateOrConnectWithoutChatMessagesInput = {
@@ -27874,16 +28212,17 @@ export namespace Prisma {
     oauthProvider?: string;
     oauthId: string;
     createdAt?: Date | string;
-    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
-    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
-    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
-    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
-    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
+    receivedMessages?: ChatMessageCreateNestedManyWithoutRecipientInput;
     feedbackGiven?: FeedbackCreateNestedManyWithoutFromUserInput;
     feedbackReceived?: FeedbackCreateNestedManyWithoutToUserInput;
     githubActivities?: GitHubActivityCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
     presenceLogs?: PresenceLogCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
     refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput;
+    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
   };
 
   export type UserUncheckedCreateWithoutMessagesInput = {
@@ -27894,16 +28233,17 @@ export namespace Prisma {
     oauthProvider?: string;
     oauthId: string;
     createdAt?: Date | string;
-    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
-    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
-    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
-    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
-    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
+    receivedMessages?: ChatMessageUncheckedCreateNestedManyWithoutRecipientInput;
     feedbackGiven?: FeedbackUncheckedCreateNestedManyWithoutFromUserInput;
     feedbackReceived?: FeedbackUncheckedCreateNestedManyWithoutToUserInput;
     githubActivities?: GitHubActivityUncheckedCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
     presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
     refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput;
+    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
   };
 
   export type UserCreateOrConnectWithoutMessagesInput = {
@@ -27911,6 +28251,56 @@ export namespace Prisma {
     create: XOR<
       UserCreateWithoutMessagesInput,
       UserUncheckedCreateWithoutMessagesInput
+    >;
+  };
+
+  export type UserCreateWithoutReceivedMessagesInput = {
+    id?: string;
+    name: string;
+    email: string;
+    avatarUrl?: string | null;
+    oauthProvider?: string;
+    oauthId: string;
+    createdAt?: Date | string;
+    messages?: ChatMessageCreateNestedManyWithoutSenderInput;
+    feedbackGiven?: FeedbackCreateNestedManyWithoutFromUserInput;
+    feedbackReceived?: FeedbackCreateNestedManyWithoutToUserInput;
+    githubActivities?: GitHubActivityCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
+    presenceLogs?: PresenceLogCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput;
+    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
+  };
+
+  export type UserUncheckedCreateWithoutReceivedMessagesInput = {
+    id?: string;
+    name: string;
+    email: string;
+    avatarUrl?: string | null;
+    oauthProvider?: string;
+    oauthId: string;
+    createdAt?: Date | string;
+    messages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput;
+    feedbackGiven?: FeedbackUncheckedCreateNestedManyWithoutFromUserInput;
+    feedbackReceived?: FeedbackUncheckedCreateNestedManyWithoutToUserInput;
+    githubActivities?: GitHubActivityUncheckedCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
+    presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput;
+    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
+  };
+
+  export type UserCreateOrConnectWithoutReceivedMessagesInput = {
+    where: UserWhereUniqueInput;
+    create: XOR<
+      UserCreateWithoutReceivedMessagesInput,
+      UserUncheckedCreateWithoutReceivedMessagesInput
     >;
   };
 
@@ -27946,13 +28336,13 @@ export namespace Prisma {
       | Date
       | string
       | null;
-    members?: ProjectMemberUpdateManyWithoutProjectNestedInput;
-    tasks?: TaskUpdateManyWithoutProjectNestedInput;
     feedbacks?: FeedbackUpdateManyWithoutProjectNestedInput;
     githubData?: GitHubActivityUpdateManyWithoutProjectNestedInput;
     insights?: InsightUpdateManyWithoutProjectNestedInput;
     presenceLogs?: PresenceLogUpdateManyWithoutProjectNestedInput;
     createdBy?: UserUpdateOneRequiredWithoutProjectsCreatedNestedInput;
+    members?: ProjectMemberUpdateManyWithoutProjectNestedInput;
+    tasks?: TaskUpdateManyWithoutProjectNestedInput;
   };
 
   export type ProjectUncheckedUpdateWithoutChatMessagesInput = {
@@ -27968,12 +28358,12 @@ export namespace Prisma {
       | Date
       | string
       | null;
-    members?: ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput;
-    tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput;
     feedbacks?: FeedbackUncheckedUpdateManyWithoutProjectNestedInput;
     githubData?: GitHubActivityUncheckedUpdateManyWithoutProjectNestedInput;
     insights?: InsightUncheckedUpdateManyWithoutProjectNestedInput;
     presenceLogs?: PresenceLogUncheckedUpdateManyWithoutProjectNestedInput;
+    members?: ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput;
+    tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput;
   };
 
   export type UserUpsertWithoutMessagesInput = {
@@ -28004,16 +28394,17 @@ export namespace Prisma {
     oauthProvider?: StringFieldUpdateOperationsInput | string;
     oauthId?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
-    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
-    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
-    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
-    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
+    receivedMessages?: ChatMessageUpdateManyWithoutRecipientNestedInput;
     feedbackGiven?: FeedbackUpdateManyWithoutFromUserNestedInput;
     feedbackReceived?: FeedbackUpdateManyWithoutToUserNestedInput;
     githubActivities?: GitHubActivityUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
     presenceLogs?: PresenceLogUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
     refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
   };
 
   export type UserUncheckedUpdateWithoutMessagesInput = {
@@ -28024,16 +28415,79 @@ export namespace Prisma {
     oauthProvider?: StringFieldUpdateOperationsInput | string;
     oauthId?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
-    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
-    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
-    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
-    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
+    receivedMessages?: ChatMessageUncheckedUpdateManyWithoutRecipientNestedInput;
     feedbackGiven?: FeedbackUncheckedUpdateManyWithoutFromUserNestedInput;
     feedbackReceived?: FeedbackUncheckedUpdateManyWithoutToUserNestedInput;
     githubActivities?: GitHubActivityUncheckedUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
     presenceLogs?: PresenceLogUncheckedUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
     refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
+  };
+
+  export type UserUpsertWithoutReceivedMessagesInput = {
+    update: XOR<
+      UserUpdateWithoutReceivedMessagesInput,
+      UserUncheckedUpdateWithoutReceivedMessagesInput
+    >;
+    create: XOR<
+      UserCreateWithoutReceivedMessagesInput,
+      UserUncheckedCreateWithoutReceivedMessagesInput
+    >;
+    where?: UserWhereInput;
+  };
+
+  export type UserUpdateToOneWithWhereWithoutReceivedMessagesInput = {
+    where?: UserWhereInput;
+    data: XOR<
+      UserUpdateWithoutReceivedMessagesInput,
+      UserUncheckedUpdateWithoutReceivedMessagesInput
+    >;
+  };
+
+  export type UserUpdateWithoutReceivedMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    email?: StringFieldUpdateOperationsInput | string;
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    oauthProvider?: StringFieldUpdateOperationsInput | string;
+    oauthId?: StringFieldUpdateOperationsInput | string;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    messages?: ChatMessageUpdateManyWithoutSenderNestedInput;
+    feedbackGiven?: FeedbackUpdateManyWithoutFromUserNestedInput;
+    feedbackReceived?: FeedbackUpdateManyWithoutToUserNestedInput;
+    githubActivities?: GitHubActivityUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
+    presenceLogs?: PresenceLogUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
+  };
+
+  export type UserUncheckedUpdateWithoutReceivedMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    email?: StringFieldUpdateOperationsInput | string;
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    oauthProvider?: StringFieldUpdateOperationsInput | string;
+    oauthId?: StringFieldUpdateOperationsInput | string;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    messages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput;
+    feedbackGiven?: FeedbackUncheckedUpdateManyWithoutFromUserNestedInput;
+    feedbackReceived?: FeedbackUncheckedUpdateManyWithoutToUserNestedInput;
+    githubActivities?: GitHubActivityUncheckedUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
+    presenceLogs?: PresenceLogUncheckedUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
   };
 
   export type ProjectCreateWithoutGithubDataInput = {
@@ -28044,13 +28498,13 @@ export namespace Prisma {
     githubRepo: string;
     createdAt?: Date | string;
     lastActive?: Date | string | null;
-    members?: ProjectMemberCreateNestedManyWithoutProjectInput;
-    tasks?: TaskCreateNestedManyWithoutProjectInput;
     chatMessages?: ChatMessageCreateNestedManyWithoutProjectInput;
     feedbacks?: FeedbackCreateNestedManyWithoutProjectInput;
     insights?: InsightCreateNestedManyWithoutProjectInput;
     presenceLogs?: PresenceLogCreateNestedManyWithoutProjectInput;
     createdBy: UserCreateNestedOneWithoutProjectsCreatedInput;
+    members?: ProjectMemberCreateNestedManyWithoutProjectInput;
+    tasks?: TaskCreateNestedManyWithoutProjectInput;
   };
 
   export type ProjectUncheckedCreateWithoutGithubDataInput = {
@@ -28062,12 +28516,12 @@ export namespace Prisma {
     createdById: string;
     createdAt?: Date | string;
     lastActive?: Date | string | null;
-    members?: ProjectMemberUncheckedCreateNestedManyWithoutProjectInput;
-    tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput;
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutProjectInput;
     feedbacks?: FeedbackUncheckedCreateNestedManyWithoutProjectInput;
     insights?: InsightUncheckedCreateNestedManyWithoutProjectInput;
     presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutProjectInput;
+    members?: ProjectMemberUncheckedCreateNestedManyWithoutProjectInput;
+    tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput;
   };
 
   export type ProjectCreateOrConnectWithoutGithubDataInput = {
@@ -28086,16 +28540,17 @@ export namespace Prisma {
     oauthProvider?: string;
     oauthId: string;
     createdAt?: Date | string;
-    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
-    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
-    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
-    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
     messages?: ChatMessageCreateNestedManyWithoutSenderInput;
-    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
+    receivedMessages?: ChatMessageCreateNestedManyWithoutRecipientInput;
     feedbackGiven?: FeedbackCreateNestedManyWithoutFromUserInput;
     feedbackReceived?: FeedbackCreateNestedManyWithoutToUserInput;
+    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
     presenceLogs?: PresenceLogCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
     refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput;
+    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
   };
 
   export type UserUncheckedCreateWithoutGithubActivitiesInput = {
@@ -28106,16 +28561,17 @@ export namespace Prisma {
     oauthProvider?: string;
     oauthId: string;
     createdAt?: Date | string;
-    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
-    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
-    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
-    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
     messages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput;
-    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
+    receivedMessages?: ChatMessageUncheckedCreateNestedManyWithoutRecipientInput;
     feedbackGiven?: FeedbackUncheckedCreateNestedManyWithoutFromUserInput;
     feedbackReceived?: FeedbackUncheckedCreateNestedManyWithoutToUserInput;
+    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
     presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
     refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput;
+    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
   };
 
   export type UserCreateOrConnectWithoutGithubActivitiesInput = {
@@ -28158,13 +28614,13 @@ export namespace Prisma {
       | Date
       | string
       | null;
-    members?: ProjectMemberUpdateManyWithoutProjectNestedInput;
-    tasks?: TaskUpdateManyWithoutProjectNestedInput;
     chatMessages?: ChatMessageUpdateManyWithoutProjectNestedInput;
     feedbacks?: FeedbackUpdateManyWithoutProjectNestedInput;
     insights?: InsightUpdateManyWithoutProjectNestedInput;
     presenceLogs?: PresenceLogUpdateManyWithoutProjectNestedInput;
     createdBy?: UserUpdateOneRequiredWithoutProjectsCreatedNestedInput;
+    members?: ProjectMemberUpdateManyWithoutProjectNestedInput;
+    tasks?: TaskUpdateManyWithoutProjectNestedInput;
   };
 
   export type ProjectUncheckedUpdateWithoutGithubDataInput = {
@@ -28180,12 +28636,12 @@ export namespace Prisma {
       | Date
       | string
       | null;
-    members?: ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput;
-    tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput;
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutProjectNestedInput;
     feedbacks?: FeedbackUncheckedUpdateManyWithoutProjectNestedInput;
     insights?: InsightUncheckedUpdateManyWithoutProjectNestedInput;
     presenceLogs?: PresenceLogUncheckedUpdateManyWithoutProjectNestedInput;
+    members?: ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput;
+    tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput;
   };
 
   export type UserUpsertWithoutGithubActivitiesInput = {
@@ -28216,16 +28672,17 @@ export namespace Prisma {
     oauthProvider?: StringFieldUpdateOperationsInput | string;
     oauthId?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
-    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
-    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
-    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
     messages?: ChatMessageUpdateManyWithoutSenderNestedInput;
-    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
+    receivedMessages?: ChatMessageUpdateManyWithoutRecipientNestedInput;
     feedbackGiven?: FeedbackUpdateManyWithoutFromUserNestedInput;
     feedbackReceived?: FeedbackUpdateManyWithoutToUserNestedInput;
+    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
     presenceLogs?: PresenceLogUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
     refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
   };
 
   export type UserUncheckedUpdateWithoutGithubActivitiesInput = {
@@ -28236,16 +28693,17 @@ export namespace Prisma {
     oauthProvider?: StringFieldUpdateOperationsInput | string;
     oauthId?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
-    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
-    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
-    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
     messages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput;
-    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
+    receivedMessages?: ChatMessageUncheckedUpdateManyWithoutRecipientNestedInput;
     feedbackGiven?: FeedbackUncheckedUpdateManyWithoutFromUserNestedInput;
     feedbackReceived?: FeedbackUncheckedUpdateManyWithoutToUserNestedInput;
+    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
     presenceLogs?: PresenceLogUncheckedUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
     refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
   };
 
   export type UserCreateWithoutGoogleDocsDataInput = {
@@ -28256,16 +28714,17 @@ export namespace Prisma {
     oauthProvider?: string;
     oauthId: string;
     createdAt?: Date | string;
-    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
-    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
-    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
     messages?: ChatMessageCreateNestedManyWithoutSenderInput;
-    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
+    receivedMessages?: ChatMessageCreateNestedManyWithoutRecipientInput;
     feedbackGiven?: FeedbackCreateNestedManyWithoutFromUserInput;
     feedbackReceived?: FeedbackCreateNestedManyWithoutToUserInput;
     githubActivities?: GitHubActivityCreateNestedManyWithoutUserInput;
     presenceLogs?: PresenceLogCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
     refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput;
+    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
   };
 
   export type UserUncheckedCreateWithoutGoogleDocsDataInput = {
@@ -28276,16 +28735,17 @@ export namespace Prisma {
     oauthProvider?: string;
     oauthId: string;
     createdAt?: Date | string;
-    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
-    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
-    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
     messages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput;
-    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
+    receivedMessages?: ChatMessageUncheckedCreateNestedManyWithoutRecipientInput;
     feedbackGiven?: FeedbackUncheckedCreateNestedManyWithoutFromUserInput;
     feedbackReceived?: FeedbackUncheckedCreateNestedManyWithoutToUserInput;
     githubActivities?: GitHubActivityUncheckedCreateNestedManyWithoutUserInput;
     presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
     refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput;
+    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
   };
 
   export type UserCreateOrConnectWithoutGoogleDocsDataInput = {
@@ -28324,16 +28784,17 @@ export namespace Prisma {
     oauthProvider?: StringFieldUpdateOperationsInput | string;
     oauthId?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
-    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
-    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
     messages?: ChatMessageUpdateManyWithoutSenderNestedInput;
-    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
+    receivedMessages?: ChatMessageUpdateManyWithoutRecipientNestedInput;
     feedbackGiven?: FeedbackUpdateManyWithoutFromUserNestedInput;
     feedbackReceived?: FeedbackUpdateManyWithoutToUserNestedInput;
     githubActivities?: GitHubActivityUpdateManyWithoutUserNestedInput;
     presenceLogs?: PresenceLogUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
     refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
   };
 
   export type UserUncheckedUpdateWithoutGoogleDocsDataInput = {
@@ -28344,16 +28805,17 @@ export namespace Prisma {
     oauthProvider?: StringFieldUpdateOperationsInput | string;
     oauthId?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
-    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
-    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
     messages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput;
-    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
+    receivedMessages?: ChatMessageUncheckedUpdateManyWithoutRecipientNestedInput;
     feedbackGiven?: FeedbackUncheckedUpdateManyWithoutFromUserNestedInput;
     feedbackReceived?: FeedbackUncheckedUpdateManyWithoutToUserNestedInput;
     githubActivities?: GitHubActivityUncheckedUpdateManyWithoutUserNestedInput;
     presenceLogs?: PresenceLogUncheckedUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
     refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
   };
 
   export type ProjectCreateWithoutInsightsInput = {
@@ -28364,13 +28826,13 @@ export namespace Prisma {
     githubRepo: string;
     createdAt?: Date | string;
     lastActive?: Date | string | null;
-    members?: ProjectMemberCreateNestedManyWithoutProjectInput;
-    tasks?: TaskCreateNestedManyWithoutProjectInput;
     chatMessages?: ChatMessageCreateNestedManyWithoutProjectInput;
     feedbacks?: FeedbackCreateNestedManyWithoutProjectInput;
     githubData?: GitHubActivityCreateNestedManyWithoutProjectInput;
     presenceLogs?: PresenceLogCreateNestedManyWithoutProjectInput;
     createdBy: UserCreateNestedOneWithoutProjectsCreatedInput;
+    members?: ProjectMemberCreateNestedManyWithoutProjectInput;
+    tasks?: TaskCreateNestedManyWithoutProjectInput;
   };
 
   export type ProjectUncheckedCreateWithoutInsightsInput = {
@@ -28382,12 +28844,12 @@ export namespace Prisma {
     createdById: string;
     createdAt?: Date | string;
     lastActive?: Date | string | null;
-    members?: ProjectMemberUncheckedCreateNestedManyWithoutProjectInput;
-    tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput;
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutProjectInput;
     feedbacks?: FeedbackUncheckedCreateNestedManyWithoutProjectInput;
     githubData?: GitHubActivityUncheckedCreateNestedManyWithoutProjectInput;
     presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutProjectInput;
+    members?: ProjectMemberUncheckedCreateNestedManyWithoutProjectInput;
+    tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput;
   };
 
   export type ProjectCreateOrConnectWithoutInsightsInput = {
@@ -28430,13 +28892,13 @@ export namespace Prisma {
       | Date
       | string
       | null;
-    members?: ProjectMemberUpdateManyWithoutProjectNestedInput;
-    tasks?: TaskUpdateManyWithoutProjectNestedInput;
     chatMessages?: ChatMessageUpdateManyWithoutProjectNestedInput;
     feedbacks?: FeedbackUpdateManyWithoutProjectNestedInput;
     githubData?: GitHubActivityUpdateManyWithoutProjectNestedInput;
     presenceLogs?: PresenceLogUpdateManyWithoutProjectNestedInput;
     createdBy?: UserUpdateOneRequiredWithoutProjectsCreatedNestedInput;
+    members?: ProjectMemberUpdateManyWithoutProjectNestedInput;
+    tasks?: TaskUpdateManyWithoutProjectNestedInput;
   };
 
   export type ProjectUncheckedUpdateWithoutInsightsInput = {
@@ -28452,12 +28914,62 @@ export namespace Prisma {
       | Date
       | string
       | null;
-    members?: ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput;
-    tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput;
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutProjectNestedInput;
     feedbacks?: FeedbackUncheckedUpdateManyWithoutProjectNestedInput;
     githubData?: GitHubActivityUncheckedUpdateManyWithoutProjectNestedInput;
     presenceLogs?: PresenceLogUncheckedUpdateManyWithoutProjectNestedInput;
+    members?: ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput;
+    tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput;
+  };
+
+  export type UserCreateWithoutFeedbackGivenInput = {
+    id?: string;
+    name: string;
+    email: string;
+    avatarUrl?: string | null;
+    oauthProvider?: string;
+    oauthId: string;
+    createdAt?: Date | string;
+    messages?: ChatMessageCreateNestedManyWithoutSenderInput;
+    receivedMessages?: ChatMessageCreateNestedManyWithoutRecipientInput;
+    feedbackReceived?: FeedbackCreateNestedManyWithoutToUserInput;
+    githubActivities?: GitHubActivityCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
+    presenceLogs?: PresenceLogCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput;
+    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
+  };
+
+  export type UserUncheckedCreateWithoutFeedbackGivenInput = {
+    id?: string;
+    name: string;
+    email: string;
+    avatarUrl?: string | null;
+    oauthProvider?: string;
+    oauthId: string;
+    createdAt?: Date | string;
+    messages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput;
+    receivedMessages?: ChatMessageUncheckedCreateNestedManyWithoutRecipientInput;
+    feedbackReceived?: FeedbackUncheckedCreateNestedManyWithoutToUserInput;
+    githubActivities?: GitHubActivityUncheckedCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
+    presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput;
+    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
+  };
+
+  export type UserCreateOrConnectWithoutFeedbackGivenInput = {
+    where: UserWhereUniqueInput;
+    create: XOR<
+      UserCreateWithoutFeedbackGivenInput,
+      UserUncheckedCreateWithoutFeedbackGivenInput
+    >;
   };
 
   export type ProjectCreateWithoutFeedbacksInput = {
@@ -28468,13 +28980,13 @@ export namespace Prisma {
     githubRepo: string;
     createdAt?: Date | string;
     lastActive?: Date | string | null;
-    members?: ProjectMemberCreateNestedManyWithoutProjectInput;
-    tasks?: TaskCreateNestedManyWithoutProjectInput;
     chatMessages?: ChatMessageCreateNestedManyWithoutProjectInput;
     githubData?: GitHubActivityCreateNestedManyWithoutProjectInput;
     insights?: InsightCreateNestedManyWithoutProjectInput;
     presenceLogs?: PresenceLogCreateNestedManyWithoutProjectInput;
     createdBy: UserCreateNestedOneWithoutProjectsCreatedInput;
+    members?: ProjectMemberCreateNestedManyWithoutProjectInput;
+    tasks?: TaskCreateNestedManyWithoutProjectInput;
   };
 
   export type ProjectUncheckedCreateWithoutFeedbacksInput = {
@@ -28486,12 +28998,12 @@ export namespace Prisma {
     createdById: string;
     createdAt?: Date | string;
     lastActive?: Date | string | null;
-    members?: ProjectMemberUncheckedCreateNestedManyWithoutProjectInput;
-    tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput;
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutProjectInput;
     githubData?: GitHubActivityUncheckedCreateNestedManyWithoutProjectInput;
     insights?: InsightUncheckedCreateNestedManyWithoutProjectInput;
     presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutProjectInput;
+    members?: ProjectMemberUncheckedCreateNestedManyWithoutProjectInput;
+    tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput;
   };
 
   export type ProjectCreateOrConnectWithoutFeedbacksInput = {
@@ -28499,54 +29011,6 @@ export namespace Prisma {
     create: XOR<
       ProjectCreateWithoutFeedbacksInput,
       ProjectUncheckedCreateWithoutFeedbacksInput
-    >;
-  };
-
-  export type UserCreateWithoutFeedbackGivenInput = {
-    id?: string;
-    name: string;
-    email: string;
-    avatarUrl?: string | null;
-    oauthProvider?: string;
-    oauthId: string;
-    createdAt?: Date | string;
-    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
-    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
-    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
-    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
-    messages?: ChatMessageCreateNestedManyWithoutSenderInput;
-    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
-    feedbackReceived?: FeedbackCreateNestedManyWithoutToUserInput;
-    githubActivities?: GitHubActivityCreateNestedManyWithoutUserInput;
-    presenceLogs?: PresenceLogCreateNestedManyWithoutUserInput;
-    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput;
-  };
-
-  export type UserUncheckedCreateWithoutFeedbackGivenInput = {
-    id?: string;
-    name: string;
-    email: string;
-    avatarUrl?: string | null;
-    oauthProvider?: string;
-    oauthId: string;
-    createdAt?: Date | string;
-    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
-    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
-    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
-    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
-    messages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput;
-    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
-    feedbackReceived?: FeedbackUncheckedCreateNestedManyWithoutToUserInput;
-    githubActivities?: GitHubActivityUncheckedCreateNestedManyWithoutUserInput;
-    presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutUserInput;
-    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput;
-  };
-
-  export type UserCreateOrConnectWithoutFeedbackGivenInput = {
-    where: UserWhereUniqueInput;
-    create: XOR<
-      UserCreateWithoutFeedbackGivenInput,
-      UserUncheckedCreateWithoutFeedbackGivenInput
     >;
   };
 
@@ -28558,16 +29022,17 @@ export namespace Prisma {
     oauthProvider?: string;
     oauthId: string;
     createdAt?: Date | string;
-    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
-    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
-    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
-    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
     messages?: ChatMessageCreateNestedManyWithoutSenderInput;
-    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
+    receivedMessages?: ChatMessageCreateNestedManyWithoutRecipientInput;
     feedbackGiven?: FeedbackCreateNestedManyWithoutFromUserInput;
     githubActivities?: GitHubActivityCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
     presenceLogs?: PresenceLogCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
     refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput;
+    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
   };
 
   export type UserUncheckedCreateWithoutFeedbackReceivedInput = {
@@ -28578,16 +29043,17 @@ export namespace Prisma {
     oauthProvider?: string;
     oauthId: string;
     createdAt?: Date | string;
-    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
-    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
-    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
-    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
     messages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput;
-    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
+    receivedMessages?: ChatMessageUncheckedCreateNestedManyWithoutRecipientInput;
     feedbackGiven?: FeedbackUncheckedCreateNestedManyWithoutFromUserInput;
     githubActivities?: GitHubActivityUncheckedCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
     presenceLogs?: PresenceLogUncheckedCreateNestedManyWithoutUserInput;
+    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
     refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput;
+    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
   };
 
   export type UserCreateOrConnectWithoutFeedbackReceivedInput = {
@@ -28596,6 +29062,68 @@ export namespace Prisma {
       UserCreateWithoutFeedbackReceivedInput,
       UserUncheckedCreateWithoutFeedbackReceivedInput
     >;
+  };
+
+  export type UserUpsertWithoutFeedbackGivenInput = {
+    update: XOR<
+      UserUpdateWithoutFeedbackGivenInput,
+      UserUncheckedUpdateWithoutFeedbackGivenInput
+    >;
+    create: XOR<
+      UserCreateWithoutFeedbackGivenInput,
+      UserUncheckedCreateWithoutFeedbackGivenInput
+    >;
+    where?: UserWhereInput;
+  };
+
+  export type UserUpdateToOneWithWhereWithoutFeedbackGivenInput = {
+    where?: UserWhereInput;
+    data: XOR<
+      UserUpdateWithoutFeedbackGivenInput,
+      UserUncheckedUpdateWithoutFeedbackGivenInput
+    >;
+  };
+
+  export type UserUpdateWithoutFeedbackGivenInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    email?: StringFieldUpdateOperationsInput | string;
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    oauthProvider?: StringFieldUpdateOperationsInput | string;
+    oauthId?: StringFieldUpdateOperationsInput | string;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    messages?: ChatMessageUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: ChatMessageUpdateManyWithoutRecipientNestedInput;
+    feedbackReceived?: FeedbackUpdateManyWithoutToUserNestedInput;
+    githubActivities?: GitHubActivityUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
+    presenceLogs?: PresenceLogUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
+  };
+
+  export type UserUncheckedUpdateWithoutFeedbackGivenInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    email?: StringFieldUpdateOperationsInput | string;
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    oauthProvider?: StringFieldUpdateOperationsInput | string;
+    oauthId?: StringFieldUpdateOperationsInput | string;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    messages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: ChatMessageUncheckedUpdateManyWithoutRecipientNestedInput;
+    feedbackReceived?: FeedbackUncheckedUpdateManyWithoutToUserNestedInput;
+    githubActivities?: GitHubActivityUncheckedUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
+    presenceLogs?: PresenceLogUncheckedUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
   };
 
   export type ProjectUpsertWithoutFeedbacksInput = {
@@ -28630,13 +29158,13 @@ export namespace Prisma {
       | Date
       | string
       | null;
-    members?: ProjectMemberUpdateManyWithoutProjectNestedInput;
-    tasks?: TaskUpdateManyWithoutProjectNestedInput;
     chatMessages?: ChatMessageUpdateManyWithoutProjectNestedInput;
     githubData?: GitHubActivityUpdateManyWithoutProjectNestedInput;
     insights?: InsightUpdateManyWithoutProjectNestedInput;
     presenceLogs?: PresenceLogUpdateManyWithoutProjectNestedInput;
     createdBy?: UserUpdateOneRequiredWithoutProjectsCreatedNestedInput;
+    members?: ProjectMemberUpdateManyWithoutProjectNestedInput;
+    tasks?: TaskUpdateManyWithoutProjectNestedInput;
   };
 
   export type ProjectUncheckedUpdateWithoutFeedbacksInput = {
@@ -28652,72 +29180,12 @@ export namespace Prisma {
       | Date
       | string
       | null;
-    members?: ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput;
-    tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput;
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutProjectNestedInput;
     githubData?: GitHubActivityUncheckedUpdateManyWithoutProjectNestedInput;
     insights?: InsightUncheckedUpdateManyWithoutProjectNestedInput;
     presenceLogs?: PresenceLogUncheckedUpdateManyWithoutProjectNestedInput;
-  };
-
-  export type UserUpsertWithoutFeedbackGivenInput = {
-    update: XOR<
-      UserUpdateWithoutFeedbackGivenInput,
-      UserUncheckedUpdateWithoutFeedbackGivenInput
-    >;
-    create: XOR<
-      UserCreateWithoutFeedbackGivenInput,
-      UserUncheckedCreateWithoutFeedbackGivenInput
-    >;
-    where?: UserWhereInput;
-  };
-
-  export type UserUpdateToOneWithWhereWithoutFeedbackGivenInput = {
-    where?: UserWhereInput;
-    data: XOR<
-      UserUpdateWithoutFeedbackGivenInput,
-      UserUncheckedUpdateWithoutFeedbackGivenInput
-    >;
-  };
-
-  export type UserUpdateWithoutFeedbackGivenInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    name?: StringFieldUpdateOperationsInput | string;
-    email?: StringFieldUpdateOperationsInput | string;
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
-    oauthProvider?: StringFieldUpdateOperationsInput | string;
-    oauthId?: StringFieldUpdateOperationsInput | string;
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
-    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
-    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
-    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
-    messages?: ChatMessageUpdateManyWithoutSenderNestedInput;
-    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
-    feedbackReceived?: FeedbackUpdateManyWithoutToUserNestedInput;
-    githubActivities?: GitHubActivityUpdateManyWithoutUserNestedInput;
-    presenceLogs?: PresenceLogUpdateManyWithoutUserNestedInput;
-    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput;
-  };
-
-  export type UserUncheckedUpdateWithoutFeedbackGivenInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    name?: StringFieldUpdateOperationsInput | string;
-    email?: StringFieldUpdateOperationsInput | string;
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null;
-    oauthProvider?: StringFieldUpdateOperationsInput | string;
-    oauthId?: StringFieldUpdateOperationsInput | string;
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
-    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
-    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
-    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
-    messages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput;
-    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
-    feedbackReceived?: FeedbackUncheckedUpdateManyWithoutToUserNestedInput;
-    githubActivities?: GitHubActivityUncheckedUpdateManyWithoutUserNestedInput;
-    presenceLogs?: PresenceLogUncheckedUpdateManyWithoutUserNestedInput;
-    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput;
+    members?: ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput;
+    tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput;
   };
 
   export type UserUpsertWithoutFeedbackReceivedInput = {
@@ -28748,16 +29216,17 @@ export namespace Prisma {
     oauthProvider?: StringFieldUpdateOperationsInput | string;
     oauthId?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
-    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
-    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
-    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
     messages?: ChatMessageUpdateManyWithoutSenderNestedInput;
-    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
+    receivedMessages?: ChatMessageUpdateManyWithoutRecipientNestedInput;
     feedbackGiven?: FeedbackUpdateManyWithoutFromUserNestedInput;
     githubActivities?: GitHubActivityUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
     presenceLogs?: PresenceLogUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
     refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
   };
 
   export type UserUncheckedUpdateWithoutFeedbackReceivedInput = {
@@ -28768,16 +29237,17 @@ export namespace Prisma {
     oauthProvider?: StringFieldUpdateOperationsInput | string;
     oauthId?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
-    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
-    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
-    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
     messages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput;
-    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
+    receivedMessages?: ChatMessageUncheckedUpdateManyWithoutRecipientNestedInput;
     feedbackGiven?: FeedbackUncheckedUpdateManyWithoutFromUserNestedInput;
     githubActivities?: GitHubActivityUncheckedUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
     presenceLogs?: PresenceLogUncheckedUpdateManyWithoutUserNestedInput;
+    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
     refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
   };
 
   export type ProjectCreateWithoutPresenceLogsInput = {
@@ -28788,13 +29258,13 @@ export namespace Prisma {
     githubRepo: string;
     createdAt?: Date | string;
     lastActive?: Date | string | null;
-    members?: ProjectMemberCreateNestedManyWithoutProjectInput;
-    tasks?: TaskCreateNestedManyWithoutProjectInput;
     chatMessages?: ChatMessageCreateNestedManyWithoutProjectInput;
     feedbacks?: FeedbackCreateNestedManyWithoutProjectInput;
     githubData?: GitHubActivityCreateNestedManyWithoutProjectInput;
     insights?: InsightCreateNestedManyWithoutProjectInput;
     createdBy: UserCreateNestedOneWithoutProjectsCreatedInput;
+    members?: ProjectMemberCreateNestedManyWithoutProjectInput;
+    tasks?: TaskCreateNestedManyWithoutProjectInput;
   };
 
   export type ProjectUncheckedCreateWithoutPresenceLogsInput = {
@@ -28806,12 +29276,12 @@ export namespace Prisma {
     createdById: string;
     createdAt?: Date | string;
     lastActive?: Date | string | null;
-    members?: ProjectMemberUncheckedCreateNestedManyWithoutProjectInput;
-    tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput;
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutProjectInput;
     feedbacks?: FeedbackUncheckedCreateNestedManyWithoutProjectInput;
     githubData?: GitHubActivityUncheckedCreateNestedManyWithoutProjectInput;
     insights?: InsightUncheckedCreateNestedManyWithoutProjectInput;
+    members?: ProjectMemberUncheckedCreateNestedManyWithoutProjectInput;
+    tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput;
   };
 
   export type ProjectCreateOrConnectWithoutPresenceLogsInput = {
@@ -28830,16 +29300,17 @@ export namespace Prisma {
     oauthProvider?: string;
     oauthId: string;
     createdAt?: Date | string;
-    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
-    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
-    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
-    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
     messages?: ChatMessageCreateNestedManyWithoutSenderInput;
-    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
+    receivedMessages?: ChatMessageCreateNestedManyWithoutRecipientInput;
     feedbackGiven?: FeedbackCreateNestedManyWithoutFromUserInput;
     feedbackReceived?: FeedbackCreateNestedManyWithoutToUserInput;
     githubActivities?: GitHubActivityCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataCreateNestedOneWithoutUserInput;
+    projectsCreated?: ProjectCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberCreateNestedManyWithoutUserInput;
     refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput;
+    tasks?: TaskCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthCreateNestedManyWithoutUserInput;
   };
 
   export type UserUncheckedCreateWithoutPresenceLogsInput = {
@@ -28850,16 +29321,17 @@ export namespace Prisma {
     oauthProvider?: string;
     oauthId: string;
     createdAt?: Date | string;
-    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
-    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
-    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
-    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
     messages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput;
-    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
+    receivedMessages?: ChatMessageUncheckedCreateNestedManyWithoutRecipientInput;
     feedbackGiven?: FeedbackUncheckedCreateNestedManyWithoutFromUserInput;
     feedbackReceived?: FeedbackUncheckedCreateNestedManyWithoutToUserInput;
     githubActivities?: GitHubActivityUncheckedCreateNestedManyWithoutUserInput;
+    googleDocsData?: GoogleDocsDataUncheckedCreateNestedOneWithoutUserInput;
+    projectsCreated?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+    memberships?: ProjectMemberUncheckedCreateNestedManyWithoutUserInput;
     refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput;
+    tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput;
+    oauthAccounts?: UserOAuthUncheckedCreateNestedManyWithoutUserInput;
   };
 
   export type UserCreateOrConnectWithoutPresenceLogsInput = {
@@ -28902,13 +29374,13 @@ export namespace Prisma {
       | Date
       | string
       | null;
-    members?: ProjectMemberUpdateManyWithoutProjectNestedInput;
-    tasks?: TaskUpdateManyWithoutProjectNestedInput;
     chatMessages?: ChatMessageUpdateManyWithoutProjectNestedInput;
     feedbacks?: FeedbackUpdateManyWithoutProjectNestedInput;
     githubData?: GitHubActivityUpdateManyWithoutProjectNestedInput;
     insights?: InsightUpdateManyWithoutProjectNestedInput;
     createdBy?: UserUpdateOneRequiredWithoutProjectsCreatedNestedInput;
+    members?: ProjectMemberUpdateManyWithoutProjectNestedInput;
+    tasks?: TaskUpdateManyWithoutProjectNestedInput;
   };
 
   export type ProjectUncheckedUpdateWithoutPresenceLogsInput = {
@@ -28924,12 +29396,12 @@ export namespace Prisma {
       | Date
       | string
       | null;
-    members?: ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput;
-    tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput;
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutProjectNestedInput;
     feedbacks?: FeedbackUncheckedUpdateManyWithoutProjectNestedInput;
     githubData?: GitHubActivityUncheckedUpdateManyWithoutProjectNestedInput;
     insights?: InsightUncheckedUpdateManyWithoutProjectNestedInput;
+    members?: ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput;
+    tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput;
   };
 
   export type UserUpsertWithoutPresenceLogsInput = {
@@ -28960,16 +29432,17 @@ export namespace Prisma {
     oauthProvider?: StringFieldUpdateOperationsInput | string;
     oauthId?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
-    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
-    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
-    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
     messages?: ChatMessageUpdateManyWithoutSenderNestedInput;
-    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
+    receivedMessages?: ChatMessageUpdateManyWithoutRecipientNestedInput;
     feedbackGiven?: FeedbackUpdateManyWithoutFromUserNestedInput;
     feedbackReceived?: FeedbackUpdateManyWithoutToUserNestedInput;
     githubActivities?: GitHubActivityUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUpdateOneWithoutUserNestedInput;
+    projectsCreated?: ProjectUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUpdateManyWithoutUserNestedInput;
     refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput;
+    tasks?: TaskUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUpdateManyWithoutUserNestedInput;
   };
 
   export type UserUncheckedUpdateWithoutPresenceLogsInput = {
@@ -28980,67 +29453,37 @@ export namespace Prisma {
     oauthProvider?: StringFieldUpdateOperationsInput | string;
     oauthId?: StringFieldUpdateOperationsInput | string;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
-    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
-    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
-    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
     messages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput;
-    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
+    receivedMessages?: ChatMessageUncheckedUpdateManyWithoutRecipientNestedInput;
     feedbackGiven?: FeedbackUncheckedUpdateManyWithoutFromUserNestedInput;
     feedbackReceived?: FeedbackUncheckedUpdateManyWithoutToUserNestedInput;
     githubActivities?: GitHubActivityUncheckedUpdateManyWithoutUserNestedInput;
+    googleDocsData?: GoogleDocsDataUncheckedUpdateOneWithoutUserNestedInput;
+    projectsCreated?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+    memberships?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput;
     refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput;
-  };
-
-  export type UserOAuthCreateManyUserInput = {
-    id?: string;
-    provider: string;
-    providerUserId: string;
-    accessTokenEnc: string;
-    tokenExpiresAt?: Date | string | null;
-    scopes?: string | null;
-    createdAt?: Date | string;
-    updatedAt?: Date | string;
-  };
-
-  export type ProjectCreateManyCreatedByInput = {
-    id?: string;
-    name: string;
-    status?: $Enums.ProjectStatus;
-    description?: string | null;
-    githubRepo: string;
-    createdAt?: Date | string;
-    lastActive?: Date | string | null;
-  };
-
-  export type ProjectMemberCreateManyUserInput = {
-    id?: string;
-    projectId: string;
-    role?: $Enums.ProjectRole;
-    status?: $Enums.MemberStatus;
-    joinedAt?: Date | string | null;
+    tasks?: TaskUncheckedUpdateManyWithoutAssigneeNestedInput;
+    oauthAccounts?: UserOAuthUncheckedUpdateManyWithoutUserNestedInput;
   };
 
   export type ChatMessageCreateManySenderInput = {
     id?: string;
     projectId: string;
+    recipientId?: string | null;
     message: string;
     type?: string;
     aiLabel?: string | null;
     createdAt?: Date | string;
   };
 
-  export type TaskCreateManyAssigneeInput = {
+  export type ChatMessageCreateManyRecipientInput = {
     id?: string;
-    priority?: $Enums.TaskPriority;
     projectId: string;
-    title: string;
-    description?: string | null;
-    weight?: number;
-    status?: $Enums.TaskStatus;
+    senderId: string;
+    message: string;
+    type?: string;
+    aiLabel?: string | null;
     createdAt?: Date | string;
-    completedAt?: Date | string | null;
-    score?: number | null;
   };
 
   export type FeedbackCreateManyFromUserInput = {
@@ -29088,6 +29531,24 @@ export namespace Prisma {
     isActive?: boolean;
   };
 
+  export type ProjectCreateManyCreatedByInput = {
+    id?: string;
+    name: string;
+    status?: $Enums.ProjectStatus;
+    description?: string | null;
+    githubRepo: string;
+    createdAt?: Date | string;
+    lastActive?: Date | string | null;
+  };
+
+  export type ProjectMemberCreateManyUserInput = {
+    id?: string;
+    projectId: string;
+    role?: $Enums.ProjectRole;
+    status?: $Enums.MemberStatus;
+    joinedAt?: Date | string | null;
+  };
+
   export type RefreshTokenCreateManyUserInput = {
     id?: string;
     hashedToken: string;
@@ -29102,141 +29563,28 @@ export namespace Prisma {
     deviceName?: string | null;
   };
 
-  export type UserOAuthUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    provider?: StringFieldUpdateOperationsInput | string;
-    providerUserId?: StringFieldUpdateOperationsInput | string;
-    accessTokenEnc?: StringFieldUpdateOperationsInput | string;
-    tokenExpiresAt?:
-      | NullableDateTimeFieldUpdateOperationsInput
-      | Date
-      | string
-      | null;
-    scopes?: NullableStringFieldUpdateOperationsInput | string | null;
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+  export type TaskCreateManyAssigneeInput = {
+    id?: string;
+    priority?: $Enums.TaskPriority;
+    projectId: string;
+    title: string;
+    description?: string | null;
+    weight?: number;
+    status?: $Enums.TaskStatus;
+    createdAt?: Date | string;
+    completedAt?: Date | string | null;
+    score?: number | null;
   };
 
-  export type UserOAuthUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    provider?: StringFieldUpdateOperationsInput | string;
-    providerUserId?: StringFieldUpdateOperationsInput | string;
-    accessTokenEnc?: StringFieldUpdateOperationsInput | string;
-    tokenExpiresAt?:
-      | NullableDateTimeFieldUpdateOperationsInput
-      | Date
-      | string
-      | null;
-    scopes?: NullableStringFieldUpdateOperationsInput | string | null;
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-  };
-
-  export type UserOAuthUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    provider?: StringFieldUpdateOperationsInput | string;
-    providerUserId?: StringFieldUpdateOperationsInput | string;
-    accessTokenEnc?: StringFieldUpdateOperationsInput | string;
-    tokenExpiresAt?:
-      | NullableDateTimeFieldUpdateOperationsInput
-      | Date
-      | string
-      | null;
-    scopes?: NullableStringFieldUpdateOperationsInput | string | null;
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-  };
-
-  export type ProjectUpdateWithoutCreatedByInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    name?: StringFieldUpdateOperationsInput | string;
-    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
-    description?: NullableStringFieldUpdateOperationsInput | string | null;
-    githubRepo?: StringFieldUpdateOperationsInput | string;
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    lastActive?:
-      | NullableDateTimeFieldUpdateOperationsInput
-      | Date
-      | string
-      | null;
-    members?: ProjectMemberUpdateManyWithoutProjectNestedInput;
-    tasks?: TaskUpdateManyWithoutProjectNestedInput;
-    chatMessages?: ChatMessageUpdateManyWithoutProjectNestedInput;
-    feedbacks?: FeedbackUpdateManyWithoutProjectNestedInput;
-    githubData?: GitHubActivityUpdateManyWithoutProjectNestedInput;
-    insights?: InsightUpdateManyWithoutProjectNestedInput;
-    presenceLogs?: PresenceLogUpdateManyWithoutProjectNestedInput;
-  };
-
-  export type ProjectUncheckedUpdateWithoutCreatedByInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    name?: StringFieldUpdateOperationsInput | string;
-    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
-    description?: NullableStringFieldUpdateOperationsInput | string | null;
-    githubRepo?: StringFieldUpdateOperationsInput | string;
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    lastActive?:
-      | NullableDateTimeFieldUpdateOperationsInput
-      | Date
-      | string
-      | null;
-    members?: ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput;
-    tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput;
-    chatMessages?: ChatMessageUncheckedUpdateManyWithoutProjectNestedInput;
-    feedbacks?: FeedbackUncheckedUpdateManyWithoutProjectNestedInput;
-    githubData?: GitHubActivityUncheckedUpdateManyWithoutProjectNestedInput;
-    insights?: InsightUncheckedUpdateManyWithoutProjectNestedInput;
-    presenceLogs?: PresenceLogUncheckedUpdateManyWithoutProjectNestedInput;
-  };
-
-  export type ProjectUncheckedUpdateManyWithoutCreatedByInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    name?: StringFieldUpdateOperationsInput | string;
-    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
-    description?: NullableStringFieldUpdateOperationsInput | string | null;
-    githubRepo?: StringFieldUpdateOperationsInput | string;
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    lastActive?:
-      | NullableDateTimeFieldUpdateOperationsInput
-      | Date
-      | string
-      | null;
-  };
-
-  export type ProjectMemberUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    role?: EnumProjectRoleFieldUpdateOperationsInput | $Enums.ProjectRole;
-    status?: EnumMemberStatusFieldUpdateOperationsInput | $Enums.MemberStatus;
-    joinedAt?:
-      | NullableDateTimeFieldUpdateOperationsInput
-      | Date
-      | string
-      | null;
-    project?: ProjectUpdateOneRequiredWithoutMembersNestedInput;
-  };
-
-  export type ProjectMemberUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    projectId?: StringFieldUpdateOperationsInput | string;
-    role?: EnumProjectRoleFieldUpdateOperationsInput | $Enums.ProjectRole;
-    status?: EnumMemberStatusFieldUpdateOperationsInput | $Enums.MemberStatus;
-    joinedAt?:
-      | NullableDateTimeFieldUpdateOperationsInput
-      | Date
-      | string
-      | null;
-  };
-
-  export type ProjectMemberUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    projectId?: StringFieldUpdateOperationsInput | string;
-    role?: EnumProjectRoleFieldUpdateOperationsInput | $Enums.ProjectRole;
-    status?: EnumMemberStatusFieldUpdateOperationsInput | $Enums.MemberStatus;
-    joinedAt?:
-      | NullableDateTimeFieldUpdateOperationsInput
-      | Date
-      | string
-      | null;
+  export type UserOAuthCreateManyUserInput = {
+    id?: string;
+    provider: string;
+    providerUserId: string;
+    accessTokenEnc: string;
+    tokenExpiresAt?: Date | string | null;
+    scopes?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
   };
 
   export type ChatMessageUpdateWithoutSenderInput = {
@@ -29246,11 +29594,13 @@ export namespace Prisma {
     aiLabel?: NullableStringFieldUpdateOperationsInput | string | null;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
     project?: ProjectUpdateOneRequiredWithoutChatMessagesNestedInput;
+    recipient?: UserUpdateOneWithoutReceivedMessagesNestedInput;
   };
 
   export type ChatMessageUncheckedUpdateWithoutSenderInput = {
     id?: StringFieldUpdateOperationsInput | string;
     projectId?: StringFieldUpdateOperationsInput | string;
+    recipientId?: NullableStringFieldUpdateOperationsInput | string | null;
     message?: StringFieldUpdateOperationsInput | string;
     type?: StringFieldUpdateOperationsInput | string;
     aiLabel?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -29260,61 +29610,41 @@ export namespace Prisma {
   export type ChatMessageUncheckedUpdateManyWithoutSenderInput = {
     id?: StringFieldUpdateOperationsInput | string;
     projectId?: StringFieldUpdateOperationsInput | string;
+    recipientId?: NullableStringFieldUpdateOperationsInput | string | null;
     message?: StringFieldUpdateOperationsInput | string;
     type?: StringFieldUpdateOperationsInput | string;
     aiLabel?: NullableStringFieldUpdateOperationsInput | string | null;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
-  export type TaskUpdateWithoutAssigneeInput = {
+  export type ChatMessageUpdateWithoutRecipientInput = {
     id?: StringFieldUpdateOperationsInput | string;
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority;
-    title?: StringFieldUpdateOperationsInput | string;
-    description?: NullableStringFieldUpdateOperationsInput | string | null;
-    weight?: FloatFieldUpdateOperationsInput | number;
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus;
+    message?: StringFieldUpdateOperationsInput | string;
+    type?: StringFieldUpdateOperationsInput | string;
+    aiLabel?: NullableStringFieldUpdateOperationsInput | string | null;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    completedAt?:
-      | NullableDateTimeFieldUpdateOperationsInput
-      | Date
-      | string
-      | null;
-    score?: NullableFloatFieldUpdateOperationsInput | number | null;
-    project?: ProjectUpdateOneRequiredWithoutTasksNestedInput;
+    project?: ProjectUpdateOneRequiredWithoutChatMessagesNestedInput;
+    sender?: UserUpdateOneRequiredWithoutMessagesNestedInput;
   };
 
-  export type TaskUncheckedUpdateWithoutAssigneeInput = {
+  export type ChatMessageUncheckedUpdateWithoutRecipientInput = {
     id?: StringFieldUpdateOperationsInput | string;
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority;
     projectId?: StringFieldUpdateOperationsInput | string;
-    title?: StringFieldUpdateOperationsInput | string;
-    description?: NullableStringFieldUpdateOperationsInput | string | null;
-    weight?: FloatFieldUpdateOperationsInput | number;
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus;
+    senderId?: StringFieldUpdateOperationsInput | string;
+    message?: StringFieldUpdateOperationsInput | string;
+    type?: StringFieldUpdateOperationsInput | string;
+    aiLabel?: NullableStringFieldUpdateOperationsInput | string | null;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    completedAt?:
-      | NullableDateTimeFieldUpdateOperationsInput
-      | Date
-      | string
-      | null;
-    score?: NullableFloatFieldUpdateOperationsInput | number | null;
   };
 
-  export type TaskUncheckedUpdateManyWithoutAssigneeInput = {
+  export type ChatMessageUncheckedUpdateManyWithoutRecipientInput = {
     id?: StringFieldUpdateOperationsInput | string;
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority;
     projectId?: StringFieldUpdateOperationsInput | string;
-    title?: StringFieldUpdateOperationsInput | string;
-    description?: NullableStringFieldUpdateOperationsInput | string | null;
-    weight?: FloatFieldUpdateOperationsInput | number;
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus;
+    senderId?: StringFieldUpdateOperationsInput | string;
+    message?: StringFieldUpdateOperationsInput | string;
+    type?: StringFieldUpdateOperationsInput | string;
+    aiLabel?: NullableStringFieldUpdateOperationsInput | string | null;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    completedAt?:
-      | NullableDateTimeFieldUpdateOperationsInput
-      | Date
-      | string
-      | null;
-    score?: NullableFloatFieldUpdateOperationsInput | number | null;
   };
 
   export type FeedbackUpdateWithoutFromUserInput = {
@@ -29361,8 +29691,8 @@ export namespace Prisma {
     comment?: NullableStringFieldUpdateOperationsInput | string | null;
     aiFlag?: NullableStringFieldUpdateOperationsInput | string | null;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    project?: ProjectUpdateOneRequiredWithoutFeedbacksNestedInput;
     fromUser?: UserUpdateOneRequiredWithoutFeedbackGivenNestedInput;
+    project?: ProjectUpdateOneRequiredWithoutFeedbacksNestedInput;
   };
 
   export type FeedbackUncheckedUpdateWithoutToUserInput = {
@@ -29470,6 +29800,98 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean;
   };
 
+  export type ProjectUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
+    githubRepo?: StringFieldUpdateOperationsInput | string;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    lastActive?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    chatMessages?: ChatMessageUpdateManyWithoutProjectNestedInput;
+    feedbacks?: FeedbackUpdateManyWithoutProjectNestedInput;
+    githubData?: GitHubActivityUpdateManyWithoutProjectNestedInput;
+    insights?: InsightUpdateManyWithoutProjectNestedInput;
+    presenceLogs?: PresenceLogUpdateManyWithoutProjectNestedInput;
+    members?: ProjectMemberUpdateManyWithoutProjectNestedInput;
+    tasks?: TaskUpdateManyWithoutProjectNestedInput;
+  };
+
+  export type ProjectUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
+    githubRepo?: StringFieldUpdateOperationsInput | string;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    lastActive?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    chatMessages?: ChatMessageUncheckedUpdateManyWithoutProjectNestedInput;
+    feedbacks?: FeedbackUncheckedUpdateManyWithoutProjectNestedInput;
+    githubData?: GitHubActivityUncheckedUpdateManyWithoutProjectNestedInput;
+    insights?: InsightUncheckedUpdateManyWithoutProjectNestedInput;
+    presenceLogs?: PresenceLogUncheckedUpdateManyWithoutProjectNestedInput;
+    members?: ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput;
+    tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput;
+  };
+
+  export type ProjectUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
+    githubRepo?: StringFieldUpdateOperationsInput | string;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    lastActive?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+  };
+
+  export type ProjectMemberUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    role?: EnumProjectRoleFieldUpdateOperationsInput | $Enums.ProjectRole;
+    status?: EnumMemberStatusFieldUpdateOperationsInput | $Enums.MemberStatus;
+    joinedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    project?: ProjectUpdateOneRequiredWithoutMembersNestedInput;
+  };
+
+  export type ProjectMemberUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    projectId?: StringFieldUpdateOperationsInput | string;
+    role?: EnumProjectRoleFieldUpdateOperationsInput | $Enums.ProjectRole;
+    status?: EnumMemberStatusFieldUpdateOperationsInput | $Enums.MemberStatus;
+    joinedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+  };
+
+  export type ProjectMemberUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    projectId?: StringFieldUpdateOperationsInput | string;
+    role?: EnumProjectRoleFieldUpdateOperationsInput | $Enums.ProjectRole;
+    status?: EnumMemberStatusFieldUpdateOperationsInput | $Enums.MemberStatus;
+    joinedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+  };
+
   export type RefreshTokenUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string;
     hashedToken?: StringFieldUpdateOperationsInput | string;
@@ -29524,30 +29946,106 @@ export namespace Prisma {
     deviceName?: NullableStringFieldUpdateOperationsInput | string | null;
   };
 
-  export type ProjectMemberCreateManyProjectInput = {
-    id?: string;
-    userId: string;
-    role?: $Enums.ProjectRole;
-    status?: $Enums.MemberStatus;
-    joinedAt?: Date | string | null;
+  export type TaskUpdateWithoutAssigneeInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority;
+    title?: StringFieldUpdateOperationsInput | string;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
+    weight?: FloatFieldUpdateOperationsInput | number;
+    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    completedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    score?: NullableFloatFieldUpdateOperationsInput | number | null;
+    project?: ProjectUpdateOneRequiredWithoutTasksNestedInput;
   };
 
-  export type TaskCreateManyProjectInput = {
-    id?: string;
-    priority?: $Enums.TaskPriority;
-    title: string;
-    description?: string | null;
-    weight?: number;
-    status?: $Enums.TaskStatus;
-    assigneeId?: string | null;
-    createdAt?: Date | string;
-    completedAt?: Date | string | null;
-    score?: number | null;
+  export type TaskUncheckedUpdateWithoutAssigneeInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority;
+    projectId?: StringFieldUpdateOperationsInput | string;
+    title?: StringFieldUpdateOperationsInput | string;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
+    weight?: FloatFieldUpdateOperationsInput | number;
+    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    completedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    score?: NullableFloatFieldUpdateOperationsInput | number | null;
+  };
+
+  export type TaskUncheckedUpdateManyWithoutAssigneeInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority;
+    projectId?: StringFieldUpdateOperationsInput | string;
+    title?: StringFieldUpdateOperationsInput | string;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
+    weight?: FloatFieldUpdateOperationsInput | number;
+    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    completedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    score?: NullableFloatFieldUpdateOperationsInput | number | null;
+  };
+
+  export type UserOAuthUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    provider?: StringFieldUpdateOperationsInput | string;
+    providerUserId?: StringFieldUpdateOperationsInput | string;
+    accessTokenEnc?: StringFieldUpdateOperationsInput | string;
+    tokenExpiresAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    scopes?: NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type UserOAuthUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    provider?: StringFieldUpdateOperationsInput | string;
+    providerUserId?: StringFieldUpdateOperationsInput | string;
+    accessTokenEnc?: StringFieldUpdateOperationsInput | string;
+    tokenExpiresAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    scopes?: NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type UserOAuthUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    provider?: StringFieldUpdateOperationsInput | string;
+    providerUserId?: StringFieldUpdateOperationsInput | string;
+    accessTokenEnc?: StringFieldUpdateOperationsInput | string;
+    tokenExpiresAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    scopes?: NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
   export type ChatMessageCreateManyProjectInput = {
     id?: string;
     senderId: string;
+    recipientId?: string | null;
     message: string;
     type?: string;
     aiLabel?: string | null;
@@ -29595,91 +30093,25 @@ export namespace Prisma {
     isActive?: boolean;
   };
 
-  export type ProjectMemberUpdateWithoutProjectInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    role?: EnumProjectRoleFieldUpdateOperationsInput | $Enums.ProjectRole;
-    status?: EnumMemberStatusFieldUpdateOperationsInput | $Enums.MemberStatus;
-    joinedAt?:
-      | NullableDateTimeFieldUpdateOperationsInput
-      | Date
-      | string
-      | null;
-    user?: UserUpdateOneRequiredWithoutMembershipsNestedInput;
+  export type ProjectMemberCreateManyProjectInput = {
+    id?: string;
+    userId: string;
+    role?: $Enums.ProjectRole;
+    status?: $Enums.MemberStatus;
+    joinedAt?: Date | string | null;
   };
 
-  export type ProjectMemberUncheckedUpdateWithoutProjectInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    userId?: StringFieldUpdateOperationsInput | string;
-    role?: EnumProjectRoleFieldUpdateOperationsInput | $Enums.ProjectRole;
-    status?: EnumMemberStatusFieldUpdateOperationsInput | $Enums.MemberStatus;
-    joinedAt?:
-      | NullableDateTimeFieldUpdateOperationsInput
-      | Date
-      | string
-      | null;
-  };
-
-  export type ProjectMemberUncheckedUpdateManyWithoutProjectInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    userId?: StringFieldUpdateOperationsInput | string;
-    role?: EnumProjectRoleFieldUpdateOperationsInput | $Enums.ProjectRole;
-    status?: EnumMemberStatusFieldUpdateOperationsInput | $Enums.MemberStatus;
-    joinedAt?:
-      | NullableDateTimeFieldUpdateOperationsInput
-      | Date
-      | string
-      | null;
-  };
-
-  export type TaskUpdateWithoutProjectInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority;
-    title?: StringFieldUpdateOperationsInput | string;
-    description?: NullableStringFieldUpdateOperationsInput | string | null;
-    weight?: FloatFieldUpdateOperationsInput | number;
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus;
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    completedAt?:
-      | NullableDateTimeFieldUpdateOperationsInput
-      | Date
-      | string
-      | null;
-    score?: NullableFloatFieldUpdateOperationsInput | number | null;
-    assignee?: UserUpdateOneWithoutTasksNestedInput;
-  };
-
-  export type TaskUncheckedUpdateWithoutProjectInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority;
-    title?: StringFieldUpdateOperationsInput | string;
-    description?: NullableStringFieldUpdateOperationsInput | string | null;
-    weight?: FloatFieldUpdateOperationsInput | number;
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus;
-    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    completedAt?:
-      | NullableDateTimeFieldUpdateOperationsInput
-      | Date
-      | string
-      | null;
-    score?: NullableFloatFieldUpdateOperationsInput | number | null;
-  };
-
-  export type TaskUncheckedUpdateManyWithoutProjectInput = {
-    id?: StringFieldUpdateOperationsInput | string;
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority;
-    title?: StringFieldUpdateOperationsInput | string;
-    description?: NullableStringFieldUpdateOperationsInput | string | null;
-    weight?: FloatFieldUpdateOperationsInput | number;
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus;
-    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
-    completedAt?:
-      | NullableDateTimeFieldUpdateOperationsInput
-      | Date
-      | string
-      | null;
-    score?: NullableFloatFieldUpdateOperationsInput | number | null;
+  export type TaskCreateManyProjectInput = {
+    id?: string;
+    priority?: $Enums.TaskPriority;
+    title: string;
+    description?: string | null;
+    weight?: number;
+    status?: $Enums.TaskStatus;
+    assigneeId?: string | null;
+    createdAt?: Date | string;
+    completedAt?: Date | string | null;
+    score?: number | null;
   };
 
   export type ChatMessageUpdateWithoutProjectInput = {
@@ -29689,11 +30121,13 @@ export namespace Prisma {
     aiLabel?: NullableStringFieldUpdateOperationsInput | string | null;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
     sender?: UserUpdateOneRequiredWithoutMessagesNestedInput;
+    recipient?: UserUpdateOneWithoutReceivedMessagesNestedInput;
   };
 
   export type ChatMessageUncheckedUpdateWithoutProjectInput = {
     id?: StringFieldUpdateOperationsInput | string;
     senderId?: StringFieldUpdateOperationsInput | string;
+    recipientId?: NullableStringFieldUpdateOperationsInput | string | null;
     message?: StringFieldUpdateOperationsInput | string;
     type?: StringFieldUpdateOperationsInput | string;
     aiLabel?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -29703,6 +30137,7 @@ export namespace Prisma {
   export type ChatMessageUncheckedUpdateManyWithoutProjectInput = {
     id?: StringFieldUpdateOperationsInput | string;
     senderId?: StringFieldUpdateOperationsInput | string;
+    recipientId?: NullableStringFieldUpdateOperationsInput | string | null;
     message?: StringFieldUpdateOperationsInput | string;
     type?: StringFieldUpdateOperationsInput | string;
     aiLabel?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -29848,6 +30283,93 @@ export namespace Prisma {
       | null;
     duration?: NullableIntFieldUpdateOperationsInput | number | null;
     isActive?: BoolFieldUpdateOperationsInput | boolean;
+  };
+
+  export type ProjectMemberUpdateWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    role?: EnumProjectRoleFieldUpdateOperationsInput | $Enums.ProjectRole;
+    status?: EnumMemberStatusFieldUpdateOperationsInput | $Enums.MemberStatus;
+    joinedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    user?: UserUpdateOneRequiredWithoutMembershipsNestedInput;
+  };
+
+  export type ProjectMemberUncheckedUpdateWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    userId?: StringFieldUpdateOperationsInput | string;
+    role?: EnumProjectRoleFieldUpdateOperationsInput | $Enums.ProjectRole;
+    status?: EnumMemberStatusFieldUpdateOperationsInput | $Enums.MemberStatus;
+    joinedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+  };
+
+  export type ProjectMemberUncheckedUpdateManyWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    userId?: StringFieldUpdateOperationsInput | string;
+    role?: EnumProjectRoleFieldUpdateOperationsInput | $Enums.ProjectRole;
+    status?: EnumMemberStatusFieldUpdateOperationsInput | $Enums.MemberStatus;
+    joinedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+  };
+
+  export type TaskUpdateWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority;
+    title?: StringFieldUpdateOperationsInput | string;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
+    weight?: FloatFieldUpdateOperationsInput | number;
+    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    completedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    score?: NullableFloatFieldUpdateOperationsInput | number | null;
+    assignee?: UserUpdateOneWithoutTasksNestedInput;
+  };
+
+  export type TaskUncheckedUpdateWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority;
+    title?: StringFieldUpdateOperationsInput | string;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
+    weight?: FloatFieldUpdateOperationsInput | number;
+    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus;
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    completedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    score?: NullableFloatFieldUpdateOperationsInput | number | null;
+  };
+
+  export type TaskUncheckedUpdateManyWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority;
+    title?: StringFieldUpdateOperationsInput | string;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
+    weight?: FloatFieldUpdateOperationsInput | number;
+    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus;
+    assigneeId?: NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    completedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    score?: NullableFloatFieldUpdateOperationsInput | number | null;
   };
 
   /**

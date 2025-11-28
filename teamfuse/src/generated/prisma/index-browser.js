@@ -191,6 +191,7 @@ exports.Prisma.ChatMessageScalarFieldEnum = {
   id: "id",
   projectId: "projectId",
   senderId: "senderId",
+  recipientId: "recipientId",
   message: "message",
   type: "type",
   aiLabel: "aiLabel",
