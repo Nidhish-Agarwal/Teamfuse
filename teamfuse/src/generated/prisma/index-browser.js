@@ -159,9 +159,66 @@ exports.Prisma.ProjectScalarFieldEnum = {
   status: "status",
   description: "description",
   githubRepo: "githubRepo",
+  githubRepoId: "githubRepoId",
+  githubWebhookSecret: "githubWebhookSecret",
   createdById: "createdById",
   createdAt: "createdAt",
   lastActive: "lastActive",
+};
+
+exports.Prisma.RepoCommitScalarFieldEnum = {
+  id: "id",
+  projectId: "projectId",
+  sha: "sha",
+  authorName: "authorName",
+  authorEmail: "authorEmail",
+  message: "message",
+  url: "url",
+  authoredAt: "authoredAt",
+  addedLines: "addedLines",
+  deletedLines: "deletedLines",
+  raw: "raw",
+  createdAt: "createdAt",
+};
+
+exports.Prisma.PullRequestScalarFieldEnum = {
+  id: "id",
+  projectId: "projectId",
+  prNumber: "prNumber",
+  title: "title",
+  authorId: "authorId",
+  authorLogin: "authorLogin",
+  state: "state",
+  merged: "merged",
+  mergedAt: "mergedAt",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt",
+  raw: "raw",
+};
+
+exports.Prisma.ProjectSyncScalarFieldEnum = {
+  id: "id",
+  projectId: "projectId",
+  userId: "userId",
+  status: "status",
+  error: "error",
+  createdAt: "createdAt",
+  finishedAt: "finishedAt",
+  retried: "retried",
+};
+
+exports.Prisma.WebhookDeliveryScalarFieldEnum = {
+  id: "id",
+  projectId: "projectId",
+  deliveryId: "deliveryId",
+  event: "event",
+  status: "status",
+  error: "error",
+  attempts: "attempts",
+  payload: "payload",
+  receivedAt: "receivedAt",
+  processedAt: "processedAt",
+  retried: "retried",
 };
 
 exports.Prisma.ProjectMemberScalarFieldEnum = {
@@ -191,6 +248,7 @@ exports.Prisma.ChatMessageScalarFieldEnum = {
   id: "id",
   projectId: "projectId",
   senderId: "senderId",
+  recipientId: "recipientId",
   message: "message",
   type: "type",
   aiLabel: "aiLabel",
@@ -259,6 +317,10 @@ exports.Prisma.NullableJsonNullValueInput = {
   JsonNull: Prisma.JsonNull,
 };
 
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull,
+};
+
 exports.Prisma.QueryMode = {
   default: "default",
   insensitive: "insensitive",
@@ -278,6 +340,22 @@ exports.ProjectStatus = exports.$Enums.ProjectStatus = {
   ACTIVE: "ACTIVE",
   ARCHIVED: "ARCHIVED",
   COMPLETED: "COMPLETED",
+};
+
+exports.SyncStatus = exports.$Enums.SyncStatus = {
+  PENDING: "PENDING",
+  COMPLETED: "COMPLETED",
+  FAILED: "FAILED",
+  PROCESSING: "PROCESSING",
+  RETRYING: "RETRYING",
+};
+
+exports.WebhookDeliveryStatus = exports.$Enums.WebhookDeliveryStatus = {
+  PENDING: "PENDING",
+  COMPLETED: "COMPLETED",
+  FAILED: "FAILED",
+  PROCESSING: "PROCESSING",
+  RETRYING: "RETRYING",
 };
 
 exports.ProjectRole = exports.$Enums.ProjectRole = {
@@ -315,6 +393,10 @@ exports.Prisma.ModelName = {
   UserOAuth: "UserOAuth",
   RefreshToken: "RefreshToken",
   Project: "Project",
+  RepoCommit: "RepoCommit",
+  PullRequest: "PullRequest",
+  ProjectSync: "ProjectSync",
+  WebhookDelivery: "WebhookDelivery",
   ProjectMember: "ProjectMember",
   Task: "Task",
   ChatMessage: "ChatMessage",
