@@ -6,7 +6,13 @@ import {
 import { sendSuccess } from "@/lib/responseHandler";
 import { handleRouteError } from "@/lib/errors/handleRouteError";
 
-export async function GET({ params }: { params: { id: string } }) {
+interface RouteParams {
+  params: Promise<{ id: string }>;
+}
+
+export async function GET(_req: Request, { params }: RouteParams) {
+  const { id: projectId } = await params; // unwrap await
+
   try {
     const { id: projectId } = params;
 
@@ -30,11 +36,17 @@ export async function GET({ params }: { params: { id: string } }) {
       },
     });
 
+
+    // Remove duplicates by user ID
+    const uniqueMembers = Array.from(
+      new Map(members.map((m) => [m.user.id, m.user])).values()
+    );
     await setMembersInCache(projectId, members);
 
     return sendSuccess(members, "Successfully fetched all the members");
   } catch (e) {
     console.error("MEMBER FETCH ERROR:", e);
     return handleRouteError(e);
+
   }
 }
