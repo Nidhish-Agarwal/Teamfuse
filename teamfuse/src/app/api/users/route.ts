@@ -20,10 +20,10 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, role, avatarUrl } = body;
+    const { name, email, avatarUrl, oauthId } = body;
 
     const user = await prisma.user.create({
-      data: { name, email, role, avatarUrl },
+      data: { name, email, avatarUrl, oauthId },
     });
 
     return sendSuccess(user, "User created successfully", 201);

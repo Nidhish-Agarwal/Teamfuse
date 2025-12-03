@@ -8,6 +8,7 @@ import {
   Github,
   MessageCircle,
   Users,
+  User,
 } from "lucide-react";
 
 export default function Sidebar({ projectId }: { projectId: string }) {
@@ -33,6 +34,11 @@ export default function Sidebar({ projectId }: { projectId: string }) {
       label: "Chat",
       href: `/project/${projectId}/chat`,
       icon: MessageCircle,
+    },
+    {
+      label: "My Performance",
+      href: `/project/${projectId}/me/performance`,
+      icon: User,
     },
     {
       label: "Team Performance",

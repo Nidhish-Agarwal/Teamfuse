@@ -3,7 +3,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Github } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 function Authentication() {
   const [isLoading, setIsLoading] = useState(false);

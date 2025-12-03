@@ -13,6 +13,8 @@ export interface ProjectDashboard {
   createdAt: Date;
   lastActive: Date | null;
 
+  updatedAt: Date | string;
+
   members: {
     user: {
       id: string;
@@ -33,7 +35,6 @@ export interface ProjectDashboard {
     type: string;
     aiLabel: string | null;
     createdAt: Date;
-
     sender: {
       id: string;
       name: string;
@@ -42,6 +43,5 @@ export interface ProjectDashboard {
   }[];
 
   githubData: GitHubActivity[];
-
   insights: Insight[];
 }

@@ -38,11 +38,26 @@ export async function GET(req: Request) {
 
 export async function POST(request: Request) {
   try {
-    const { fromUserId, toUserId, projectId, rating, comment } =
-      await request.json();
+    const {
+      fromUserId,
+      toUserId,
+      projectId,
+      effort,
+      collaboration,
+      reliability,
+      comment,
+    } = await request.json();
 
     const feedback = await prisma.feedback.create({
-      data: { fromUserId, toUserId, projectId, rating, comment },
+      data: {
+        fromUserId,
+        toUserId,
+        projectId,
+        effort,
+        collaboration,
+        reliability,
+        comment,
+      },
     });
 
     await invalidateFeedbackCache(projectId);

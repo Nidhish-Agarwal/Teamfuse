@@ -120,7 +120,9 @@ export default function PendingInviteCard({
               <p className="text-gray-400 text-sm mb-1">Invited By</p>
               <div className="flex items-center gap-2">
                 <Avatar className="h-10 w-10">
-                  <AvatarImage src={project?.createdBy?.avatarUrl} />
+                  <AvatarImage
+                    src={project?.createdBy?.avatarUrl ?? undefined}
+                  />
                   <AvatarFallback>{project?.createdBy?.name[0]}</AvatarFallback>
                 </Avatar>
                 <div>
