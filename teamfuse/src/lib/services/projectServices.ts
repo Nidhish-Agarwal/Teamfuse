@@ -5,9 +5,9 @@ import { ProjectTask } from "../types/projectTask";
 
 export async function getProjectById(projectId: string, userId: string) {
   try {
-    // Check if user is a member of the project
+    // Check membership
     const membership = await prisma.projectMember.findFirst({
-      where: { projectId, userId: userId, status: "ACCEPTED" },
+      where: { projectId, userId, status: "ACCEPTED" },
     });
 
     if (!membership) {
@@ -18,12 +18,11 @@ export async function getProjectById(projectId: string, userId: string) {
       );
     }
 
+    // --- Try cache first ---
     const cached = await getProjectFromCache(projectId);
-    if (cached) {
-      return cached;
-    }
+    if (cached) return cached;
 
-    // Fetch full project dashboard data
+    // --- Fetch full project ---
     const project = await prisma.project.findUnique({
       where: { id: projectId },
       include: {
@@ -75,7 +74,7 @@ export async function getProjectById(projectId: string, userId: string) {
       throw new AppError("Project not found", "NOT_FOUND", 404);
     }
 
-    // ---- Transform data for frontend ---- //
+    // ---- Transform task summary ----
     const taskSummary = {
       total: project.tasks.length,
       todo: project.tasks.filter((t: ProjectTask) => t.status === "TODO")
@@ -90,6 +89,7 @@ export async function getProjectById(projectId: string, userId: string) {
       ).length,
     };
 
+    // ---- Transform GitHub summary ----
     const githubSummary = project.githubData.reduce(
       (acc, item) => {
         acc.commitCount += item.commitCount;
@@ -108,14 +108,41 @@ export async function getProjectById(projectId: string, userId: string) {
 
     const latestInsight = project.insights[0] ?? null;
 
-    await setProjectInCache(projectId, {
-      project,
-      taskSummary,
-      githubSummary,
-      latestInsight,
-    });
+    // ---- FINAL CONSISTENT RESPONSE SHAPE ----
+    const formatted = {
+      project: {
+        id: project.id,
+        name: project.name,
+        description: project.description,
+        githubRepo: project.githubRepo,
+        createdById: project.createdById,
+        updatedAt: project.lastActive ?? project.createdAt,
+      },
 
-    return { project, taskSummary, githubSummary, latestInsight };
+      members: project.members.map((m) => ({
+        memberId: m.id,
+        userId: m.user.id,
+        name: m.user.name,
+        email: m.user.email,
+        avatarUrl: m.user.avatarUrl,
+        role: m.role,
+        status: m.status,
+      })),
+
+      stats: {
+        tasks: taskSummary,
+        github: githubSummary,
+        messages: project.chatMessages.length,
+      },
+
+      latestInsight,
+    };
+
+    // Save into cache
+    await setProjectInCache(projectId, formatted);
+
+    // Return consistent output
+    return formatted;
   } catch (error) {
     throw error;
   }
@@ -181,7 +208,6 @@ export async function getAllProjectsForUser(userId: string) {
       },
     });
 
-    // helper to get commit count from githubData (robust: checks common field names)
     const getCommitCount = (githubData: { commitCount: number }[] = []) =>
       githubData.reduce((sum, g) => sum + (g.commitCount ?? 0), 0);
 

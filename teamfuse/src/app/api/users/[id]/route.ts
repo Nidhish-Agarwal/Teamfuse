@@ -2,13 +2,20 @@
 import { prisma } from "../../../../lib/prisma";
 import { sendSuccess, sendError } from "@/lib/responseHandler";
 
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+// GET /api/users/[id]
+export async function GET(
+  _: Request,
+  context: { params: Promise<Record<string, string>> }
+) {
   try {
+    const { id } = await context.params;
+
     const user = await prisma.user.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
-        projects: { include: { project: true } },
-        tasksAssigned: true,
+        memberships: { include: { project: true } },
+        projectsCreated: true,
+        tasks: true,
       },
     });
 
@@ -22,11 +29,18 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
   }
 }
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+// PUT /api/users/[id]
+export async function PUT(
+  request: Request,
+  context: { params: Promise<Record<string, string>> }
+) {
   try {
+    const { id } = await context.params;
+
     const data = await request.json();
+
     const updated = await prisma.user.update({
-      where: { id: params.id },
+      where: { id },
       data,
     });
 
@@ -36,9 +50,16 @@ export async function PUT(request: Request, { params }: { params: { id: string }
   }
 }
 
-export async function DELETE(_: Request, { params }: { params: { id: string } }) {
+// DELETE /api/users/[id]
+export async function DELETE(
+  _: Request,
+  context: { params: Promise<Record<string, string>> }
+) {
   try {
-    await prisma.user.delete({ where: { id: params.id } });
+    const { id } = await context.params;
+
+    await prisma.user.delete({ where: { id } });
+
     return sendSuccess(null, "User deleted successfully");
   } catch (error: any) {
     return sendError(error.message, "DELETE_ERROR", 500, error);

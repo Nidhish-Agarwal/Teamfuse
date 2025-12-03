@@ -17,16 +17,16 @@ export default async function OverviewTab({
   const currentUserId = session?.user?.id;
 
   // 2. No session or missing user ID
-  // 2. No session or missing user ID
   if (!currentUserId) {
-    return <div className="text-white p-6">Unauthorized</div>;
     return <div className="text-white p-6">Unauthorized</div>;
   }
 
-  let project, taskSummary, githubSummary, latestInsight;
+  let project, members, stats, latestInsight;
   try {
-    ({ project, taskSummary, githubSummary, latestInsight } =
-      await getProjectById(id, currentUserId));
+    ({ project, members, stats, latestInsight } = await getProjectById(
+      id,
+      currentUserId
+    ));
   } catch {
     return (
       <div className="text-white p-6">
@@ -57,24 +57,34 @@ export default async function OverviewTab({
       />
 
       <TeamMembers
-        members={project.members.map((m) => ({
-          memberId: m.id,
-          userId: m.user.id,
-          name: m.user.name,
-          email: m.user.email,
-          avatarUrl: m.user.avatarUrl ?? "",
-          role: m.role,
-          status: m.status,
-        }))}
-        projectId={id as string}
+        members={members.map(
+          (m: {
+            memberId: string;
+            userId: string;
+            name: string;
+            email: string;
+            avatarUrl: string | null;
+            role: string;
+            status: string;
+          }) => ({
+            memberId: m.memberId,
+            userId: m.userId,
+            name: m.name,
+            email: m.email,
+            avatarUrl: m.avatarUrl ?? "",
+            role: m.role,
+            status: m.status,
+          })
+        )}
+        projectId={id}
         currentUserId={currentUserId}
       />
 
       <QuickStats
         stats={{
-          tasks: taskSummary,
-          github: githubSummary,
-          messages: project?.chatMessages?.length,
+          tasks: stats.tasks,
+          github: stats.github,
+          messages: stats.messages,
         }}
       />
 

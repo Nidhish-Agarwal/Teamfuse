@@ -6,15 +6,16 @@ import { User } from "@/lib/types/user";
 
 export async function GET(
   req: NextRequest,
-  context: { params: Record<string, string> }
+  context: { params: Promise<Record<string, string>> }
 ) {
-  return withAuth(handler)(req, context);
+  const resolved = await context.params;
+  return withAuth(handler)(req, { params: resolved });
 }
 
 async function handler(
-  req: NextRequest,
+  _req: NextRequest,
   user: User,
-  context: { params: Record<string, string> }
+  _context: { params: Record<string, string> }
 ) {
   try {
     const sessions = await prisma.refreshToken.findMany({

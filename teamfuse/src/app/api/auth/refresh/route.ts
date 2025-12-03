@@ -19,7 +19,7 @@ export async function POST() {
   try {
     const { payload } = await verifyRefresh(rt);
     const userId = payload.sub!;
-    const jti = String(payload.jti);
+    // const jti = String(payload.jti);
 
     const stored = await prisma.refreshToken.findFirst({
       where: { hashedToken: await hashToken(rt), userId },

@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 
-const FRESH_SESSION_MS = 2 * 60 * 1000; // 2 minutes
+// const FRESH_SESSION_MS = 2 * 60 * 1000; // 2 minutes
 const SESSION_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
 
 export async function logStartSession(userId: string, projectId: string) {

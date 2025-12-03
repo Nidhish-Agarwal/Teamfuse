@@ -3,107 +3,119 @@ import { prisma } from "@/lib/prisma";
 import { withAuth } from "@/lib/withAuth";
 import { sendSuccess, sendError } from "@/lib/responseHandler";
 
-export const GET = withAuth(async (req: NextRequest, user) => {
-  try {
-    const parts = req.nextUrl.pathname.split("/");
-    const projectId = parts[3];
+export async function GET(req: NextRequest) {
+  return withAuth(async (_, user) => {
+    try {
+      const projectId = req.nextUrl.pathname.split("/")[3];
+      if (!projectId)
+        return sendError("Missing project ID", "BAD_REQUEST", 400);
 
-    if (!projectId) {
-      return sendError("Missing project ID", "BAD_REQUEST", 400);
-    }
+      const membership = await prisma.projectMember.findFirst({
+        where: { userId: user.id, projectId, status: "ACCEPTED" },
+      });
 
-    // Validate membership
-    const membership = await prisma.projectMember.findFirst({
-      where: {
-        userId: user.id,
-        projectId,
-        status: "ACCEPTED",
-      },
-    });
+      if (!membership) {
+        return sendError("Not part of this project", "FORBIDDEN", 403);
+      }
 
-    if (!membership) {
-      return sendError("Not part of this project", "FORBIDDEN", 403);
-    }
+      const userId = user.id;
 
-    const userId = user.id;
+      // ⭐ Fetch GitHub login (oauthId)
+      const dbUser = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { oauthId: true },
+      });
 
-    const tasks = await prisma.task.findMany({
-      where: { assigneeId: userId, projectId },
-      select: { status: true },
-    });
+      const githubLogin = dbUser?.oauthId ?? null;
 
-    const totalTasks = tasks.length;
-    const completedTasks = tasks.filter((t) => t.status === "DONE").length;
+      // TASK COMPLETION
+      const tasks = await prisma.task.findMany({
+        where: { assigneeId: userId, projectId },
+        select: { status: true },
+      });
 
-    const taskCompletionRate =
-      totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
+      const totalTasks = tasks.length;
+      const completedTasks = tasks.filter((t) => t.status === "DONE").length;
 
-    const feedback = await prisma.feedback.findMany({
-      where: { toUserId: userId, projectId },
-      select: { effort: true, collaboration: true, reliability: true },
-    });
+      const taskCompletionRate =
+        totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
 
-    let avgFeedback = 0;
-    if (feedback.length > 0) {
-      const totalScore = feedback.reduce(
-        (acc, f) => acc + f.effort + f.collaboration + f.reliability,
-        0
+      // FEEDBACK AVG
+      const feedback = await prisma.feedback.findMany({
+        where: { projectId, toUserId: userId },
+      });
+
+      const avgFeedback =
+        feedback.length === 0
+          ? 0
+          : Number(
+              (
+                feedback.reduce(
+                  (a, f) => a + f.effort + f.collaboration + f.reliability,
+                  0
+                ) /
+                (feedback.length * 3)
+              ).toFixed(2)
+            );
+
+      // WEEKLY GitHub activity
+      const github = await prisma.gitHubActivity.findMany({
+        where: { userId, projectId },
+        orderBy: { weekStart: "asc" },
+      });
+
+      // ⭐ ORIGINAL & CORRECT — PRs counted by GitHub login
+      const prCount = await prisma.pullRequest.count({
+        where: { projectId, authorLogin: githubLogin },
+      });
+
+      // CHAT
+      const chatCount = await prisma.chatMessage.count({
+        where: { projectId, senderId: userId },
+      });
+
+      const chatParticipationScore = Math.min(chatCount, 100);
+
+      // INSIGHTS
+      const insights = await prisma.insight.findMany({
+        where: { projectId },
+        orderBy: { generatedAt: "desc" },
+        take: 20,
+      });
+
+      // TEAM RATE
+      const allProjectTasks = await prisma.task.findMany({
+        where: { projectId },
+      });
+
+      const teamDone = allProjectTasks.filter(
+        (t) => t.status === "DONE"
+      ).length;
+
+      const teamRate =
+        allProjectTasks.length === 0
+          ? 0
+          : Math.round((teamDone / allProjectTasks.length) * 100);
+
+      return sendSuccess(
+        {
+          taskCompletionRate,
+          avgFeedback,
+          github,
+          prCount,
+          chatParticipationScore,
+          insights,
+          peerBenchmark: {
+            userRate: taskCompletionRate,
+            teamRate,
+            difference: taskCompletionRate - teamRate,
+          },
+        },
+        "Project-specific performance loaded"
       );
-      avgFeedback = Number((totalScore / (feedback.length * 3)).toFixed(2));
+    } catch (err) {
+      console.error(err);
+      return sendError("Internal error", "INTERNAL_ERROR", 500);
     }
-
-    const github = await prisma.gitHubActivity.findMany({
-      where: { userId, projectId },
-      orderBy: { weekStart: "asc" },
-    });
-
-    const chatCount = await prisma.chatMessage.count({
-      where: { senderId: userId, projectId },
-    });
-
-    const chatParticipationScore = Math.min(100, chatCount);
-
-    const insights = await prisma.insight.findMany({
-      where: { projectId },
-      orderBy: { generatedAt: "desc" },
-      take: 20,
-    });
-
-    const allProjectTasks = await prisma.task.findMany({
-      where: { projectId },
-      select: { status: true, assigneeId: true },
-    });
-
-    const projectCompleted = allProjectTasks.filter(
-      (t) => t.status === "DONE"
-    ).length;
-
-    const projectTotal = allProjectTasks.length;
-
-    const teamRate =
-      projectTotal === 0
-        ? 0
-        : Math.round((projectCompleted / projectTotal) * 100);
-
-    const peerBenchmark = {
-      userRate: taskCompletionRate,
-      teamRate,
-      difference: taskCompletionRate - teamRate,
-    };
-
-    return sendSuccess(
-      {
-        taskCompletionRate,
-        avgFeedback,
-        github,
-        chatParticipationScore,
-        insights,
-        peerBenchmark,
-      },
-      "Project-specific performance loaded"
-    );
-  } catch (err) {
-    console.error("Error loading performance:", err);
-    return sendError("Failed to load performance", "INTERNAL_ERROR", 500, err);
-  }
-});
+  })(req, { params: {} });
+}

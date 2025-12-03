@@ -11,10 +11,8 @@ interface RouteParams {
 }
 
 export async function GET(_req: Request, { params }: RouteParams) {
-  const { id: projectId } = await params; // unwrap await
-
   try {
-    const { id: projectId } = params;
+    const { id: projectId } = await params;
 
     const cached = await getMembersFromCache(projectId);
     if (cached) {
@@ -36,17 +34,15 @@ export async function GET(_req: Request, { params }: RouteParams) {
       },
     });
 
-
-    // Remove duplicates by user ID
     const uniqueMembers = Array.from(
       new Map(members.map((m) => [m.user.id, m.user])).values()
     );
+
     await setMembersInCache(projectId, members);
 
-    return sendSuccess(members, "Successfully fetched all the members");
+    return sendSuccess(uniqueMembers, "Successfully fetched all the members");
   } catch (e) {
     console.error("MEMBER FETCH ERROR:", e);
     return handleRouteError(e);
-
   }
 }

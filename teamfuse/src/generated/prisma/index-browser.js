@@ -159,11 +159,11 @@ exports.Prisma.ProjectScalarFieldEnum = {
   status: "status",
   description: "description",
   githubRepo: "githubRepo",
-  githubRepoId: "githubRepoId",
-  githubWebhookSecret: "githubWebhookSecret",
   createdById: "createdById",
   createdAt: "createdAt",
   lastActive: "lastActive",
+  githubRepoId: "githubRepoId",
+  githubWebhookSecret: "githubWebhookSecret",
 };
 
 exports.Prisma.RepoCommitScalarFieldEnum = {
@@ -232,29 +232,29 @@ exports.Prisma.ProjectMemberScalarFieldEnum = {
 
 exports.Prisma.TaskScalarFieldEnum = {
   id: "id",
+  priority: "priority",
   projectId: "projectId",
   title: "title",
   description: "description",
   weight: "weight",
   status: "status",
-  progress: "progress",
   assigneeId: "assigneeId",
   createdAt: "createdAt",
-  updatedAt: "updatedAt",
   completedAt: "completedAt",
   score: "score",
-  priority: "priority",
+  progress: "progress",
+  updatedAt: "updatedAt",
 };
 
 exports.Prisma.ChatMessageScalarFieldEnum = {
   id: "id",
   projectId: "projectId",
   senderId: "senderId",
-  recipientId: "recipientId",
   message: "message",
   type: "type",
   aiLabel: "aiLabel",
   createdAt: "createdAt",
+  recipientId: "recipientId",
 };
 
 exports.Prisma.GitHubActivityScalarFieldEnum = {
@@ -371,17 +371,17 @@ exports.MemberStatus = exports.$Enums.MemberStatus = {
   DECLINED: "DECLINED",
 };
 
-exports.TaskStatus = exports.$Enums.TaskStatus = {
-  IN_PROGRESS: "IN_PROGRESS",
-  REVIEW: "REVIEW",
-  DONE: "DONE",
-  TODO: "TODO",
-};
-
 exports.TaskPriority = exports.$Enums.TaskPriority = {
   LOW: "LOW",
   MEDIUM: "MEDIUM",
   HIGH: "HIGH",
+};
+
+exports.TaskStatus = exports.$Enums.TaskStatus = {
+  TODO: "TODO",
+  IN_PROGRESS: "IN_PROGRESS",
+  REVIEW: "REVIEW",
+  DONE: "DONE",
 };
 
 exports.PresenceStatus = exports.$Enums.PresenceStatus = {

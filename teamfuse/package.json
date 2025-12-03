@@ -10,12 +10,13 @@
     "lint": "eslint",
     "seed": "dotenv -e .env.local -- node prisma/seed.js",
     "db:push": "dotenv -e .env.local -- npx prisma db push",
-    "sync:worker" : "dotenv -e .env.local -- tsx src/lib/queue/syncWorker.ts",
-    "webhook:worker" : "dotenv -e .env.local -- tsx src/lib/queue/webhookWorker.ts",
-    "sync_worker" : "tsx src/lib/queue/syncWorker.ts",
-    "webhook_worker" : "tsx src/lib/queue/webhookWorker.ts"
+    "sync:worker": "dotenv -e .env.local -- tsx src/lib/queue/syncWorker.ts",
+    "webhook:worker": "dotenv -e .env.local -- tsx src/lib/queue/webhookWorker.ts",
+    "sync_worker": "tsx src/lib/queue/syncWorker.ts",
+    "webhook_worker": "tsx src/lib/queue/webhookWorker.ts"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^18.0.1",
     "@hookform/resolvers": "^5.2.2",
     "@next-auth/prisma-adapter": "^1.0.7",
     "@prisma/client": "^6.19.0",
@@ -51,6 +52,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
+    "baseline-browser-mapping": "^2.8.32",
     "dotenv-cli": "^11.0.0",
     "eslint": "^9.39.0",
     "eslint-config-next": "^16.0.1",
@@ -69,5 +71,5 @@
       "eslint --ignore-pattern \"src/generated/**\" --fix",
       "prettier --write"
     ]
-  } 
+  }
 }
