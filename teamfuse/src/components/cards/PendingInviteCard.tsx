@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import ProjectCardType from "@/lib/interfaces/ProjectCardType";
-import { Loader2 } from "lucide-react";
+import { Loader2, Clock, Mail, Github, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 
 export default function PendingInviteCard({
@@ -46,9 +46,7 @@ export default function PendingInviteCard({
         });
         return;
       }
-      // Update parent state to remove this invite from the list
       setInvites((prev) => prev.filter((p) => p.id !== project.id));
-      // If accepted, add to accepted projects
       if (accept) {
         setAcceptedProjects((prev) => [...prev, project]);
         toast.success("Invitation accepted!", {
@@ -69,85 +67,167 @@ export default function PendingInviteCard({
 
   return (
     <>
-      {/* The Card */}
+      {/* Enhanced Card */}
       <Card
-        className="cursor-pointer bg-white/5 border border-white/10 hover:bg-white/10 rounded-xl p-4"
+        className="group cursor-pointer bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-pink-500/10 border border-indigo-500/20 hover:border-indigo-400/40 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/20 hover:scale-[1.02]"
         onClick={() => setOpen(true)}
       >
-        <CardHeader>
-          <CardTitle className="text-lg text-white font-semibold">
-            {project.name}
-          </CardTitle>
-          <p className="text-gray-400 text-sm">You have been invited</p>
+        {/* Glowing effect on top */}
+        <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-indigo-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+        <CardHeader className="relative">
+          {/* Badge */}
+          <div className="absolute top-4 right-4 flex items-center gap-1.5 px-2.5 py-1 bg-indigo-500/20 border border-indigo-400/30 rounded-full">
+            <Sparkles className="h-3 w-3 text-indigo-300" />
+            <span className="text-xs font-medium text-indigo-200">Pending</span>
+          </div>
+
+          <div className="flex items-start gap-4 pr-24">
+            {/* Avatar */}
+            <div className="relative">
+              <Avatar className="h-12 w-12 border-2 border-indigo-400/40 shadow-lg shadow-indigo-500/20">
+                <AvatarImage
+                  src={
+                    project?.createdBy?.avatarUrl ||
+                    "https://github.com/shadcn.png"
+                  }
+                />
+                <AvatarFallback className="bg-linear-to-br from-indigo-500 to-purple-600 text-white font-semibold">
+                  {project?.createdBy?.name?.[0] || "?"}
+                </AvatarFallback>
+              </Avatar>
+              <div className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 bg-indigo-500 rounded-full border-2 border-[#0f111a]" />
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 min-w-0">
+              <CardTitle className="text-lg text-white font-semibold mb-1 truncate">
+                {project.name}
+              </CardTitle>
+              <p className="text-white/60 text-sm mb-2">
+                Invited by{" "}
+                <span className="text-indigo-300 font-medium">
+                  {project?.createdBy?.name}
+                </span>
+              </p>
+              {project.description && (
+                <p className="text-white/50 text-xs line-clamp-2">
+                  {project.description}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* Quick Action Hint */}
+          <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
+            <span className="text-xs text-white/40 flex items-center gap-1.5">
+              <Clock className="h-3 w-3" />
+              Click to view details
+            </span>
+            <div className="flex gap-2">
+              <div className="h-1.5 w-1.5 rounded-full bg-indigo-400 animate-pulse" />
+              <div className="h-1.5 w-1.5 rounded-full bg-purple-400 animate-pulse delay-75" />
+              <div className="h-1.5 w-1.5 rounded-full bg-pink-400 animate-pulse delay-150" />
+            </div>
+          </div>
         </CardHeader>
       </Card>
 
-      {/* Popup */}
+      {/* Enhanced Popup */}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-lg bg-black/80 border border-white/20 backdrop-blur-xl">
+        <DialogContent className="max-w-xl bg-[#0f111a]/95 border border-white/10 backdrop-blur-xl rounded-xl shadow-2xl shadow-indigo-500/10">
           <DialogHeader>
-            <DialogTitle className="text-xl text-white">
-              Project Invitation
-            </DialogTitle>
-            <DialogDescription className="text-gray-300">
-              Review project details before you accept or decline.
+            <div className="flex items-center gap-2 mb-2">
+              <div className="h-8 w-8 rounded-lg bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                <Mail className="h-4 w-4 text-white" />
+              </div>
+              <DialogTitle className="text-2xl text-white font-bold">
+                Project Invitation
+              </DialogTitle>
+            </div>
+            <DialogDescription className="text-white/60">
+              Review the project details and decide whether to join
             </DialogDescription>
           </DialogHeader>
 
-          {/* --- Project Details --- */}
-          <div className="space-y-4 mt-3">
-            <div>
-              <p className="text-gray-400 text-sm">Project Name</p>
-              <p className="text-white font-medium">{project.name}</p>
+          {/* Project Details */}
+          <div className="space-y-5 mt-6">
+            {/* Project Name with gradient */}
+            <div className="p-4 bg-linear-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 rounded-lg">
+              <p className="text-white/60 text-xs font-medium uppercase tracking-wide mb-1">
+                Project Name
+              </p>
+              <p className="text-white font-semibold text-xl">{project.name}</p>
             </div>
 
-            {/* Repo Link */}
-            {project.githubRepo && (
-              <div>
-                <p className="text-gray-400 text-sm">Repository</p>
-                <a
-                  href={project.githubRepo}
-                  target="_blank"
-                  className="text-indigo-300 underline"
-                >
-                  {project.githubRepo}
-                </a>
-              </div>
-            )}
-
-            {/* Inviter */}
-            <div>
-              <p className="text-gray-400 text-sm mb-1">Invited By</p>
-              <div className="flex items-center gap-2">
-                <Avatar className="h-10 w-10">
-                  <AvatarImage src={project?.createdBy?.avatarUrl} />
-                  <AvatarFallback>{project?.createdBy?.name[0]}</AvatarFallback>
+            {/* Inviter Info */}
+            <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
+              <p className="text-white/60 text-xs font-medium uppercase tracking-wide mb-3">
+                Invited By
+              </p>
+              <div className="flex items-center gap-3">
+                <Avatar className="h-14 w-14 border-2 border-indigo-400/40 shadow-lg shadow-indigo-500/20">
+                  <AvatarImage
+                    src={
+                      project?.createdBy?.avatarUrl ||
+                      "https://github.com/shadcn.png"
+                    }
+                  />
+                  <AvatarFallback className="bg-linear-to-br from-indigo-500 to-purple-600 text-white font-semibold text-lg">
+                    {project?.createdBy?.name?.[0] || "?"}
+                  </AvatarFallback>
                 </Avatar>
-                <div>
-                  <p className="text-white font-medium">
+                <div className="flex-1">
+                  <p className="text-white font-semibold text-base">
                     {project?.createdBy?.name}
                   </p>
-                  <p className="text-gray-400 text-xs">
+                  <p className="text-white/60 text-sm flex items-center gap-1.5 mt-0.5">
+                    <Mail className="h-3.5 w-3.5" />
                     {project.createdBy?.email}
                   </p>
                 </div>
               </div>
             </div>
 
+            {/* Repository */}
+            {project.githubRepo && (
+              <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
+                <p className="text-white/60 text-xs font-medium uppercase tracking-wide mb-2">
+                  Repository
+                </p>
+                <a
+                  href={project.githubRepo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-indigo-300 hover:text-indigo-200 transition-colors group/link"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Github className="h-4 w-4" />
+                  <span className="underline underline-offset-2 group-hover/link:underline-offset-4 transition-all">
+                    {project.githubRepo.replace("https://", "")}
+                  </span>
+                </a>
+              </div>
+            )}
+
             {/* Description */}
             {project.description && (
-              <div>
-                <p className="text-gray-400 text-sm">Description</p>
-                <p className="text-white/90 text-sm">{project.description}</p>
+              <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
+                <p className="text-white/60 text-xs font-medium uppercase tracking-wide mb-2">
+                  Description
+                </p>
+                <p className="text-white/80 text-sm leading-relaxed">
+                  {project.description}
+                </p>
               </div>
             )}
           </div>
 
-          {/* Buttons */}
-          <DialogFooter className="flex justify-between mt-6">
+          {/* Action Buttons */}
+          <DialogFooter className="flex gap-3 mt-8">
             <Button
-              variant="destructive"
-              className="w-1/2 mr-2"
+              variant="outline"
+              className="flex-1 bg-transparent border-red-500/30 text-red-400 hover:bg-red-500/10 hover:border-red-400/50 hover:text-red-300 transition-all"
               disabled={loading}
               onClick={async () => {
                 await respondToInvite(false);
@@ -162,7 +242,7 @@ export default function PendingInviteCard({
             </Button>
 
             <Button
-              className="w-1/2 bg-indigo-500 hover:bg-indigo-600"
+              className="flex-1 bg-linear-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-semibold shadow-lg shadow-indigo-500/30 transition-all hover:shadow-indigo-500/40"
               disabled={loading}
               onClick={async () => {
                 await respondToInvite(true);
@@ -172,7 +252,10 @@ export default function PendingInviteCard({
               {loading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
-                "Accept"
+                <>
+                  <Sparkles className="h-4 w-4 mr-2" />
+                  Accept Invitation
+                </>
               )}
             </Button>
           </DialogFooter>

@@ -3,7 +3,9 @@ import type { NextRequest } from "next/server";
 import { verifyAccess } from "@/lib/auth-tokens";
 
 export async function middleware(req: NextRequest) {
-  let currentPath = req.nextUrl.pathname + req.nextUrl.search;
+  const path = req.nextUrl.pathname;
+  const query = req.nextUrl.search;
+  let currentPath = path + query;
   if (!currentPath.startsWith("/")) currentPath = "/";
 
   const redirectUrl = new URL("/auth", req.url);
@@ -15,52 +17,60 @@ export async function middleware(req: NextRequest) {
 
   const refresh = req.cookies.get("refresh_token")?.value;
 
-  console.log(`Access: ${!!access}, Refresh: ${!!refresh}`);
+  const nextAuthSession =
+    req.cookies.get("next-auth.session-token")?.value ||
+    req.cookies.get("__Secure-next-auth.session-token")?.value;
 
-  // ✅ 1. If access exists try verifying it
+  const isAuthCallback = path.startsWith("/api/auth/callback");
+
+  // ✅ 1. Access token valid
   if (access) {
     try {
-      await verifyAccess(access); // still valid
+      await verifyAccess(access);
       return NextResponse.next();
-    } catch (e) {
-      console.log("Error verifying access token:", e);
-      console.log("❌ Access token invalid or expired");
+    } catch (er) {
+      console.log("❌ Invalid access token, continue to refresh", er);
     }
   }
 
-  // ✅ 2. If refresh is available, try refreshing (only 1 call)
+  // ✅ 2. Refresh token exists → try refresh
   if (refresh) {
-    console.log("➡️ Trying refresh...");
-
     const refreshRes = await fetch(new URL("/api/auth/refresh", req.url), {
       method: "POST",
       headers: { cookie: req.headers.get("cookie") ?? "" },
     });
 
     if (refreshRes.ok) {
-      console.log("✅ Refresh succeeded. Forwarding new cookies.");
-
-      let res;
-      if (req.method == "GET" || req.method == "HEAD") {
-        res = NextResponse.redirect(req.url);
-      } else {
-        res = NextResponse.next();
-      }
+      const res =
+        req.method === "GET" || req.method === "HEAD"
+          ? NextResponse.redirect(req.url)
+          : NextResponse.next();
 
       refreshRes.headers.forEach((value, key) => {
         if (key.toLowerCase() === "set-cookie") {
           res.headers.append("set-cookie", value);
         }
       });
-
       return res;
     }
-
-    console.log("⛔ Refresh failed.");
   }
 
-  // ✅ 3. No access token & refresh failed → go to login
-  console.log("⛔ Redirecting to login.");
+  // ✅ 3. Only allow NextAuth session during OAuth callback phase
+  if (nextAuthSession && isAuthCallback) {
+    console.log("✔ Allowing OAuth callback phase");
+    return NextResponse.next();
+  }
+
+  // ❌ If NextAuth session exists BUT no refresh_token after callback → force login
+  if (nextAuthSession && !refresh) {
+    console.log(
+      "❌ NextAuth session exists but no refresh token → invalid state"
+    );
+    return NextResponse.redirect(redirectUrl);
+  }
+
+  // ❌ 4. Completely unauthenticated
+  console.log("⛔ No auth → redirecting to /auth");
   return NextResponse.redirect(redirectUrl);
 }
 

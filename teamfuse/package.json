@@ -10,10 +10,10 @@
     "lint": "eslint",
     "seed": "dotenv -e .env.local -- node prisma/seed.js",
     "db:push": "dotenv -e .env.local -- npx prisma db push",
-    "sync:worker" : "dotenv -e .env.local -- tsx src/lib/queue/syncWorker.ts",
-    "webhook:worker" : "dotenv -e .env.local -- tsx src/lib/queue/webhookWorker.ts",
-    "sync_worker" : "tsx src/lib/queue/syncWorker.ts",
-    "webhook_worker" : "tsx src/lib/queue/webhookWorker.ts"
+    "sync:worker": "dotenv -e .env.local -- tsx src/lib/queue/syncWorker.ts",
+    "webhook:worker": "dotenv -e .env.local -- tsx src/lib/queue/webhookWorker.ts",
+    "sync_worker": "tsx src/lib/queue/syncWorker.ts",
+    "webhook_worker": "tsx src/lib/queue/webhookWorker.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -28,6 +28,7 @@
     "clsx": "^2.1.1",
     "crypto": "^1.0.1",
     "dotenv": "^17.2.3",
+    "fuse.js": "^7.1.0",
     "ioredis": "^5.8.2",
     "jose": "^6.1.1",
     "lucide-react": "^0.552.0",
@@ -65,8 +66,12 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
-      "eslint --ignore-pattern \"src/generated/**\" --fix",
+      "sh -c 'echo \"$1\" | grep -v \"src/generated/\" >/dev/null' --",
+      "eslint --fix --max-warnings=0",
+      "prettier --write"
+    ],
+    "*.{json,md,css,scss}": [
       "prettier --write"
     ]
-  } 
+  }
 }

@@ -3,6 +3,7 @@ import { AppError } from "@/lib/errors/AppError";
 import { handleRouteError } from "@/lib/errors/handleRouteError";
 import { sendSuccess } from "@/lib/responseHandler";
 import { getProjectById } from "@/lib/services/projectServices";
+import { ProjectDashboardResponse } from "@/lib/interfaces/projectDashboardResponse";
 
 export const GET = withAuth(async (req, user) => {
   try {
@@ -11,8 +12,12 @@ export const GET = withAuth(async (req, user) => {
       throw new AppError("Missing project ID", "BAD_REQUEST", 400);
     }
 
-    const { project, taskSummary, githubSummary, latestInsight } =
-      await getProjectById(projectId, user.id);
+    const data: ProjectDashboardResponse = await getProjectById(
+      projectId,
+      user.id
+    );
+
+    const { project, taskSummary, githubSummary, latestInsight } = data;
 
     return sendSuccess(
       {

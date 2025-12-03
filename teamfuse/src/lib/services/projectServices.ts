@@ -2,6 +2,10 @@ import { prisma } from "@/lib/prisma";
 import { AppError } from "../errors/AppError";
 import { getProjectFromCache, setProjectInCache } from "../cache/projectCache";
 import { ProjectTask } from "../types/projectTask";
+import {
+  getUserProjectFromCache,
+  setUserProjectInCache,
+} from "../cache/userProjectCache";
 
 export async function getProjectById(projectId: string, userId: string) {
   try {
@@ -28,7 +32,10 @@ export async function getProjectById(projectId: string, userId: string) {
       where: { id: projectId },
       include: {
         members: {
-          include: {
+          select: {
+            role: true,
+            status: true,
+            id: true,
             user: {
               select: {
                 id: true,
@@ -123,6 +130,10 @@ export async function getProjectById(projectId: string, userId: string) {
 
 export async function getAllProjectsForUser(userId: string) {
   try {
+    const cached = await getUserProjectFromCache(userId);
+    if (cached) {
+      return cached;
+    }
     const acceptedRaw = await prisma.project.findMany({
       where: {
         members: {
@@ -198,6 +209,8 @@ export async function getAllProjectsForUser(userId: string) {
       commits: getCommitCount(p.githubData),
       totalMessages: p._count.chatMessages,
     }));
+
+    await setUserProjectInCache(userId, { accepted, pending });
 
     return { accepted, pending };
   } catch (error) {

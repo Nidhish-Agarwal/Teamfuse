@@ -5,6 +5,7 @@ import AISummary from "@/components/project/overview/AISummary";
 import { getProjectById } from "@/lib/services/projectServices";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
+import { ProjectDashboardResponse } from "@/lib/interfaces/projectDashboardResponse";
 
 export default async function OverviewTab({
   params,
@@ -20,13 +21,15 @@ export default async function OverviewTab({
   // 2. No session or missing user ID
   if (!currentUserId) {
     return <div className="text-white p-6">Unauthorized</div>;
-    return <div className="text-white p-6">Unauthorized</div>;
   }
 
   let project, taskSummary, githubSummary, latestInsight;
   try {
-    ({ project, taskSummary, githubSummary, latestInsight } =
-      await getProjectById(id, currentUserId));
+    const data: ProjectDashboardResponse = await getProjectById(
+      id,
+      currentUserId
+    );
+    ({ project, taskSummary, githubSummary, latestInsight } = data);
   } catch {
     return (
       <div className="text-white p-6">

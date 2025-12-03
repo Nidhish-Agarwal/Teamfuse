@@ -14,6 +14,9 @@ export interface ProjectDashboard {
   lastActive: Date | null;
 
   members: {
+    role: string;
+    status: "PENDING" | "ACCEPTED" | "DECLINED";
+    id: string;
     user: {
       id: string;
       name: string;

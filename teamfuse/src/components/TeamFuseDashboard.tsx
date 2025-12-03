@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Fuse from "fuse.js";
 
 import { Search, Filter } from "lucide-react";
 import ProjectCard from "@/components/cards/ProjectCard";
@@ -60,14 +61,45 @@ export default function TeamFuseDashboard({
     useState<ProjectCardType[]>(projects);
   const [invites, setInvites] = useState<ProjectCardType[]>(pendingProjects);
 
-  const filteredProjects = acceptedProjects.filter((project) => {
-    const matchesSearch = project.name
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-    const matchesFilter =
-      filterStatus === "all" || project.status === filterStatus;
-    return matchesSearch && matchesFilter;
-  });
+  // -----------------------------
+  // Fuzzy Search Instance (Fuse)
+  // -----------------------------
+  const fuse = useMemo(() => {
+    return new Fuse(acceptedProjects, {
+      keys: [
+        { name: "name", weight: 0.5 },
+        { name: "description", weight: 0.2 },
+        { name: "githubRepo", weight: 0.15 },
+        { name: "createdBy.name", weight: 0.1 },
+        { name: "createdBy.email", weight: 0.05 },
+      ],
+      threshold: 0.35,
+      ignoreLocation: true,
+      includeScore: true,
+      shouldSort: true,
+    });
+  }, [acceptedProjects]);
+  // -----------------------------
+  // Final Filtered Projects
+  // -----------------------------
+  const filteredProjects = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+
+    // 1) Search (Fuse) — if there is a query
+    let searchResults: ProjectCardType[] = acceptedProjects;
+
+    if (q) {
+      searchResults = fuse.search(q).map((r) => r.item);
+    }
+
+    // 2) Status filter (all / ACTIVE / COMPLETED / ARCHIVED)
+    return searchResults.filter((project) => {
+      const matchesFilter =
+        filterStatus === "all" || project.status === filterStatus;
+
+      return matchesFilter;
+    });
+  }, [acceptedProjects, searchQuery, filterStatus, fuse]);
 
   return (
     <div className="min-h-screen relative bg-linear-to-b from-[#0f111a] via-[#141620] to-[#1a1c25] text-white overflow-hidden">
@@ -118,28 +150,46 @@ export default function TeamFuseDashboard({
             </div>
 
             {/* Search & Filters */}
-            <div className="flex items-center gap-4">
-              <div className="relative flex-1 max-w-md">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+
+            <div className="flex items-center gap-4 flex-wrap">
+              {/* Search Bar */}
+              <div className="relative flex-1 min-w-[280px] max-w-md">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
                 <Input
                   placeholder="Search projects..."
-                  className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-gray-400"
+                  className="
+            pl-10 
+            bg-white/5 
+            border border-white/10 
+            text-white 
+            placeholder:text-white/40
+            focus:border-indigo-400/50
+            focus:bg-white/10
+            transition-all
+            h-11
+            rounded-xl
+          "
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
 
               {/* Filters */}
-              <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-xl backdrop-blur-md">
-                <Filter className="h-4 w-4 text-indigo-300" />
+              <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-2 rounded-xl backdrop-blur-md">
+                <div className="flex items-center gap-1.5 pr-2 border-r border-white/10">
+                  <Filter className="h-4 w-4 text-indigo-300" />
+                  <span className="text-xs text-white/60 font-medium">
+                    Filter:
+                  </span>
+                </div>
 
                 <Button
-                  variant={filterStatus === "all" ? "default" : "outline"}
+                  variant="ghost"
                   size="sm"
                   className={
                     filterStatus === "all"
-                      ? "bg-indigo-500 text-white"
-                      : "border-white/10 text-gray-300"
+                      ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white hover:from-indigo-600 hover:to-purple-700 shadow-md shadow-indigo-500/20"
+                      : "text-white/60 hover:text-white hover:bg-white/5"
                   }
                   onClick={() => setFilterStatus("all")}
                 >
@@ -147,12 +197,12 @@ export default function TeamFuseDashboard({
                 </Button>
 
                 <Button
-                  variant={filterStatus === "ACTIVE" ? "default" : "outline"}
+                  variant="ghost"
                   size="sm"
                   className={
                     filterStatus === "ACTIVE"
-                      ? "bg-indigo-500 text-white"
-                      : "border-white/10 text-gray-300"
+                      ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white hover:from-indigo-600 hover:to-purple-700 shadow-md shadow-indigo-500/20"
+                      : "text-white/60 hover:text-white hover:bg-white/5"
                   }
                   onClick={() => setFilterStatus("ACTIVE")}
                 >
@@ -160,12 +210,12 @@ export default function TeamFuseDashboard({
                 </Button>
 
                 <Button
-                  variant={filterStatus === "COMPLETED" ? "default" : "outline"}
+                  variant="ghost"
                   size="sm"
                   className={
                     filterStatus === "COMPLETED"
-                      ? "bg-indigo-500 text-white"
-                      : "border-white/10 text-gray-300"
+                      ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white hover:from-indigo-600 hover:to-purple-700 shadow-md shadow-indigo-500/20"
+                      : "text-white/60 hover:text-white hover:bg-white/5"
                   }
                   onClick={() => setFilterStatus("COMPLETED")}
                 >

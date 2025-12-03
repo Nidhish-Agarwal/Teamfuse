@@ -1,10 +1,10 @@
 import { redis } from "@/lib/redis/connection";
-import { projectMemberKey } from "./keys";
+import { projectMembersKey } from "./keys";
 import { TTL } from "./policy";
 import { ProjectMemberWithUser } from "../interfaces/projectMemberWithUser";
 
 export async function getMembersFromCache(id: string) {
-  const data = await redis.get(projectMemberKey(id));
+  const data = await redis.get(projectMembersKey(id));
   return data ? JSON.parse(data) : null;
 }
 
@@ -13,7 +13,7 @@ export async function setMembersInCache(
   project: ProjectMemberWithUser[]
 ) {
   await redis.set(
-    projectMemberKey(id),
+    projectMembersKey(id),
     JSON.stringify(project),
     "EX",
     TTL.FIVE_MIN
@@ -21,5 +21,5 @@ export async function setMembersInCache(
 }
 
 export async function invalidateMemberCache(id: string) {
-  await redis.del(projectMemberKey(id));
+  await redis.del(projectMembersKey(id));
 }
