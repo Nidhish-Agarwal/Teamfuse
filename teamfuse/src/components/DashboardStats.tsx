@@ -74,7 +74,7 @@ export default function DashboardStats({
         </Card>
 
         {/* AI Insight */}
-        <Card className="bg-linear-to-br from-indigo-500/20 to-purple-600/20 border-white/10 backdrop-blur-xl shadow-lg shadow-indigo-500/30">
+        <Card className="bg-gradient-to-br from-indigo-500/20 to-purple-600/20 border-white/10 backdrop-blur-xl shadow-lg shadow-indigo-500/30">
           <CardContent className="pt-6">
             <div className="flex items-start gap-3">
               <div className="p-2 bg-indigo-500/30 rounded-lg">

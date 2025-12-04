@@ -9,16 +9,14 @@ import { handleRouteError } from "@/lib/errors/handleRouteError";
 
 export async function POST(
   req: NextRequest,
-  context: { params: Promise<Record<string, string>> }
+  { params }: { params: { id: string } } // <-- typed shape of params
 ) {
-  await context.params;
+  // no awaiting params — params is a plain object
+  const projectId = params.id;
+  if (!projectId) return sendError("Missing project ID", "BAD_REQUEST", 400);
 
   return withAuth(async (req: NextRequest, user) => {
     try {
-      const projectId = req.nextUrl.pathname.split("/").at(-2);
-      if (!projectId)
-        return sendError("Missing project ID", "BAD_REQUEST", 400);
-
       // --- 1. CHECK PROJECT EXISTS ---
       const project = await prisma.project.findUnique({
         where: { id: projectId },
@@ -74,5 +72,5 @@ export async function POST(
       console.error("Sync GitHub Error:", err);
       return handleRouteError(err);
     }
-  })(req, { params: {} });
+  })(req, { params });
 }

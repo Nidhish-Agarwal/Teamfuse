@@ -3,12 +3,9 @@ import { prisma } from "../../../../lib/prisma";
 import { sendSuccess, sendError } from "@/lib/responseHandler";
 
 // GET /api/users/[id]
-export async function GET(
-  _: Request,
-  context: { params: Promise<Record<string, string>> }
-) {
+export async function GET(_: Request, { params }: { params: { id: string } }) {
   try {
-    const { id } = await context.params;
+    const id = params.id;
 
     const user = await prisma.user.findUnique({
       where: { id },
@@ -32,10 +29,10 @@ export async function GET(
 // PUT /api/users/[id]
 export async function PUT(
   request: Request,
-  context: { params: Promise<Record<string, string>> }
+  { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = await context.params;
+    const id = params.id;
 
     const data = await request.json();
 

@@ -3,6 +3,7 @@ import { AppError } from "@/lib/errors/AppError";
 import { handleRouteError } from "@/lib/errors/handleRouteError";
 import { sendSuccess } from "@/lib/responseHandler";
 import { getProjectById } from "@/lib/services/projectServices";
+import { ProjectDashboardResponse } from "@/lib/interfaces/projectDashboardResponse";
 import { NextRequest } from "next/server";
 
 export async function GET(
@@ -18,24 +19,26 @@ export async function GET(
         throw new AppError("Missing project ID", "BAD_REQUEST", 400);
       }
 
-      const { project, taskSummary, githubSummary, latestInsight } =
-        await getProjectById(projectId, user.id);
+      const data: ProjectDashboardResponse = await getProjectById(
+        projectId,
+        user.id
+      );
+
+      const { project, taskSummary, githubSummary, latestInsight } = data;
 
       return sendSuccess(
         {
           project,
 
-          members: project.members.map(
-            (m: (typeof project.members)[number]) => ({
-              memberId: m.id,
-              userId: m.user.id,
-              name: m.user.name,
-              email: m.user.email,
-              avatarUrl: m.user.avatarUrl,
-              role: m.role,
-              status: m.status,
-            })
-          ),
+          members: project.members.map((m) => ({
+            memberId: m.id,
+            userId: m.user.id,
+            name: m.user.name,
+            email: m.user.email,
+            avatarUrl: m.user.avatarUrl,
+            role: m.role,
+            status: m.status,
+          })),
 
           taskSummary,
 

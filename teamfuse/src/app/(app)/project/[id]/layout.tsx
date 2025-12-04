@@ -17,7 +17,7 @@ export default async function ProjectLayout({ children, params }: LayoutProps) {
   return (
     <div className="flex min-h-screen bg-gray-950 text-white">
       {/* LEFT SIDEBAR */}
-      <Sidebar projectId={projectId} />
+      <Sidebar projectId={projectId} userId={currentUserId} />
 
       {/* MAIN CONTENT auto-expands */}
       <main className="flex-1 overflow-visible">{children}</main>

@@ -1,22 +1,23 @@
 "use client";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Github } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { logout } from "@/lib/auth/logout";
+import { useSearchParams } from "next/navigation";
 
 function Authentication() {
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
-  const router = useRouter();
-  // const searchParams = useSearchParams();
-  console.log("Session data:", session);
+  const searchParams = useSearchParams();
+  const from = searchParams.get("from") || "/dashboard";
 
   const handleLogin = () => {
     setIsLoading(true);
     try {
       signIn("github", {
-        // callbackUrl: searchParams.get("from") || "/dashboard",
+        callbackUrl: from,
+        prompt: "login",
       });
     } catch (error) {
       console.error("Error during sign in:", error);
@@ -25,9 +26,7 @@ function Authentication() {
 
   const handleLogout = async () => {
     setIsLoading(true);
-    await fetch("/api/auth/logout", { method: "POST" });
-    signOut();
-    router.replace("/");
+    await logout();
   };
 
   const LoadingSpinner = (
@@ -50,7 +49,7 @@ function Authentication() {
         flex items-center justify-center gap-3 
         font-semibold
         shadow-lg shadow-indigo-500/20
-        bg-gradient-to-r from-indigo-600 to-purple-600
+        bg-linear-to-r from-indigo-600 to-purple-600
         hover:from-indigo-500 hover:to-purple-500 
         hover:shadow-indigo-500/40
         disabled:opacity-50 disabled:cursor-not-allowed

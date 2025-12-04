@@ -12,11 +12,7 @@ export async function GET(
   return withAuth(handler)(req, { params: resolved });
 }
 
-async function handler(
-  _req: NextRequest,
-  user: User,
-  _context: { params: Record<string, string> }
-) {
+async function handler(_req: NextRequest, user: User) {
   try {
     const sessions = await prisma.refreshToken.findMany({
       where: {

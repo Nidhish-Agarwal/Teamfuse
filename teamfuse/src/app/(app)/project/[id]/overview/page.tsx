@@ -5,6 +5,7 @@ import AISummary from "@/components/project/overview/AISummary";
 import { getProjectById } from "@/lib/services/projectServices";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
+import { ProjectDashboardResponse } from "@/lib/interfaces/projectDashboardResponse";
 
 import ErrorUnauthorized from "@/components/shared/ErrorUnauthorized";
 import ErrorProjectNotFound from "@/components/shared/ErrorProjectNotFound";
@@ -25,12 +26,13 @@ export default async function OverviewTab({
     return <ErrorUnauthorized />;
   }
 
-  let project, members, stats, latestInsight;
+  let project, taskSummary, githubSummary, latestInsight;
   try {
-    ({ project, members, stats, latestInsight } = await getProjectById(
+    const data: ProjectDashboardResponse = await getProjectById(
       id,
       currentUserId
-    ));
+    );
+    ({ project, taskSummary, githubSummary, latestInsight } = data);
   } catch {
     return <ErrorNoAccess />;
   }
@@ -53,34 +55,24 @@ export default async function OverviewTab({
       />
 
       <TeamMembers
-        members={members.map(
-          (m: {
-            memberId: string;
-            userId: string;
-            name: string;
-            email: string;
-            avatarUrl: string | null;
-            role: string;
-            status: string;
-          }) => ({
-            memberId: m.memberId,
-            userId: m.userId,
-            name: m.name,
-            email: m.email,
-            avatarUrl: m.avatarUrl ?? "",
-            role: m.role,
-            status: m.status,
-          })
-        )}
+        members={project.members.map((m) => ({
+          memberId: m.id,
+          userId: m.user.id,
+          name: m.user.name || "",
+          email: m.user.email || "",
+          avatarUrl: m.user.avatarUrl ?? "",
+          role: m.role,
+          status: m.status,
+        }))}
         projectId={id}
         currentUserId={currentUserId}
       />
 
       <QuickStats
         stats={{
-          tasks: stats.tasks,
-          github: stats.github,
-          messages: stats.messages,
+          tasks: taskSummary,
+          github: githubSummary,
+          messages: project?.chatMessages?.length,
         }}
       />
 

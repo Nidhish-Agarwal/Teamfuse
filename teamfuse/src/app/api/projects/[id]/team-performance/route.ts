@@ -3,10 +3,13 @@ import { prisma } from "@/lib/prisma";
 import { withAuth } from "@/lib/withAuth";
 import { sendSuccess, sendError } from "@/lib/responseHandler";
 
-export async function GET(req: NextRequest) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   return withAuth(async (_, user) => {
     try {
-      const projectId = req.nextUrl.pathname.split("/")[3];
+      const projectId = params.id;
       if (!projectId)
         return sendError("Missing project ID", "BAD_REQUEST", 400);
 
@@ -129,5 +132,5 @@ export async function GET(req: NextRequest) {
       console.error(err);
       return sendError("Internal error", "INTERNAL_ERROR", 500);
     }
-  })(req, { params: {} });
+  })(req, { params });
 }

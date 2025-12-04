@@ -1,5 +1,6 @@
 import { invalidateMemberCache } from "@/lib/cache/memberCache";
 import { invalidateProjectCache } from "@/lib/cache/projectCache";
+import { invalidateUserProjectCache } from "@/lib/cache/userProjectCache";
 import { respondToInvite } from "@/lib/db/members/respondToInvite";
 import { handleRouteError } from "@/lib/errors/handleRouteError";
 import { sendError, sendSuccess } from "@/lib/responseHandler";
@@ -32,6 +33,8 @@ export async function POST(
         await invalidateProjectCache(projectId);
         await invalidateMemberCache(projectId);
       }
+
+      await invalidateUserProjectCache(user.id);
 
       return sendSuccess(
         updated,
