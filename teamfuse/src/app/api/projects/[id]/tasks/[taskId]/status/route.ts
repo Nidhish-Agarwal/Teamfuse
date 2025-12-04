@@ -8,8 +8,9 @@ import { invalidateProjectCache } from "@/lib/cache/projectCache";
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string; taskId: string } }
+  context: { params: Promise<{ id: string; taskId: string }> }
 ) {
+  const params = await context.params;
   return withAuth(async (req: NextRequest, user) => {
     try {
       const taskId = params.taskId;

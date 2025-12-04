@@ -5,8 +5,9 @@ import { sendSuccess, sendError } from "@/lib/responseHandler";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
+  const params = await context.params;
   return withAuth(async (_, user) => {
     try {
       const projectId = params.id;

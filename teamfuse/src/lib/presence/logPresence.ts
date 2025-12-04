@@ -1,7 +1,6 @@
 // src/lib/presence/logPresence.ts
 import { prisma } from "@/lib/prisma";
 import type { PresenceLog } from "@/generated/prisma";
-import { Prisma } from "@prisma/client";
 
 const SESSION_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
 

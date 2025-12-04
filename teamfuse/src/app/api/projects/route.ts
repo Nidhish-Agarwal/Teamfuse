@@ -76,8 +76,9 @@ export async function POST(
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: EmptyParams }
+  context: { params: Promise<EmptyParams> }
 ) {
+  const params = await context.params;
   return withAuth(async (_req: NextRequest, user) => {
     try {
       const { accepted, pending } = await getAllProjectsForUser(user.id);

@@ -12,8 +12,9 @@ import { invalidateProjectCache } from "@/lib/cache/projectCache";
 // GET /api/projects/[id]/tasks
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
+  const params = await context.params;
   const projectId = params.id;
 
   try {

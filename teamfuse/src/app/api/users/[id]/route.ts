@@ -1,10 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { EmailConfig } from "next-auth/providers/email";
 import { prisma } from "../../../../lib/prisma";
 import { sendSuccess, sendError } from "@/lib/responseHandler";
 
 // GET /api/users/[id]
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+export async function GET(
+  _: Request,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
+    const params = await context.params;
     const id = params.id;
 
     const user = await prisma.user.findUnique({
@@ -29,9 +34,10 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
 // PUT /api/users/[id]
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await context.params;
     const id = params.id;
 
     const data = await request.json();
@@ -50,7 +56,7 @@ export async function PUT(
 // DELETE /api/users/[id]
 export async function DELETE(
   _: Request,
-  context: { params: Promise<Record<string, string>> }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await context.params;

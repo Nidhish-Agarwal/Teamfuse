@@ -10,7 +10,7 @@ export async function GET(
   req: NextRequest,
   context: { params: Promise<Record<string, string>> }
 ) {
-  await context.params;
+  const params = await context.params;
 
   return withAuth(async (req, user) => {
     try {
@@ -53,5 +53,5 @@ export async function GET(
     } catch (err) {
       return handleRouteError(err);
     }
-  })(req, { params: {} });
+  })(req, { params });
 }
