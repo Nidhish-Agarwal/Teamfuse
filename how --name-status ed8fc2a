@@ -1,0 +1,105 @@
+7e9cb77 HEAD@{Thu Dec 4 13:07:04 2025} checkout: moving from UIPolish to main
+ed8fc2a HEAD@{Thu Dec 4 13:06:53 2025} commit: Ongoing changes
+7e9cb77 HEAD@{Thu Dec 4 11:24:31 2025} checkout: moving from main to UIPolish
+7e9cb77 HEAD@{Thu Dec 4 11:23:58 2025} commit (merge): Polishing the application
+97be71f HEAD@{Thu Dec 4 11:21:08 2025} reset: moving to HEAD
+97be71f HEAD@{Thu Dec 4 11:21:07 2025} reset: moving to HEAD
+97be71f HEAD@{Thu Dec 4 11:17:38 2025} reset: moving to HEAD
+97be71f HEAD@{Thu Dec 4 11:17:37 2025} reset: moving to HEAD
+97be71f HEAD@{Thu Dec 4 10:56:56 2025} reset: moving to HEAD
+97be71f HEAD@{Thu Dec 4 10:56:54 2025} reset: moving to HEAD
+97be71f HEAD@{Thu Dec 4 10:08:33 2025} reset: moving to HEAD
+97be71f HEAD@{Thu Dec 4 10:08:31 2025} reset: moving to HEAD
+97be71f HEAD@{Thu Dec 4 10:07:33 2025} reset: moving to HEAD
+97be71f HEAD@{Thu Dec 4 10:07:32 2025} reset: moving to HEAD
+97be71f HEAD@{Thu Dec 4 10:06:29 2025} reset: moving to HEAD
+97be71f HEAD@{Thu Dec 4 10:06:27 2025} reset: moving to HEAD
+97be71f HEAD@{Wed Dec 3 17:10:20 2025} commit: WIP: ongoing changes
+a3dd342 HEAD@{Wed Dec 3 17:08:57 2025} reset: moving to HEAD
+a3dd342 HEAD@{Wed Dec 3 17:08:57 2025} reset: moving to HEAD
+a3dd342 HEAD@{Wed Dec 3 17:07:37 2025} reset: moving to HEAD
+a3dd342 HEAD@{Wed Dec 3 17:07:37 2025} reset: moving to HEAD
+a3dd342 HEAD@{Tue Dec 2 16:51:52 2025} pull origin main: Fast-forward
+07edfab HEAD@{Tue Dec 2 16:51:46 2025} checkout: moving from main to main
+07edfab HEAD@{Tue Dec 2 16:51:21 2025} checkout: moving from main to main
+07edfab HEAD@{Tue Dec 2 15:33:15 2025} pull origin main: Fast-forward
+825d203 HEAD@{Tue Dec 2 15:32:50 2025} checkout: moving from githubHistory to main
+80c03eb HEAD@{Tue Dec 2 15:30:43 2025} commit: Added redis, worker, githubFetch
+cc52c10 HEAD@{Tue Dec 2 15:14:59 2025} reset: moving to HEAD
+cc52c10 HEAD@{Tue Dec 2 15:14:51 2025} reset: moving to HEAD
+cc52c10 HEAD@{Tue Dec 2 12:17:51 2025} commit: Resolved stash@{1} merge (clean reset for Button component)
+b2eae5b HEAD@{Tue Dec 2 10:47:58 2025} commit: Resolved stash@{2} merge (clean reset for Button component)
+3c6522e HEAD@{Tue Dec 2 10:41:22 2025} commit: Resolved stash@{3} merge (clean reset for Button component)
+42aadaf HEAD@{Tue Dec 2 10:40:26 2025} reset: moving to HEAD
+42aadaf HEAD@{Tue Dec 2 10:40:14 2025} reset: moving to HEAD
+42aadaf HEAD@{Tue Dec 2 10:36:09 2025} reset: moving to HEAD
+42aadaf HEAD@{Tue Dec 2 10:36:00 2025} reset: moving to HEAD
+42aadaf HEAD@{Tue Dec 2 10:23:07 2025} commit (merge): Resolved merge conflicts
+a3c5224 HEAD@{Tue Dec 2 10:15:04 2025} reset: moving to HEAD
+a3c5224 HEAD@{Tue Dec 2 10:14:03 2025} reset: moving to HEAD
+a3c5224 HEAD@{Tue Dec 2 10:11:32 2025} reset: moving to HEAD
+a3c5224 HEAD@{Sat Nov 29 14:26:13 2025} commit: Added feature to track github Commits
+825d203 HEAD@{Sat Nov 29 14:25:26 2025} checkout: moving from main to githubHistory
+825d203 HEAD@{Sat Nov 29 14:25:07 2025} checkout: moving from githubHistory to main
+825d203 HEAD@{Sat Nov 29 09:34:22 2025} checkout: moving from main to githubHistory
+825d203 HEAD@{Fri Nov 28 10:21:23 2025} pull origin main: Fast-forward
+b0afeb5 HEAD@{Mon Nov 24 14:47:26 2025} pull origin main: Fast-forward
+9fd40ca HEAD@{Mon Nov 24 11:29:15 2025} pull origin main: Fast-forward
+31ff921 HEAD@{Mon Nov 24 11:28:21 2025} checkout: moving from FeedbackUI to main
+3d59bdb HEAD@{Mon Nov 24 11:25:44 2025} commit: Made the dashboard dynamic
+31ff921 HEAD@{Mon Nov 24 11:25:28 2025} checkout: moving from main to FeedbackUI
+31ff921 HEAD@{Sat Nov 22 11:48:56 2025} pull origin main: Fast-forward
+d52160c HEAD@{Sat Nov 22 11:48:51 2025} reset: moving to HEAD
+d52160c HEAD@{Thu Nov 20 16:32:23 2025} commit: Added button
+f76c07f HEAD@{Thu Nov 20 16:25:45 2025} commit: Fixed bugs
+923e8fd HEAD@{Thu Nov 20 16:21:50 2025} pull origin main: Fast-forward
+8bf9540 HEAD@{Thu Nov 20 16:21:46 2025} reset: moving to HEAD
+8bf9540 HEAD@{Thu Nov 20 12:19:54 2025} checkout: moving from main to main
+8bf9540 HEAD@{Thu Nov 20 12:19:37 2025} commit: Bug fixes
+d9cb42e HEAD@{Thu Nov 20 11:14:23 2025} pull origin main: Fast-forward
+f538fe8 HEAD@{Thu Nov 20 11:14:15 2025} checkout: moving from backend to main
+a1d7d63 HEAD@{Tue Nov 18 22:15:08 2025} commit: Made backend routes to manage project invites
+f538fe8 HEAD@{Tue Nov 18 22:14:13 2025} checkout: moving from main to backend
+f538fe8 HEAD@{Thu Nov 13 16:28:03 2025} pull origin main: Fast-forward
+dc94e2b HEAD@{Thu Nov 13 16:27:54 2025} checkout: moving from AddingProject to main
+7508e90 HEAD@{Thu Nov 13 16:25:45 2025} commit: Added functionality in backend to add new projects
+dc94e2b HEAD@{Thu Nov 13 16:25:15 2025} checkout: moving from main to AddingProject
+dc94e2b HEAD@{Thu Nov 13 10:06:16 2025} pull origin main: Fast-forward
+8c67e72 HEAD@{Tue Nov 11 13:03:51 2025} pull origin main: Fast-forward
+948617f HEAD@{Tue Nov 11 13:02:28 2025} checkout: moving from Authentication to main
+570907c HEAD@{Tue Nov 11 12:58:41 2025} commit: Fixed bugs in authentication logic
+8973901 HEAD@{Mon Nov 10 16:39:32 2025} commit: Completed the authentication flow
+91f2f4b HEAD@{Mon Nov 10 16:39:02 2025} checkout: moving from Authentication to Authentication
+91f2f4b HEAD@{Mon Nov 10 10:21:30 2025} pull origin main: Merge made by the 'ort' strategy.
+8dc8b76 HEAD@{Sat Nov 8 00:25:33 2025} commit: Added github authentication
+948617f HEAD@{Sat Nov 8 00:25:14 2025} checkout: moving from main to Authentication
+948617f HEAD@{Sat Nov 8 00:12:38 2025} pull origin main: Fast-forward
+76e9793 HEAD@{Sat Nov 8 00:12:28 2025} reset: moving to HEAD
+76e9793 HEAD@{Fri Nov 7 11:40:23 2025} pull origin main: Fast-forward
+dd62e45 HEAD@{Fri Nov 7 11:40:10 2025} checkout: moving from API_response_handler to main
+3040126 HEAD@{Wed Nov 5 15:00:55 2025} commit: Added a global API response handler
+dd62e45 HEAD@{Wed Nov 5 15:00:43 2025} checkout: moving from main to API_response_handler
+dd62e45 HEAD@{Wed Nov 5 14:40:35 2025} pull origin main: Fast-forward
+058a96b HEAD@{Wed Nov 5 14:40:21 2025} checkout: moving from DockerSetup to main
+8b4fd29 HEAD@{Wed Nov 5 13:03:07 2025} commit: Updating prisma check
+f62e776 HEAD@{Wed Nov 5 13:00:31 2025} reset: moving to HEAD
+f62e776 HEAD@{Wed Nov 5 13:00:22 2025} reset: moving to HEAD
+f62e776 HEAD@{Wed Nov 5 12:55:07 2025} reset: moving to HEAD
+f62e776 HEAD@{Wed Nov 5 12:55:05 2025} reset: moving to HEAD
+f62e776 HEAD@{Wed Nov 5 12:53:57 2025} reset: moving to HEAD
+f62e776 HEAD@{Wed Nov 5 12:53:53 2025} reset: moving to HEAD
+f62e776 HEAD@{Wed Nov 5 12:52:51 2025} commit: Adding stashed changes
+219ec42 HEAD@{Wed Nov 5 12:46:07 2025} reset: moving to HEAD
+219ec42 HEAD@{Wed Nov 5 12:46:02 2025} reset: moving to HEAD
+219ec42 HEAD@{Wed Nov 5 12:36:29 2025} reset: moving to HEAD
+219ec42 HEAD@{Wed Nov 5 12:36:24 2025} reset: moving to HEAD
+219ec42 HEAD@{Wed Nov 5 12:25:57 2025} commit: Docker Setup
+06df7c9 HEAD@{Wed Nov 5 12:23:46 2025} reset: moving to HEAD
+06df7c9 HEAD@{Wed Nov 5 12:20:24 2025} reset: moving to HEAD
+06df7c9 HEAD@{Wed Nov 5 12:20:20 2025} reset: moving to HEAD
+06df7c9 HEAD@{Wed Nov 5 12:18:24 2025} pull origin main: Fast-forward
+058a96b HEAD@{Wed Nov 5 12:18:16 2025} reset: moving to HEAD
+058a96b HEAD@{Wed Nov 5 12:16:09 2025} reset: moving to HEAD
+058a96b HEAD@{Wed Nov 5 12:16:03 2025} reset: moving to HEAD
+058a96b HEAD@{Wed Nov 5 12:15:33 2025} checkout: moving from main to DockerSetup
+058a96b HEAD@{Tue Nov 4 22:17:44 2025} clone: from https://github.com/kalviumcommunity/S62-1125-Cognifuse-Full-Stack-With-NextjsAnd-AWS-Azure-TeamFuse.git

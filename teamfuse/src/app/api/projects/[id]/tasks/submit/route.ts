@@ -5,8 +5,9 @@ import { invalidateProjectCache } from "@/lib/cache/projectCache";
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
+  const params = await context.params;
   const projectId = params.id;
   const { taskId } = await req.json();
 

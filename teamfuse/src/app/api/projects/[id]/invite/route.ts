@@ -110,5 +110,5 @@ export async function POST(
       console.log("Invite Error:", err);
       return handleRouteError(err);
     }
-  })(req, { params: {} });
+  })(req, { params: resolved });
 }

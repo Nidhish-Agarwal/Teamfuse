@@ -8,14 +8,15 @@ import { invalidateProjectCache } from "@/lib/cache/projectCache";
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string; taskId: string } }
+  context: { params: Promise<{ id: string; taskId: string }> }
 ) {
   // defensive: ensure params exist
+  const params = await context.params;
   if (!params?.id || !params?.taskId) {
     return sendError("Missing route parameters", "BAD_REQUEST", 400);
   }
 
-  return withAuth(async (req: NextRequest, user) => {
+  return withAuth(async (_req: NextRequest, user) => {
     try {
       const projectId = params.id;
       const taskId = params.taskId;

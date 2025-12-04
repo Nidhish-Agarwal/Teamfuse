@@ -1,10 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { handleRouteError } from "@/lib/errors/handleRouteError";
 import { prisma } from "../../../../lib/prisma";
 import { sendSuccess, sendError } from "@/lib/responseHandler";
 
 // GET /api/users/[id]
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+export async function GET(
+  _: Request,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
+    const params = await context.params;
     const id = params.id;
 
     const user = await prisma.user.findUnique({
@@ -21,20 +25,22 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
     }
 
     return sendSuccess(user, "User fetched successfully");
-  } catch (error: any) {
-    return sendError(error.message, "FETCH_ERROR", 500, error);
+  } catch (err) {
+    console.log("Error in GET users", err);
+    return handleRouteError(err);
   }
 }
 
 // PUT /api/users/[id]
 export async function PUT(
-  request: Request,
-  { params }: { params: { id: string } }
+  req: Request,
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await context.params;
     const id = params.id;
 
-    const data = await request.json();
+    const data = await req.json();
 
     const updated = await prisma.user.update({
       where: { id },
@@ -42,15 +48,16 @@ export async function PUT(
     });
 
     return sendSuccess(updated, "User updated successfully");
-  } catch (error: any) {
-    return sendError(error.message, "UPDATE_ERROR", 500, error);
+  } catch (err) {
+    console.error("Error in PUT users", err);
+    return handleRouteError(err);
   }
 }
 
 // DELETE /api/users/[id]
 export async function DELETE(
   _: Request,
-  context: { params: Promise<Record<string, string>> }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await context.params;
@@ -58,7 +65,8 @@ export async function DELETE(
     await prisma.user.delete({ where: { id } });
 
     return sendSuccess(null, "User deleted successfully");
-  } catch (error: any) {
-    return sendError(error.message, "DELETE_ERROR", 500, error);
+  } catch (err) {
+    console.error("Error in DELETE user", err);
+    return handleRouteError(err);
   }
 }
