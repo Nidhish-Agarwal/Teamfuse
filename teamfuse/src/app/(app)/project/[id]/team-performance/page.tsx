@@ -5,6 +5,11 @@ import { useEffect, useState, Suspense } from "react";
 import dynamic from "next/dynamic";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
+// NEW imports — Only added these
+import ErrorUnauthorized from "@/components/shared/ErrorUnauthorized";
+import ErrorNoAccess from "@/components/shared/ErrorNoAccess";
+import ErrorProjectNotFound from "@/components/shared/ErrorProjectNotFound";
+
 // Dynamically import Recharts to avoid HMR issues
 const RechartsComponent = dynamic(() => import("./RechartsWrapper"), {
   ssr: false,
@@ -43,36 +48,27 @@ function TeamPerformanceContent() {
   const [perf, setPerf] = useState<TeamPerformanceResponse | null>(null);
   const [presence, setPresence] = useState<PresenceMember[] | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [code, setCode] = useState<number | null>(null);
 
-  // FETCH BOTH APIs
   useEffect(() => {
     if (!projectId) return;
 
     const fetchData = async () => {
       try {
-        const [perfRes, presRes] = await Promise.all([
-          fetch(`/api/projects/${projectId}/team-performance`).then((r) =>
-            r.json()
-          ),
-          fetch(`/api/projects/${projectId}/presence`).then((r) => r.json()),
-        ]);
+        const res = await fetch(`/api/projects/${projectId}/team-performance`);
 
-        if (perfRes.error || presRes.error) {
-          throw new Error(
-            perfRes.error || presRes.error || "Failed to fetch data"
-          );
-        }
+        setCode(res.status);
 
-        setPerf(perfRes.data);
-        setPresence(presRes.data);
-      } catch (err) {
-        console.error("Fetch error:", err);
-        setError(
-          err instanceof Error
-            ? err.message
-            : "Failed to load team performance data"
-        );
+        if (res.status === 401) return; // Unauthorized
+        if (res.status === 403) return; // No access
+        if (res.status === 404) return; // Not found
+
+        const perfJson = await res.json();
+        const presRes = await fetch(`/api/projects/${projectId}/presence`);
+        const presJson = await presRes.json();
+
+        setPerf(perfJson.data);
+        setPresence(presJson.data);
       } finally {
         setLoading(false);
       }
@@ -81,27 +77,10 @@ function TeamPerformanceContent() {
     fetchData();
   }, [projectId]);
 
-  if (error) {
-    return (
-      <div className="p-12 flex flex-col items-center justify-center h-[80vh] text-gray-400">
-        <div className="text-center max-w-md">
-          <div className="w-16 h-16 rounded-full bg-red-500/20 flex items-center justify-center mx-auto mb-4">
-            <div className="w-8 h-8 bg-red-500 rounded-full" />
-          </div>
-          <h3 className="text-xl font-semibold text-red-400 mb-2">
-            Error Loading Data
-          </h3>
-          <p className="text-gray-400 mb-4">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-lg transition-colors"
-          >
-            Try Again
-          </button>
-        </div>
-      </div>
-    );
-  }
+  // NEW ACCESS UI cases (only showing UI)
+  if (code === 401) return <ErrorUnauthorized />;
+  if (code === 403) return <ErrorNoAccess />;
+  if (code === 404) return <ErrorProjectNotFound />;
 
   if (loading || !perf || !presence) {
     return (
@@ -121,7 +100,6 @@ function TeamPerformanceContent() {
     const task = perf.userCompletion.find((t) => t.userId === m.user.id);
     const taskWeight = perf.taskWeights.find((t) => t.assigneeId === m.user.id);
 
-    // PR lookup
     const prCount =
       perf.prCounts.find((p) => p.authorLogin === m.user.email.split("@")[0])
         ?._count ?? 0;

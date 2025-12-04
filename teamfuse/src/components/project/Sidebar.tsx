@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   ListTodo,
-  Github,
   MessageCircle,
   Users,
   User,
@@ -24,11 +23,6 @@ export default function Sidebar({ projectId }: { projectId: string }) {
       label: "Tasks",
       href: `/project/${projectId}/tasks`,
       icon: ListTodo,
-    },
-    {
-      label: "GitHub",
-      href: `/project/${projectId}/github`,
-      icon: Github,
     },
     {
       label: "Chat",

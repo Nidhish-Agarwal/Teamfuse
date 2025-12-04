@@ -73,6 +73,7 @@ export default function Chat({
     const data = await res.json();
     if (data.success) setMessages(data.data);
   }
+
   async function sendMessage() {
     if (!message.trim()) return;
 
@@ -131,12 +132,12 @@ export default function Chat({
   const selectedMember = members.find((m) => m.user.id === recipientId);
 
   return (
-    <div className="flex h-[90vh] bg-[#0b0e13] rounded-2xl shadow-2xl overflow-hidden border border-gray-800/50">
+    <div className="flex h-screen bg-[#1a1d24] overflow-hidden">
       {/* LEFT SIDEBAR */}
-      <div className="w-80 bg-[#0f1218] border-r border-gray-800/50 flex flex-col">
+      <div className="w-80 bg-[#151820] border-r border-gray-800/30 flex flex-col">
         {/* SIDEBAR HEADER */}
-        <div className="p-6 border-b border-gray-800/50">
-          <h2 className="text-lg font-bold text-transparent bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text mb-4">
+        <div className="p-6 border-b border-gray-800/30">
+          <h2 className="text-lg font-semibold text-gray-200 mb-4">
             Conversations
           </h2>
 
@@ -145,7 +146,7 @@ export default function Chat({
             <input
               type="text"
               placeholder="Search members..."
-              className="w-full bg-[#13161c] border border-gray-700/50 rounded-xl px-4 py-2.5 pl-10 text-sm focus:outline-none focus:ring-2 focus:ring-purple-700/20 focus:border-purple-600/50"
+              className="w-full bg-[#1e2229] border border-gray-700/30 rounded-lg px-4 py-2.5 pl-10 text-sm text-gray-300 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-600 focus:border-gray-600"
             />
             <svg
               className="w-4 h-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2"
@@ -171,26 +172,36 @@ export default function Chat({
               setRecipientId(null);
               loadMessages(null);
             }}
-            className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
+            className={`w-full flex items-center gap-3 p-3 rounded-lg transition-all ${
               recipientId === null
-                ? "bg-gradient-to-r from-purple-700/30 to-indigo-700/30 border border-purple-600/40 shadow-md"
-                : "bg-[#13161c] hover:bg-[#181c24] border border-transparent hover:border-gray-700/50"
+                ? "bg-gray-700/20 border border-gray-600/30"
+                : "hover:bg-gray-800/30"
             }`}
           >
             <div
-              className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl ${
+              className={`w-10 h-10 rounded-lg flex items-center justify-center ${
                 recipientId === null
-                  ? "bg-gradient-to-br from-purple-600 to-indigo-600"
-                  : "bg-[#2a2f3b]"
+                  ? "bg-gray-700/50 text-gray-300"
+                  : "bg-gray-800/50 text-gray-400"
               }`}
             >
-              💬
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
+                />
+              </svg>
             </div>
             <div className="flex-1 text-left">
-              <h3 className="font-semibold text-sm text-white">Everyone</h3>
-              <p className="text-xs text-gray-400">
-                Group chat • {members.length} members
-              </p>
+              <h3 className="font-medium text-sm text-gray-200">Everyone</h3>
+              <p className="text-xs text-gray-500">{members.length} members</p>
             </div>
           </button>
 
@@ -204,26 +215,26 @@ export default function Chat({
                   setRecipientId(m.user.id);
                   loadMessages(m.user.id);
                 }}
-                className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
+                className={`w-full flex items-center gap-3 p-3 rounded-lg transition-all ${
                   recipientId === m.user.id
-                    ? "bg-gradient-to-r from-purple-700/30 to-indigo-700/30 border border-purple-600/40 shadow-md"
-                    : "bg-[#13161c] hover:bg-[#181c24] border border-transparent hover:border-gray-700/50"
+                    ? "bg-gray-700/20 border border-gray-600/30"
+                    : "hover:bg-gray-800/30"
                 }`}
               >
                 <div
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold text-lg ${
+                  className={`w-10 h-10 rounded-lg flex items-center justify-center font-semibold text-sm ${
                     recipientId === m.user.id
-                      ? "bg-gradient-to-br from-purple-600 to-indigo-600"
-                      : "bg-[#2a2f3b]"
+                      ? "bg-gray-700/50 text-gray-200"
+                      : "bg-gray-800/50 text-gray-400"
                   }`}
                 >
                   {m.user.name.charAt(0).toUpperCase()}
                 </div>
                 <div className="flex-1 text-left">
-                  <h3 className="font-semibold text-sm text-white">
+                  <h3 className="font-medium text-sm text-gray-200">
                     {m.user.name}
                   </h3>
-                  <p className="text-xs text-gray-400">Direct message</p>
+                  <p className="text-xs text-gray-500">Direct message</p>
                 </div>
               </button>
             ))}
@@ -233,31 +244,45 @@ export default function Chat({
       {/* MAIN CHAT AREA */}
       <div className="flex-1 flex flex-col">
         {/* CHAT HEADER */}
-        <div className="bg-[#141820] border-b border-gray-800/50 px-8 py-5 flex items-center gap-4">
+        <div className="bg-[#151820] border-b border-gray-800/30 px-6 py-4 flex items-center gap-3">
           {recipientId ? (
             <>
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center font-bold text-lg shadow-md">
+              <div className="w-10 h-10 rounded-lg bg-gray-700/50 flex items-center justify-center font-semibold text-sm text-gray-200">
                 {selectedMember?.user.name.charAt(0).toUpperCase()}
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white">
+                <h1 className="text-base font-semibold text-gray-200">
                   {selectedMember?.user.name}
                 </h1>
-                <p className="text-sm text-gray-400 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <p className="text-xs text-gray-500 flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
                   Active now
                 </p>
               </div>
             </>
           ) : (
             <>
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center text-2xl shadow-md">
-                💬
+              <div className="w-10 h-10 rounded-lg bg-gray-700/50 flex items-center justify-center text-gray-300">
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
+                  />
+                </svg>
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white">Team Chat</h1>
-                <p className="text-sm text-gray-400">
-                  {members.length} members online
+                <h1 className="text-base font-semibold text-gray-200">
+                  Team Chat
+                </h1>
+                <p className="text-xs text-gray-500">
+                  {members.length} members
                 </p>
               </div>
             </>
@@ -277,7 +302,7 @@ export default function Chat({
                 } gap-3`}
               >
                 {!isCurrentUser && (
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center font-bold text-sm shadow-md">
+                  <div className="w-8 h-8 rounded-lg bg-gray-700/50 flex items-center justify-center font-semibold text-xs text-gray-300">
                     {msg.sender?.name.charAt(0).toUpperCase()}
                   </div>
                 )}
@@ -287,10 +312,10 @@ export default function Chat({
                     isCurrentUser ? "items-end" : "items-start"
                   }`}
                 >
-                  <div className="text-xs text-gray-400">
+                  <div className="text-xs text-gray-500">
                     {msg.sender?.name}
                     {msg.recipient && (
-                      <span className="text-gray-500">
+                      <span className="text-gray-600">
                         {" "}
                         → {msg.recipient.name}
                       </span>
@@ -298,10 +323,10 @@ export default function Chat({
                   </div>
 
                   <div
-                    className={`px-5 py-3.5 rounded-2xl shadow-md ${
+                    className={`px-4 py-2.5 rounded-lg ${
                       isCurrentUser
-                        ? "bg-gradient-to-br from-purple-600 to-indigo-600 text-white"
-                        : "bg-[#1a1f2e] border border-gray-700/50 text-gray-200"
+                        ? "bg-blue-600 text-white"
+                        : "bg-[#242831] text-gray-200"
                     }`}
                   >
                     {msg.message}
@@ -309,7 +334,7 @@ export default function Chat({
                 </div>
 
                 {isCurrentUser && (
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center font-bold text-sm shadow-md">
+                  <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center font-semibold text-xs text-white">
                     {msg.sender?.name.charAt(0).toUpperCase()}
                   </div>
                 )}
@@ -319,13 +344,19 @@ export default function Chat({
 
           {isTyping && (
             <div className="flex gap-3 items-end">
-              <div className="w-10 h-10 rounded-xl bg-[#2a2f3b] flex items-center justify-center font-bold text-sm shadow-md">
-                …
+              <div className="w-8 h-8 rounded-lg bg-gray-700/50 flex items-center justify-center text-gray-400 text-xs">
+                •••
               </div>
-              <div className="px-5 py-3 rounded-2xl bg-[#1a1f2e] border border-gray-700/50 flex gap-2">
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+              <div className="px-4 py-2.5 rounded-lg bg-[#242831] flex gap-1.5">
+                <div className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce"></div>
+                <div
+                  className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce"
+                  style={{ animationDelay: "0.1s" }}
+                ></div>
+                <div
+                  className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce"
+                  style={{ animationDelay: "0.2s" }}
+                ></div>
               </div>
             </div>
           )}
@@ -334,11 +365,11 @@ export default function Chat({
         </div>
 
         {/* INPUT AREA */}
-        <div className="p-6 bg-[#0f1218] border-t border-gray-800/50">
-          <div className="flex items-end gap-3">
+        <div className="p-4 bg-[#151820] border-t border-gray-800/30">
+          <div className="flex items-end gap-2">
             <div className="flex-1 relative">
               <textarea
-                className="w-full bg-[#1a1f2e] border border-gray-700/50 rounded-2xl px-5 py-4 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-purple-700/20 shadow-md resize-none"
+                className="w-full bg-[#1e2229] border border-gray-700/30 rounded-lg px-4 py-3 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-600 focus:border-gray-600 resize-none"
                 placeholder={
                   recipientId
                     ? "Send a private message..."
@@ -354,7 +385,7 @@ export default function Chat({
             <button
               onClick={sendMessage}
               disabled={loading || !message.trim()}
-              className="px-6 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl shadow-md disabled:opacity-50 hover:scale-105 transition"
+              className="px-4 py-3 bg-blue-600 rounded-lg disabled:opacity-40 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors"
             >
               {loading ? (
                 <svg

@@ -6,6 +6,10 @@ import { getProjectById } from "@/lib/services/projectServices";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 
+import ErrorUnauthorized from "@/components/shared/ErrorUnauthorized";
+import ErrorProjectNotFound from "@/components/shared/ErrorProjectNotFound";
+import ErrorNoAccess from "@/components/shared/ErrorNoAccess";
+
 export default async function OverviewTab({
   params,
 }: {
@@ -16,9 +20,9 @@ export default async function OverviewTab({
 
   const currentUserId = session?.user?.id;
 
-  // 2. No session or missing user ID
+  // No session or missing user ID
   if (!currentUserId) {
-    return <div className="text-white p-6">Unauthorized</div>;
+    return <ErrorUnauthorized />;
   }
 
   let project, members, stats, latestInsight;
@@ -28,19 +32,11 @@ export default async function OverviewTab({
       currentUserId
     ));
   } catch {
-    return (
-      <div className="text-white p-6">
-        Project not found or you do not have access.
-      </div>
-    );
+    return <ErrorNoAccess />;
   }
 
   if (!project) {
-    return (
-      <div className="text-white p-6">
-        Project not found or you do not have access.
-      </div>
-    );
+    return <ErrorProjectNotFound />;
   }
 
   return (
