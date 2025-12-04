@@ -2,6 +2,9 @@ import Chat from "../../../../../components/project/chat/chat";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import { prisma } from "@/lib/prisma";
+import ErrorUnauthorized from "@/components/shared/ErrorUnauthorized";
+import ErrorNoAccess from "@/components/shared/ErrorNoAccess";
+import ErrorProjectNotFound from "@/components/shared/ErrorProjectNotFound";
 
 export default async function ChatPage({
   params,
@@ -14,7 +17,15 @@ export default async function ChatPage({
   const currentUserId = session?.user?.id;
 
   if (!currentUserId) {
-    return <div className="p-6 text-white">Unauthorized</div>;
+    return <ErrorUnauthorized />;
+  }
+
+  const project = await prisma.project.findUnique({
+    where: { id: projectId },
+  });
+
+  if (!project) {
+    return <ErrorProjectNotFound />;
   }
 
   const membership = await prisma.projectMember.findFirst({
@@ -26,7 +37,7 @@ export default async function ChatPage({
   });
 
   if (!membership) {
-    return <div className="p-6 text-white">No access</div>;
+    return <ErrorNoAccess />;
   }
 
   const members = await prisma.projectMember.findMany({
@@ -47,7 +58,7 @@ export default async function ChatPage({
   });
 
   return (
-    <div className="h-full">
+    <div className="h-screen">
       <Chat
         currentUserId={currentUserId}
         projectId={projectId}

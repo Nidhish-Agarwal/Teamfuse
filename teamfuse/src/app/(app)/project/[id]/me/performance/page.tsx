@@ -16,6 +16,11 @@ import {
   Legend,
 } from "recharts";
 
+// NEW imports
+import ErrorUnauthorized from "@/components/shared/ErrorUnauthorized";
+import ErrorNoAccess from "@/components/shared/ErrorNoAccess";
+import ErrorProjectNotFound from "@/components/shared/ErrorProjectNotFound";
+
 // ---------------- TYPES ----------------
 
 interface GithubEntry {
@@ -43,16 +48,44 @@ export default function ProjectPerformancePage() {
   const [data, setData] = useState<PerformanceResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
+  // NEW local state for errors
+  const [unauthorized, setUnauthorized] = useState(false);
+  const [noAccess, setNoAccess] = useState(false);
+  const [notFound, setNotFound] = useState(false);
+
   useEffect(() => {
     if (!projectId) return;
 
     fetch(`/api/projects/${projectId}/performance`)
-      .then((res) => res.json())
       .then((res) => {
+        if (res.status === 401) {
+          setUnauthorized(true);
+          setLoading(false);
+          return null;
+        }
+        if (res.status === 403) {
+          setNoAccess(true);
+          setLoading(false);
+          return null;
+        }
+        if (res.status === 404) {
+          setNotFound(true);
+          setLoading(false);
+          return null;
+        }
+        return res.json();
+      })
+      .then((res) => {
+        if (!res) return;
         setData(res.data as PerformanceResponse);
         setLoading(false);
       });
   }, [projectId]);
+
+  // NEW — Show correct UI screen instead of a spinner when access denied
+  if (unauthorized) return <ErrorUnauthorized />;
+  if (noAccess) return <ErrorNoAccess />;
+  if (notFound) return <ErrorProjectNotFound />;
 
   if (loading || !data) {
     return (
@@ -86,6 +119,7 @@ export default function ProjectPerformancePage() {
 
       {/* METRICS - Enhanced with icons and better spacing */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        {/* Task Completion Card */}
         <Card className="bg-gradient-to-br from-[#0d0f1a] to-[#14172a] border border-blue-500/20 rounded-2xl shadow-xl hover:shadow-blue-500/10 transition-all duration-300">
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
@@ -115,6 +149,7 @@ export default function ProjectPerformancePage() {
           </CardContent>
         </Card>
 
+        {/* Avg Feedback */}
         <Card className="bg-gradient-to-br from-[#0d0f1a] to-[#14172a] border border-purple-500/20 rounded-2xl shadow-xl hover:shadow-purple-500/10 transition-all duration-300">
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
@@ -145,6 +180,7 @@ export default function ProjectPerformancePage() {
           </CardContent>
         </Card>
 
+        {/* Chat Score */}
         <Card className="bg-gradient-to-br from-[#0d0f1a] to-[#14172a] border border-pink-500/20 rounded-2xl shadow-xl hover:shadow-pink-500/10 transition-all duration-300">
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
@@ -166,7 +202,10 @@ export default function ProjectPerformancePage() {
                   <div
                     className="h-full bg-gradient-to-r from-pink-400 to-pink-600 rounded-full"
                     style={{
-                      width: `${Math.min(data.chatParticipationScore * 10, 100)}%`,
+                      width: `${Math.min(
+                        data.chatParticipationScore * 10,
+                        100
+                      )}%`,
                     }}
                   />
                 </div>
@@ -176,6 +215,7 @@ export default function ProjectPerformancePage() {
           </CardContent>
         </Card>
 
+        {/* PR Count */}
         <Card className="bg-gradient-to-br from-[#0d0f1a] to-[#14172a] border border-indigo-500/20 rounded-2xl shadow-xl hover:shadow-indigo-500/10 transition-all duration-300">
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
@@ -206,7 +246,9 @@ export default function ProjectPerformancePage() {
 
       {/* MAIN CHARTS SECTION */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* GITHUB ACTIVITY - Enhanced */}
+        {/* GitHub Activity */}
+        {/* (unchanged code below) */}
+        {/* ------------------------------------------------------ */}
         <Card className="bg-gradient-to-br from-[#0d0f1a] to-[#14172a] border border-[#1d2033] rounded-2xl shadow-lg">
           <CardHeader className="pb-4">
             <div className="flex items-center justify-between">
@@ -296,7 +338,8 @@ export default function ProjectPerformancePage() {
           </CardContent>
         </Card>
 
-        {/* PEER BENCHMARK - Enhanced */}
+        {/* Peer Benchmark */}
+        {/* (unchanged code continues) */}
         <Card className="bg-gradient-to-br from-[#0d0f1a] to-[#14172a] border border-[#1d2033] rounded-2xl shadow-lg">
           <CardHeader className="pb-4">
             <div className="flex items-center justify-between">
