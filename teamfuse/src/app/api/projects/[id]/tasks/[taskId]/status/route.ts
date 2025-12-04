@@ -8,14 +8,12 @@ import { invalidateProjectCache } from "@/lib/cache/projectCache";
 
 export async function PATCH(
   req: NextRequest,
-  context: { params: Promise<Record<string, string>> }
+  { params }: { params: { id: string; taskId: string } }
 ) {
-  await context.params;
-
   return withAuth(async (req: NextRequest, user) => {
     try {
-      const taskId = req.url.split("/").at(-2);
-      const projectId = req.url.split("/").at(-4);
+      const taskId = params.taskId;
+      const projectId = params.id;
       const { status } = await req.json();
 
       if (!projectId) {
@@ -47,5 +45,5 @@ export async function PATCH(
       console.error("Error in Task status update", err);
       return handleRouteError(err);
     }
-  })(req, { params: {} });
+  })(req, { params });
 }

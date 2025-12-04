@@ -1,3 +1,6 @@
+// app/api/projects/route.ts
+import { NextRequest } from "next/server";
+import { withAuth } from "@/lib/withAuth";
 import { projectSchema } from "@/lib/validators/validateProjectInput";
 import { parseRepoUrl } from "@/lib/github/parseRepoUrl";
 import { checkRepoAccess } from "@/lib/github/checkRepoAccess";
@@ -5,36 +8,36 @@ import { checkScopes } from "@/lib/github/checkScopes";
 import { createProject, isRepoLinked } from "@/lib/db/projectService";
 import { inviteExistingUsers } from "@/lib/db/memberService";
 import { sendSuccess, sendError } from "@/lib/responseHandler";
-import { withAuth } from "@/lib/withAuth";
-import { NextRequest } from "next/server";
 import { getGitHubToken } from "@/lib/github/getGitHubToken";
 import { handleRouteError } from "@/lib/errors/handleRouteError";
 import { getAllProjectsForUser } from "@/lib/services/projectServices";
 import { ensureGithubWebhookForProject } from "@/lib/github/registerWebhook";
 
+type EmptyParams = Record<string, never>;
+
 export async function POST(
   req: NextRequest,
-  context: { params: Promise<Record<string, string>> }
+  { params }: { params: EmptyParams } // explicit empty params type that won't trigger the linter
 ) {
-  await context.params;
-
-  return withAuth(async (req, user) => {
+  return withAuth(async (req: NextRequest, user) => {
     try {
-      const session = await getGitHubToken(user.id);
-      if (!session?.accessToken)
+      // validate GitHub token for user
+      const token = await getGitHubToken(user.id);
+      if (!token?.accessToken) {
         return sendError(
           "Unauthorized — missing GitHub token",
           "UNAUTHORIZED",
           401
         );
+      }
 
       const body = await req.json();
       const { name, description, githubRepo, members } =
         projectSchema.parse(body);
 
       const { owner, repo } = parseRepoUrl(githubRepo);
-      checkScopes(session.scopes);
-      await checkRepoAccess(session.accessToken, owner, repo);
+      checkScopes(token.scopes);
+      await checkRepoAccess(token.accessToken, owner, repo);
 
       const exists = await isRepoLinked(githubRepo);
       if (exists) {
@@ -46,7 +49,7 @@ export async function POST(
       }
 
       const webhookData = await ensureGithubWebhookForProject(
-        session.accessToken,
+        token.accessToken,
         owner,
         repo
       );
@@ -59,24 +62,22 @@ export async function POST(
         webhookData
       );
 
-      if (members && members?.length > 0) {
+      if (Array.isArray(members) && members.length > 0) {
         await inviteExistingUsers(project.id, members);
       }
 
       return sendSuccess(project, "Project created successfully", 201);
     } catch (err) {
-      console.log("Error in POST /api/projects:", err);
+      console.error("Error in POST /api/projects:", err);
       return handleRouteError(err);
     }
-  })(req, { params: {} });
+  })(req, { params });
 }
 
 export async function GET(
   req: NextRequest,
-  context: { params: Promise<Record<string, string>> }
+  { params }: { params: EmptyParams }
 ) {
-  await context.params;
-
   return withAuth(async (_req: NextRequest, user) => {
     try {
       const { accepted, pending } = await getAllProjectsForUser(user.id);
@@ -85,8 +86,8 @@ export async function GET(
         "Projects fetched successfully"
       );
     } catch (err) {
-      console.log("Error in GET /api/projects:", err);
+      console.error("Error in GET /api/projects:", err);
       return handleRouteError(err);
     }
-  })(req, { params: {} });
+  })(req, { params });
 }

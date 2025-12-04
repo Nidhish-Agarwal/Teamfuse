@@ -1,10 +1,6 @@
-import { prisma } from "@/lib/prisma";
-import {
-  getMembersFromCache,
-  setMembersInCache,
-} from "@/lib/cache/memberCache";
 import { sendSuccess } from "@/lib/responseHandler";
 import { handleRouteError } from "@/lib/errors/handleRouteError";
+import { getProjectMembers } from "@/lib/services/memberServices";
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -14,33 +10,9 @@ export async function GET(_req: Request, { params }: RouteParams) {
   try {
     const { id: projectId } = await params;
 
-    const cached = await getMembersFromCache(projectId);
-    if (cached) {
-      return sendSuccess(cached, "Hit members cache");
-    }
+    const members = getProjectMembers(projectId);
 
-    const members = await prisma.projectMember.findMany({
-      where: {
-        projectId,
-        status: "ACCEPTED",
-      },
-      include: {
-        user: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-      },
-    });
-
-    const uniqueMembers = Array.from(
-      new Map(members.map((m) => [m.user.id, m.user])).values()
-    );
-
-    await setMembersInCache(projectId, members);
-
-    return sendSuccess(uniqueMembers, "Successfully fetched all the members");
+    return sendSuccess(members, "Successfully fetched all the members");
   } catch (e) {
     console.error("MEMBER FETCH ERROR:", e);
     return handleRouteError(e);

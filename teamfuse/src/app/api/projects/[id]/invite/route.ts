@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { sendError, sendSuccess } from "@/lib/responseHandler";
 import { withAuth } from "@/lib/withAuth";
 import { User } from "@/lib/types/user";
+import { invalidateUserProjectCache } from "@/lib/cache/userProjectCache";
 import { NextRequest } from "next/server";
 
 type ProjectMember = {
@@ -17,7 +18,7 @@ export async function POST(
 ) {
   const resolved = await context.params;
 
-  return withAuth(async (req, user, _context) => {
+  return withAuth(async (req, user) => {
     const context = { params: resolved };
 
     try {
@@ -86,6 +87,20 @@ export async function POST(
       }
 
       const invited = await inviteExistingUsers(projectId, canInvite);
+
+      await Promise.all(
+        Array.from(canInvite).map(async (uid) => {
+          try {
+            await invalidateUserProjectCache(uid);
+          } catch (err) {
+            console.error(
+              `Failed to invalidate userProjectCache for ${uid}`,
+              err
+            );
+            // swallow error so invalidation failure doesn't break the API response
+          }
+        })
+      );
 
       return sendSuccess(
         { invited, notFound, alreadyAccepted, alreadyPending },

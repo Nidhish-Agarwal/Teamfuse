@@ -5,10 +5,9 @@ import { invalidateProjectCache } from "@/lib/cache/projectCache";
 
 export async function PATCH(
   req: Request,
-  context: { params: Promise<Record<string, string>> }
+  { params }: { params: { id: string } }
 ) {
-  const { id: projectId } = await context.params;
-
+  const projectId = params.id;
   const { taskId, progress } = await req.json();
 
   const task = await prisma.task.update({
