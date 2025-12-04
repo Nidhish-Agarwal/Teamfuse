@@ -8,6 +8,8 @@ interface TeamMember {
   avatarUrl: string;
   role: string;
   status: string;
+  memberId: string;
+  email: string;
 }
 
 export default function TeamMembers({

@@ -18,7 +18,6 @@ export default async function OverviewTab({
   const currentUserId = session?.user?.id;
 
   // 2. No session or missing user ID
-  // 2. No session or missing user ID
   if (!currentUserId) {
     return <div className="text-white p-6">Unauthorized</div>;
   }
@@ -63,13 +62,13 @@ export default async function OverviewTab({
         members={project.members.map((m) => ({
           memberId: m.id,
           userId: m.user.id,
-          name: m.user.name,
-          email: m.user.email,
+          name: m.user.name || "",
+          email: m.user.email || "",
           avatarUrl: m.user.avatarUrl ?? "",
           role: m.role,
           status: m.status,
         }))}
-        projectId={id as string}
+        projectId={id}
         currentUserId={currentUserId}
       />
 

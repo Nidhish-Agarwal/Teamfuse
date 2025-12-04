@@ -1,49 +1,28 @@
-"use client";
-
+// components/project/Sidebar.tsx
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
+import { getMemberDetails } from "@/lib/services/memberServices";
+import { headers } from "next/headers";
 import {
   LayoutDashboard,
   ListTodo,
-  Github,
   MessageCircle,
   Users,
   Settings2,
+  User,
 } from "lucide-react";
-import { fetchMember } from "./actions";
 
-export default function Sidebar({
-  projectId,
-  userId,
-}: {
-  projectId: string;
-  userId: string | undefined;
-}) {
-  const pathname = usePathname();
+type Props = { projectId: string };
 
-  const [role, setRole] = useState<string | null>(null);
+export default async function Sidebar({ projectId }: Props) {
+  // Get current pathname from request headers (server-side)
+  const h = await headers();
+  const pathname = h.get("next-url") || ""; // Next.js automatically injects this
 
-  // Load member details on mount
-  useEffect(() => {
-    async function load() {
-      if (!userId) return; // Session not ready
-      const member = await fetchMember(projectId, userId);
-      setRole(member?.role ?? null);
-    }
-    load();
-  }, [userId, projectId]);
+  const session = await getServerSession(authOptions);
+  const userId = session?.user?.id;
 
-  // While session is loading
-  if (status === "loading") {
-    return (
-      <aside className="w-64 p-6 hidden md:block">
-        <p className="text-gray-400">Loading...</p>
-      </aside>
-    );
-  }
-
-  // If user is not logged in
   if (!userId) {
     return (
       <aside className="w-64 p-6 hidden md:block">
@@ -52,26 +31,21 @@ export default function Sidebar({
     );
   }
 
+  const member = await getMemberDetails(projectId, userId);
+  const role = member?.role ?? null;
+
   const links = [
     {
       label: "Overview",
       href: `/project/${projectId}/overview`,
       icon: LayoutDashboard,
     },
+    { label: "Tasks", href: `/project/${projectId}/tasks`, icon: ListTodo },
+    { label: "Chat", href: `/project/${projectId}/chat`, icon: MessageCircle },
     {
-      label: "Tasks",
-      href: `/project/${projectId}/tasks`,
-      icon: ListTodo,
-    },
-    {
-      label: "GitHub",
-      href: `/project/${projectId}/github`,
-      icon: Github,
-    },
-    {
-      label: "Chat",
-      href: `/project/${projectId}/chat`,
-      icon: MessageCircle,
+      label: "My Performance",
+      href: `/project/${projectId}/me/performance`,
+      icon: User,
     },
     {
       label: "Team Performance",
@@ -80,7 +54,6 @@ export default function Sidebar({
     },
   ];
 
-  // Add manage tab ONLY for leaders
   if (role === "LEADER" || role === "ADMIN") {
     links.push({
       label: "Manage",
@@ -102,6 +75,7 @@ export default function Sidebar({
       <nav className="space-y-2">
         {links.map(({ label, href, icon: Icon }) => {
           const isActive = pathname === href;
+
           return (
             <Link
               key={href}
@@ -113,7 +87,9 @@ export default function Sidebar({
               }`}
             >
               <Icon
-                className={`w-5 h-5 ${isActive ? "text-purple-400" : "group-hover:text-purple-400"} transition-colors`}
+                className={`w-5 h-5 ${
+                  isActive ? "text-purple-400" : "group-hover:text-purple-400"
+                } transition-colors`}
               />
               <span className="font-medium">{label}</span>
             </Link>

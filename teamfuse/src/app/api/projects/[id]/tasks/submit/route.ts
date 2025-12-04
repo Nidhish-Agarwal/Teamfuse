@@ -7,8 +7,8 @@ export async function PATCH(
   req: Request,
   { params }: { params: { id: string } }
 ) {
+  const projectId = params.id;
   const { taskId } = await req.json();
-  const { id: projectId } = params;
 
   const updated = await prisma.task.update({
     where: { id: taskId },

@@ -1,12 +1,19 @@
-import type { $Enums, GitHubActivity, Insight } from "@/generated/prisma";
+// use Prisma client types (stable, standard)
+import type {
+  ProjectStatus,
+  ProjectRole,
+  MemberStatus,
+  GitHubActivity,
+  Insight,
+} from "@/generated/prisma";
 import type { ProjectTask } from "../types/projectTask";
 
 export interface ProjectDashboard {
   id: string;
   name: string;
-  status: $Enums.ProjectStatus;
+  status: ProjectStatus;
   description: string | null;
-  githubRepo: string;
+  githubRepo: string | null;
   githubRepoId: number | null;
   githubWebhookSecret: string | null;
   createdById: string;
@@ -14,13 +21,13 @@ export interface ProjectDashboard {
   lastActive: Date | null;
 
   members: {
-    role: string;
-    status: "PENDING" | "ACCEPTED" | "DECLINED";
+    role: ProjectRole;
+    status: MemberStatus;
     id: string;
     user: {
       id: string;
-      name: string;
-      email: string;
+      name: string | null;
+      email: string | null;
       avatarUrl: string | null;
     };
   }[];
@@ -39,12 +46,11 @@ export interface ProjectDashboard {
 
     sender: {
       id: string;
-      name: string;
+      name: string | null;
       avatarUrl: string | null;
-    };
+    } | null;
   }[];
 
-  githubData: GitHubActivity[];
-
-  insights: Insight[];
+  githubData: GitHubActivity[]; // uses Prisma model type
+  insights: Insight[]; // uses Prisma model type
 }

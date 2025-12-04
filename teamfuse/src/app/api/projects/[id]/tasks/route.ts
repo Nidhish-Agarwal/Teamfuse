@@ -12,9 +12,9 @@ import { invalidateProjectCache } from "@/lib/cache/projectCache";
 // GET /api/projects/[id]/tasks
 export async function GET(
   _req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
-  const { id: projectId } = await context.params;
+  const projectId = params.id;
 
   try {
     const cached = await getTasksFromCache(projectId);
@@ -39,7 +39,7 @@ export async function GET(
 // POST /api/projects/[id]/tasks
 export async function POST(
   req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  context: { params: Promise<Record<string, string>> }
 ) {
   const { id: projectId } = await context.params;
   const body = await req.json();
@@ -60,6 +60,7 @@ export async function POST(
 
     await invalidateTaskCache(projectId);
     await invalidateProjectCache(projectId);
+
     return sendSuccess(created, "Task created successfully");
   } catch (err) {
     console.error("TASK CREATE ERROR:", err);

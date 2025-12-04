@@ -5,100 +5,110 @@ import { sendError, sendSuccess } from "@/lib/responseHandler";
 import { withAuth } from "@/lib/withAuth";
 import { User } from "@/lib/types/user";
 import { invalidateUserProjectCache } from "@/lib/cache/userProjectCache";
+import { NextRequest } from "next/server";
 
 type ProjectMember = {
   userId: string;
   status: "ACCEPTED" | "PENDING" | "DECLINED";
 };
 
-export const POST = withAuth(async (req, user, context) => {
-  try {
-    const params = await context?.params;
-    const projectId = params?.id;
-    if (!projectId) {
-      return sendError("Project ID is required", "BAD_REQUEST", 400);
-    }
+export async function POST(
+  req: NextRequest,
+  context: { params: Promise<Record<string, string>> }
+) {
+  const resolved = await context.params;
 
-    const { emails } = await req.json();
-    if (!Array.isArray(emails) || emails.length === 0) {
-      return sendError("Emails array is required", "BAD_REQUEST", 400);
-    }
+  return withAuth(async (req, user) => {
+    const context = { params: resolved };
 
-    // Owner check
-    const project = await prisma.project.findUnique({
-      where: { id: projectId },
-    });
-    if (!project) return sendError("Project not found", "NOT_FOUND", 404);
-
-    if (project.createdById !== user.id) {
-      return sendError(
-        "Only the project owner can invite members",
-        "FORBIDDEN",
-        403
-      );
-    }
-
-    // Find existing users
-    const users = await prisma.user.findMany({
-      where: { email: { in: emails } },
-      select: { id: true, email: true },
-    });
-
-    const existingEmails = users.map((u: User) => u.email);
-    const notFound = emails.filter((e) => !existingEmails.includes(e));
-
-    // Check memberships
-    const existingMembers = await prisma.projectMember.findMany({
-      where: {
-        projectId,
-        userId: { in: users.map((u: User) => u.id) },
-      },
-      select: { userId: true, status: true },
-    });
-
-    const alreadyAccepted = [];
-    const alreadyPending = [];
-    const canInvite = [];
-
-    for (const u of users) {
-      const membership = existingMembers.find(
-        (m: ProjectMember) => m.userId === u.id
-      );
-
-      if (!membership) {
-        canInvite.push(u.email); // fresh
-      } else if (membership.status === "ACCEPTED") {
-        alreadyAccepted.push(u.email);
-      } else if (membership.status === "PENDING") {
-        alreadyPending.push(u.email);
-      } else if (membership.status === "DECLINED") {
-        // allow reinvite
-        canInvite.push(u.email);
+    try {
+      const params = context?.params;
+      const projectId = params?.id;
+      if (!projectId) {
+        return sendError("Project ID is required", "BAD_REQUEST", 400);
       }
-    }
 
-    const invited = await inviteExistingUsers(projectId, canInvite);
+      const { emails } = await req.json();
+      if (!Array.isArray(emails) || emails.length === 0) {
+        return sendError("Emails array is required", "BAD_REQUEST", 400);
+      }
 
-    await Promise.all(
-      Array.from(canInvite).map(async (uid) => {
-        try {
-          await invalidateUserProjectCache(uid);
-        } catch (err) {
-          console.error(
-            `Failed to invalidate userProjectCache for ${uid}`,
-            err
-          );
-          // swallow error so invalidation failure doesn't break the API response
+      // Owner check
+      const project = await prisma.project.findUnique({
+        where: { id: projectId },
+      });
+      if (!project) return sendError("Project not found", "NOT_FOUND", 404);
+
+      if (project.createdById !== user.id) {
+        return sendError(
+          "Only the project owner can invite members",
+          "FORBIDDEN",
+          403
+        );
+      }
+
+      // Find existing users
+      const users = await prisma.user.findMany({
+        where: { email: { in: emails } },
+        select: { id: true, email: true },
+      });
+
+      const existingEmails = users.map((u: User) => u.email);
+      const notFound = emails.filter((e) => !existingEmails.includes(e));
+
+      // Check memberships
+      const existingMembers = await prisma.projectMember.findMany({
+        where: {
+          projectId,
+          userId: { in: users.map((u: User) => u.id) },
+        },
+        select: { userId: true, status: true },
+      });
+
+      const alreadyAccepted = [];
+      const alreadyPending = [];
+      const canInvite = [];
+
+      for (const u of users) {
+        const membership = existingMembers.find(
+          (m: ProjectMember) => m.userId === u.id
+        );
+
+        if (!membership) {
+          canInvite.push(u.email); // fresh
+        } else if (membership.status === "ACCEPTED") {
+          alreadyAccepted.push(u.email);
+        } else if (membership.status === "PENDING") {
+          alreadyPending.push(u.email);
+        } else if (membership.status === "DECLINED") {
+          // allow reinvite
+          canInvite.push(u.email);
         }
-      })
-    );
+      }
 
-    return sendSuccess(
-      { invited, notFound, alreadyAccepted, alreadyPending },
-      "Invite process completed"
-    );
-  } catch (err) {
-    console.log("Invite Error:", err);
-    return handleRouteError(err);
-  }
-});
+      const invited = await inviteExistingUsers(projectId, canInvite);
+
+      await Promise.all(
+        Array.from(canInvite).map(async (uid) => {
+          try {
+            await invalidateUserProjectCache(uid);
+          } catch (err) {
+            console.error(
+              `Failed to invalidate userProjectCache for ${uid}`,
+              err
+            );
+            // swallow error so invalidation failure doesn't break the API response
+          }
+        })
+      );
+
+      return sendSuccess(
+        { invited, notFound, alreadyAccepted, alreadyPending },
+        "Invite process completed"
+      );
+    } catch (err) {
+      console.log("Invite Error:", err);
+      return handleRouteError(err);
+    }
+  })(req, { params: {} });
+}

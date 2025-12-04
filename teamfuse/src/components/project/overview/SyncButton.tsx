@@ -31,9 +31,11 @@ function SyncButton({ projectId }: { projectId: string }) {
       toast.success("Syncing successfull 🎉", {
         description: "Your project is syncing",
       });
-    } catch (er) {
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Unable to sync";
+
       toast.error("Something went wrong while syncing", {
-        description: er.message || "Unable to sync",
+        description: message,
       });
     } finally {
       setLoading(false);

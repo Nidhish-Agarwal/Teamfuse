@@ -7,8 +7,9 @@ export async function PATCH(
   req: Request,
   { params }: { params: { id: string } }
 ) {
+  const projectId = params.id;
   const { taskId, progress } = await req.json();
-  const { id: projectId } = params;
+
   const task = await prisma.task.update({
     where: { id: taskId },
     data: { progress },
@@ -16,5 +17,6 @@ export async function PATCH(
 
   await invalidateTaskCache(projectId);
   await invalidateProjectCache(projectId);
+
   return NextResponse.json(task);
 }

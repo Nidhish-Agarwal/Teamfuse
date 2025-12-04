@@ -1,8 +1,16 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { handleRouteError } from "@/lib/errors/handleRouteError";
 import { prisma } from "@/lib/prisma";
 import { sendSuccess, sendError } from "@/lib/responseHandler";
 
-// GET all users
+// Utility type for JSON parsing
+type CreateUserBody = {
+  name: string;
+  email: string;
+  avatarUrl?: string | null;
+  oauthId: string;
+};
+
+// GET /api/users — fetch all users
 export async function GET() {
   try {
     const users = await prisma.user.findMany({
@@ -11,23 +19,33 @@ export async function GET() {
     });
 
     return sendSuccess(users, "Users fetched successfully");
-  } catch (error: any) {
-    return sendError(error.message, "FETCH_ERROR", 500, error);
+  } catch (error) {
+    console.error("GET /api/users error:", error);
+    return handleRouteError(error);
   }
 }
 
-// POST new user
+// POST /api/users — create a new user
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const { name, email, role, avatarUrl } = body;
+    const body = (await request.json()) as Partial<CreateUserBody>;
+
+    if (!body.name || !body.email || !body.oauthId) {
+      return sendError("Missing required fields", "VALIDATION_ERROR", 400);
+    }
 
     const user = await prisma.user.create({
-      data: { name, email, role, avatarUrl },
+      data: {
+        name: body.name,
+        email: body.email,
+        avatarUrl: body.avatarUrl ?? null,
+        oauthId: body.oauthId,
+      },
     });
 
     return sendSuccess(user, "User created successfully", 201);
-  } catch (error: any) {
-    return sendError(error.message, "CREATE_ERROR", 500, error);
+  } catch (error) {
+    console.error("POST /api/users error:", error);
+    return handleRouteError(error);
   }
 }
