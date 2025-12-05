@@ -18,8 +18,7 @@ export function usePresence(projectId: string, currentUserId: string) {
     if (!projectId || !currentUserId) return;
 
     if (!socket) {
-      socket = io(
-        process.env.NODE_ENV === "production" ? "/" : "http://localhost:3000",
+      socket = io(process.env.NEXT_PUBLIC_SOCKET_URL!,
         { path: "/api/socket/io" }
       );
 
