@@ -1,29 +1,56 @@
 import { Server, Socket } from "socket.io";
-import prisma from "./prisma";
+import { SessionManager } from "./SessionManager";
 
 export function socketServer(io: Server) {
-  const userSockets = new Map<string, Set<string>>();
-  const socketProjects = new Map<string, string>();
-
   io.on("connection", (socket: Socket) => {
-    socket.on("join_chat", ({ projectId }) => {
+    console.log("Client connected:", socket.id);
+
+    socket.on("join_project", async ({ userId, projectId }) => {
       socket.join(projectId);
+      await SessionManager.startSession(userId, projectId);
+
+      io.to(projectId).emit("presence_update", {
+        userId,
+        status: "ONLINE",
+      });
+    });
+
+    socket.on("activity", async ({ userId, projectId }) => {
+      await SessionManager.resetIdle(userId, projectId);
+
+      io.to(projectId).emit("presence_update", {
+        userId,
+        status: "ONLINE",
+      });
+    });
+
+    socket.on("status_update", async ({ userId, projectId, status }) => {
+      await SessionManager.setStatus(userId, projectId, status);
+
+      io.to(projectId).emit("presence_update", {
+        userId,
+        status,
+      });
     });
 
     socket.on("chat:send", ({ projectId, message }) => {
       io.to(projectId).emit("chat:new", message);
     });
 
-    socket.on("activity", async ({ userId, projectId }) => {
-      io.to(projectId).emit("presence_update", {
-        userId,
-        projectId,
-        status: "ONLINE",
-      });
-    });
+    socket.on("disconnecting", async () => {
+      const rooms = [...socket.rooms].filter((r) => r !== socket.id);
 
-    socket.on("disconnect", () => {
-      console.log("Socket disconnected");
+      for (const projectId of rooms) {
+        const userId = projectId.split("-")[1]; // only if needed
+
+        // End session when last socket leaves room
+        await SessionManager.endSession(userId, projectId);
+
+        io.to(projectId).emit("presence_update", {
+          userId,
+          status: "OFFLINE",
+        });
+      }
     });
   });
 }
