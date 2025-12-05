@@ -14,9 +14,8 @@ const httpServer = createServer((req, res) => {
 // Socket.IO server with correct config
 const io = new Server(httpServer, {
   cors: {
-    origin: [
-      "http://localhost:3000",        // local dev
-      "https://teamfuse-mi5t.vercel.app/"   // production frontend
+    origin: [      // local dev
+      process.env.NEXT_PUBLIC_APP_URL!,
     ],
     methods: ["GET", "POST"],
     credentials: true,
