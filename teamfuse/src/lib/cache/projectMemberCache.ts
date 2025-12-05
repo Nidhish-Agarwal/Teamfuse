@@ -1,7 +1,7 @@
 import { redis } from "@/lib/redis/connection";
 import { projectMemberKey } from "./keys";
 import { TTL } from "./policy";
-import { ProjectMember } from "@/generated/prisma";
+import { ProjectMember } from "@prisma/client";
 
 export async function getProjectMemberFromCache(
   projectId: string,

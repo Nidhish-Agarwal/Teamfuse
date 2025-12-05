@@ -1,7 +1,7 @@
 import ManageProjectClient from "@/components/project/manage/ManageProjectClient";
 import ErrorNoAccess from "@/components/shared/ErrorNoAccess";
 import ErrorProjectNotFound from "@/components/shared/ErrorProjectNotFound";
-import { ProjectMember, ProjectRole } from "@/generated/prisma";
+import { ProjectMember, ProjectRole } from "@prisma/client";
 import { authOptions } from "@/lib/authOptions";
 import { ProjectDashboardResponse } from "@/lib/interfaces/projectDashboardResponse";
 import { getMemberDetails } from "@/lib/services/memberServices";

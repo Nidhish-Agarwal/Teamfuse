@@ -16,7 +16,7 @@ import {
   ProjectMember,
   Task,
   GitHubActivity,
-} from "@/generated/prisma";
+} from "@prisma/client";
 
 /**
  * Shapes returned by this service

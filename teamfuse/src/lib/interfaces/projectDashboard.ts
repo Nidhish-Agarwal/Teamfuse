@@ -5,7 +5,7 @@ import type {
   MemberStatus,
   GitHubActivity,
   Insight,
-} from "@/generated/prisma";
+} from "@prisma/client";
 import type { ProjectTask } from "../types/projectTask";
 
 export interface ProjectDashboard {

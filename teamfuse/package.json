@@ -23,6 +23,8 @@
     "@radix-ui/react-avatar": "^1.1.11",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-label": "^2.1.8",
+    "@radix-ui/react-scroll-area": "^1.2.10",
+    "@radix-ui/react-separator": "^1.1.8",
     "@radix-ui/react-slot": "^1.2.4",
     "bullmq": "^5.65.0",
     "class-variance-authority": "^0.7.1",
@@ -40,6 +42,7 @@
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-hook-form": "^7.66.1",
+    "recharts": "^3.5.1",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
     "sonner": "^2.0.7",
@@ -66,9 +69,9 @@
     "typescript": "^5"
   },
   "lint-staged": {
-  "*.{ts,tsx,js,jsx}": [
-    "eslint --ignore-pattern \"src/generated/**\" --fix",
-    "prettier --write"
-  ]
-}
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --ignore-pattern \"src/generated/**\" --fix",
+      "prettier --write"
+    ]
+  }
 }
