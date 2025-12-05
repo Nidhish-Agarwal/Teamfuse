@@ -1,4 +1,4 @@
-import { Insight } from "@/generated/prisma";
+import { Insight } from "@prisma/client";
 import { ProjectDashboard } from "./projectDashboard";
 
 export interface ProjectDashboardResponse {

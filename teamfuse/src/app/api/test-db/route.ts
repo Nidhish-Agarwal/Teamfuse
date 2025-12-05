@@ -1,4 +1,4 @@
-import { PrismaClient } from "@/generated/prisma";
+import { PrismaClient } from "@prisma/client";
 import { sendSuccess, sendError } from "@/lib/responseHandler";
 
 const prisma = new PrismaClient();

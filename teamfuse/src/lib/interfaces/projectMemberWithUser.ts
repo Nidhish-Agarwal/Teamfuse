@@ -1,4 +1,4 @@
-import { ProjectMember } from "@/generated/prisma";
+import { ProjectMember } from "@prisma/client";
 
 export interface ProjectMemberWithUser extends ProjectMember {
   user: {

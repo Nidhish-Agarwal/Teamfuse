@@ -11,24 +11,27 @@ let socket: Socket | null = null;
 let activityTimeout: NodeJS.Timeout | null = null;
 
 export function usePresence(projectId: string, currentUserId: string) {
-  const [presence, setPresence] = useState<PresenceMap>({});
+  const [presence] = useState<PresenceMap>({});
   const joinedRef = useRef(false);
 
   useEffect(() => {
     if (!projectId || !currentUserId) return;
 
     if (!socket) {
-      socket = io(process.env.NEXT_PUBLIC_SOCKET_URL!,
-        { path: "/api/socket/io" }
-      );
+      const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL!;
 
-      socket.on("presence_update", (data) => {
-        setPresence((prev) => ({
-          ...prev,
-          [data.userId]: data.status,
-        }));
+      const SOCKET_PATH =
+        SOCKET_URL.includes("onrender.com")
+          ? "/socket.io"
+          : "/api/socket/io";
+
+      socket = io(SOCKET_URL, {
+        path: SOCKET_PATH,
+        transports: ["websocket"],
+        withCredentials: true,
       });
     }
+
 
     if (!joinedRef.current) {
       socket.emit("join_project", { projectId, userId: currentUserId });

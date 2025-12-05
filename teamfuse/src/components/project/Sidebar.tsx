@@ -9,7 +9,7 @@ import {
   Settings2,
   User,
 } from "lucide-react";
-import { ProjectMember } from "@/generated/prisma";
+import { ProjectMember } from "@prisma/client";
 
 type Props = { projectId: string; member: ProjectMember };
 

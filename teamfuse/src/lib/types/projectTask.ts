@@ -1,4 +1,4 @@
-import type { $Enums } from "@/generated/prisma";
+import type { $Enums } from "@prisma/client";
 
 export type ProjectTask = {
   id: string;
