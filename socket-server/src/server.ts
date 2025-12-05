@@ -5,14 +5,24 @@ import { socketServer } from "./lib/socketServer";
 
 dotenv.config();
 
-const httpServer = createServer();
+// Create HTTP server & properly handle requests
+const httpServer = createServer((req, res) => {
+  res.writeHead(200);
+  res.end("Socket server is running");
+});
 
+// Socket.IO server with correct config
 const io = new Server(httpServer, {
   cors: {
-    origin: "*",
+    origin: [
+      "http://localhost:3000",        // local dev
+      "https://teamfuse-mi5t.vercel.app/"   // production frontend
+    ],
     methods: ["GET", "POST"],
+    credentials: true,
   },
-  path: "/socket",
+  path: "/socket.io", 
+  transports: ["websocket"],
 });
 
 socketServer(io);
